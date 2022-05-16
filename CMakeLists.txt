@@ -24,7 +24,7 @@ list (REMOVE_DUPLICATES GL_Renderer_INCLUDE_DIRS)
 
 # Mark executable
 add_executable(GL_Renderer${GL_Renderer_SOURCES})
-target_include_directories(GL_RendererPRIVATE ${GL_Renderer_INCLUDE_DIRS})
+target_include_directories(GL_Renderer PRIVATE ${GL_Renderer_INCLUDE_DIRS})
 
 # OpenGL
 find_package(OpenGL REQUIRED)
@@ -34,19 +34,23 @@ target_link_libraries(GL_RendererPUBLIC ${OPENGL_LIBRARIES})
 
 # GLFW 3
 find_package(glfw3 CONFIG REQUIRED)
-target_link_libraries(GL_RendererPRIVATE glfw)
+target_link_libraries(GL_Renderer PRIVATE glfw)
 
 # GLEW
 find_package(GLEW REQUIRED)
-target_link_libraries(GL_RendererPRIVATE GLEW::GLEW)
+target_link_libraries(GL_Renderer PRIVATE GLEW::GLEW)
+
+# GLAD
+find_package(glad CONFIG REQUIRED)
+target_link_libraries(GL_Renderer PRIVATE glad::glad)
 
 # GLM
 find_package(glm CONFIG REQUIRED)
-target_link_libraries(GL_RendererPRIVATE glm::glm)
+target_link_libraries(GL_Renderer PRIVATE glm::glm)
 
 # spdlog
 find_package(spdlog CONFIG REQUIRED)
-target_link_libraries(GL_RendererPRIVATE spdlog::spdlog spdlog::spdlog_header_only)
+target_link_libraries(GL_Renderer PRIVATE spdlog::spdlog spdlog::spdlog_header_only)
 
 # boost
 find_package(Boost REQUIRED COMPONENTS filesystem iostreams)
@@ -64,9 +68,9 @@ if (NOT TARGET Boost::iostreams)
     set_property(TARGET Boost::iostreams PROPERTY
             INTERFACE_LINK_LIBRARIES ${Boost_LIBRARIES})
 endif()
-target_link_libraries(GL_RendererPRIVATE Boost::filesystem Boost::iostreams)
+target_link_libraries(GL_Renderer PRIVATE Boost::filesystem Boost::iostreams)
 
 # libpng
 find_package(libpng CONFIG REQUIRED)
-target_link_libraries(GL_RendererPRIVATE png_static)
+target_link_libraries(GL_Renderer PRIVATE png_static)
 
