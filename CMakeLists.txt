@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(GL_RendererVERSION 1.0)
+project(GL_Renderer VERSION 1.0)
 
 # Debug
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -g -O1")
@@ -23,14 +23,14 @@ endforeach()
 list (REMOVE_DUPLICATES GL_Renderer_INCLUDE_DIRS)
 
 # Mark executable
-add_executable(GL_Renderer${GL_Renderer_SOURCES})
+add_executable(GL_Renderer ${GL_Renderer_SOURCES})
 target_include_directories(GL_Renderer PRIVATE ${GL_Renderer_INCLUDE_DIRS})
 
 # OpenGL
 find_package(OpenGL REQUIRED)
-target_include_directories(GL_RendererPUBLIC ${OPENGL_INCLUDE_DIR})
-target_include_directories(GL_RendererPUBLIC ${OPENGL_LIBRARIES})
-target_link_libraries(GL_RendererPUBLIC ${OPENGL_LIBRARIES})
+target_include_directories(GL_Renderer PUBLIC ${OPENGL_INCLUDE_DIR})
+target_include_directories(GL_Renderer PUBLIC ${OPENGL_LIBRARIES})
+target_link_libraries(GL_Renderer PUBLIC ${OPENGL_LIBRARIES})
 
 # GLFW 3
 find_package(glfw3 CONFIG REQUIRED)
