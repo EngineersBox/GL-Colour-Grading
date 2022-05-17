@@ -8,8 +8,8 @@
 #include "gpu/buffers/vbo.hpp"
 #include "gpu/buffers/ebo.hpp"
 
-#define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1080
+static constexpr int WINDOW_WIDTH = 1920;
+static constexpr int WINDOW_HEIGHT = 1080;
 
 static constexpr char VERTEX_FILE_PATH[] = "../assets/shaders/triangle.vsh";
 static constexpr char FRAGMENT_FILE_PATH[] = "../assets/shaders/triangle.fsh";
