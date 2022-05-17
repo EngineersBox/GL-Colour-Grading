@@ -11,8 +11,8 @@ namespace GLCG::GPU::Shaders {
         const char* vertexSource = vertexCode.c_str();
         const char* fragmentSource = fragmentCode.c_str();
 
-        GLuint vertexShader = createCompileShader(vertexSource, ProgramType::VERTEX);
-        GLuint fragmentShader = createCompileShader(fragmentSource, ProgramType::FRAGMENT);
+        GLuint vertexShader = createCompiledShader(vertexSource, ProgramType::VERTEX);
+        GLuint fragmentShader = createCompiledShader(fragmentSource, ProgramType::FRAGMENT);
 
         this->id = glCreateProgram();
         glAttachShader(this->id, vertexShader);
@@ -52,7 +52,7 @@ namespace GLCG::GPU::Shaders {
         }
     }
 
-    GLuint Shader::createCompileShader(const char* source, const ProgramType type) {
+    GLuint Shader::createCompiledShader(const char* source, const ProgramType type) {
         GLuint shader = glCreateShader(programTypeToGLenum(type));
         glShaderSource(shader, 1, &source, nullptr);
         glCompileShader(shader);

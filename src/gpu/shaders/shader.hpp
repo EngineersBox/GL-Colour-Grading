@@ -18,7 +18,7 @@ namespace GLCG::GPU::Shaders {
             void remove() const;
 
         private:
-            static GLuint createCompileShader(const char* source, ProgramType type);
+            static GLuint createCompiledShader(const char* source, const ProgramType type);
             static void compileErrors(unsigned int shader, ProgramType type);
     };
 }
