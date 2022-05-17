@@ -6,13 +6,22 @@
 #include <glad/glad.h>
 
 namespace GLCG::GPU::Shaders {
+    typedef enum ProgramType {
+        FRAGMENT,
+        VERTEX,
+        GEOMETRY,
+        PROGRAM,
+    } ProgramType;
+
     class Shader {
         public:
             GLuint id;
             Shader(const char* vertexFile, const char* fragmentFile);
 
-            void Activate();
-            void Delete();
+            void activate() const;
+            void remove() const;
+        private:
+            static void compileErrors(unsigned int shader, ProgramType type);
     };
 }
 

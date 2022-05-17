@@ -13,7 +13,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Include source content
 file (GLOB_RECURSE GL_Colour_Grading_SOURCES CONFIGURE_DEPENDS "src/*.cpp")
-file (GLOB_RECURSE GL_Colour_Grading_HEADERS CONFIGURE_DEPENDS "src/*.h")
+file (GLOB_RECURSE GL_Colour_Grading_HEADERS CONFIGURE_DEPENDS "src/*.hpp")
 
 set (GL_Colour_Grading_INCLUDE_DIRS "")
 foreach (_headerFile ${GL_Colour_Grading_HEADERS})
