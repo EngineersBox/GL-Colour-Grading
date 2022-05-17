@@ -1,28 +1,34 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <spdlog/spdlog.h>
+
+#include "logging/logger.hpp"
 
 #define WINDOW_WIDTH 1920
 #define WINDOW_HEIGHT 1080
 
 int main(int argc, const char* argv[]) {
-	glfwInit();
+    GLColorGrading::Logger::init();
+    glfwSetErrorCallback(reinterpret_cast<GLFWerrorfun>(GLColorGrading::Logger::errorCallbackGLFW));
+    glfwInit();
+    spdlog::info("Initialised GLFW");
 
 	// Use OpenGL 3.3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+//	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+//	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	// Using core profile for only modern APIs
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+//	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
 
-	const GLFWwindow* window = glfwCreateWindow(
+	GLFWwindow* window = glfwCreateWindow(
 		WINDOW_WIDTH,
 		WINDOW_HEIGHT,
 		"GL Rendering",
-		NULL,
-		NULL
+		nullptr,
+		nullptr
 	);
-	if (window == null) {
-		std::cerr << "Failed to create GLFW window" << std::endl;
+	if (window == nullptr) {
+        spdlog::error("Failed to create GLFW window");
 		glfwTerminate();
 		return 1;
 	}
@@ -38,7 +44,8 @@ int main(int argc, const char* argv[]) {
 	glClear(GL_COLOR_BUFFER_BIT);
 	// Swap the buffer context from the front to back buffer
 	glfwSwapBuffers(window);
-	
+
+    spdlog::debug("Starting event loop");
 	// Main event loop
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
@@ -47,6 +54,7 @@ int main(int argc, const char* argv[]) {
 	// Clean up OpenGL resources
 	glfwDestroyWindow(window);
 	glfwTerminate();
+    spdlog::info("Cleaned up GLFW/GLAD/OpenGL resources");
 
 	return 0;
 }
