@@ -17,7 +17,7 @@ namespace GLCG::GPU::Buffers {
             void linkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset);
             void bind() override;
             void unbind() override;
-            void remove() override;
+            void destroy() override;
     };
 }
 

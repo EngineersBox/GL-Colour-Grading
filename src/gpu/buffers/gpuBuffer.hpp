@@ -10,7 +10,7 @@ namespace GLCG::GPU::Buffers {
 
             virtual void bind() = 0;
             virtual void unbind() = 0;
-            virtual void remove() = 0;
+            virtual void destroy() = 0;
     };
 }
 

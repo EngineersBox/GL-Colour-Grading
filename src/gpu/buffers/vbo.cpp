@@ -15,7 +15,7 @@ namespace GLCG::GPU::Buffers {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    void VBO::remove() {
+    void VBO::destroy() {
         glDeleteBuffers(1, &this->id);
     }
 }

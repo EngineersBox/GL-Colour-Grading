@@ -20,7 +20,7 @@ namespace GLCG::GPU::Buffers {
         glBindVertexArray(0);
     }
 
-    void VAO::remove() {
+    void VAO::destroy() {
         glDeleteVertexArrays(1, &this->id);
     }
 }

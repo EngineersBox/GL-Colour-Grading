@@ -15,7 +15,7 @@ namespace GLCG::GPU::Buffers {
 
             void bind() override;
             void unbind() override;
-            void remove() override;
+            void destroy() override;
     };
 }
 

@@ -100,9 +100,9 @@ int main(int argc, const char* argv[]) {
 	}
 
 	// Clean up OpenGL resources
-    VAO1.remove();
-    VBO1.remove();
-    EBO1.remove();
+    VAO1.destroy();
+    VBO1.destroy();
+    EBO1.destroy();
     shader.remove();
 	glfwDestroyWindow(window);
 	glfwTerminate();

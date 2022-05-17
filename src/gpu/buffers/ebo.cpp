@@ -15,7 +15,7 @@ namespace GLCG::GPU::Buffers {
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 
-    void EBO::remove() {
+    void EBO::destroy() {
         glDeleteBuffers(1, &this->id);
     }
 }
