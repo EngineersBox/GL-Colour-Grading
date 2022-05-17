@@ -57,6 +57,6 @@ find_package(Boost REQUIRED filesystem iostreams COMPONENTS)
 target_link_libraries(GL_Colour_Grading PRIVATE Boost::filesystem Boost::iostreams)
 
 # stb
-find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
+find_path(STB_INCLUDE_DIRS "stb.h")
 target_include_directories(GL_Colour_Grading PRIVATE ${STB_INCLUDE_DIRS})
 

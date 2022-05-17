@@ -11,15 +11,8 @@ namespace GLCG::GPU::Shaders {
         const char* vertexSource = vertexCode.c_str();
         const char* fragmentSource = fragmentCode.c_str();
 
-        GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexShader, 1, &vertexSource, nullptr);
-        glCompileShader(vertexShader);
-        compileErrors(vertexShader, ProgramType::VERTEX);
-
-        GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragmentShader, 1, &fragmentSource, nullptr);
-        glCompileShader(fragmentShader);
-        compileErrors(fragmentShader, ProgramType::FRAGMENT);
+        GLuint vertexShader = createCompileShader(vertexSource, ProgramType::VERTEX);
+        GLuint fragmentShader = createCompileShader(fragmentSource, ProgramType::FRAGMENT);
 
         this->id = glCreateProgram();
         glAttachShader(this->id, vertexShader);
@@ -29,7 +22,6 @@ namespace GLCG::GPU::Shaders {
 
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
-
     }
 
     void Shader::activate() const {
@@ -47,7 +39,7 @@ namespace GLCG::GPU::Shaders {
             glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
             if (hasCompiled == GL_FALSE) {
                 glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
-                spdlog::error("[OpenGL] Shader compilation error for \"{}\": {}", type, infoLog);
+                spdlog::error("[OpenGL] Shader compilation error for \"{}\": {}", programTypeToString(type), infoLog);
                 exit(1);
             }
             return;
@@ -55,8 +47,16 @@ namespace GLCG::GPU::Shaders {
         glGetProgramiv(shader, GL_LINK_STATUS, &hasCompiled);
         if (hasCompiled == GL_FALSE) {
             glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
-            spdlog::error("[OpenGL] Shader linking error for \"{}\": {}", type, infoLog);
+            spdlog::error("[OpenGL] Shader linking error for \"{}\": {}", programTypeToString(type), infoLog);
             exit(1);
         }
+    }
+
+    GLuint Shader::createCompileShader(const char* source, const ProgramType type) {
+        GLuint shader = glCreateShader(programTypeToGLenum(type));
+        glShaderSource(shader, 1, &source, nullptr);
+        glCompileShader(shader);
+        compileErrors(shader, type);
+        return shader;
     }
 }

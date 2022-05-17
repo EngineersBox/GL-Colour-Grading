@@ -14,8 +14,14 @@
 #include <regex>
 
 namespace GLCG::Logger {
-    static const std::string DATETIME_LITERAL_FORMAT = "%Y-%m-%d_%H-%M-%S";
-    static const std::string LOG_FORMAT = "[{}{}%Y-%m-%d %H:%M:%S{}] [Thread: {}%t{}] [{}%n{}] [{}%^%-5l%${}] :: %v";
+    const std::string reset = "\033[m";
+    const std::string bold = "\033[1m";
+    const std::string blue = "\033[34m";
+    const std::string magenta = "\033[35m";
+    const std::string cyan = "\033[36m";
+
+    static constexpr char DATETIME_LITERAL_FORMAT[] = "%Y-%m-%d_%H-%M-%S";
+    static constexpr char LOG_FORMAT[] = "[{}{}%Y-%m-%d %H:%M:%S{}] [Thread: {}%t{}] [{}%n{}] [{}%^%-5l%${}] :: %v";
 
     static std::string getCurrentTime(const std::string& date_format) {
         std::time_t rawtime;
@@ -43,15 +49,15 @@ namespace GLCG::Logger {
             stdoutSink->set_level(consoleLevel);
             stdoutSink->set_pattern(fmt::format(
                 LOG_FORMAT,
-                stdoutSink->magenta,
-                stdoutSink->bold,
-                stdoutSink->reset,
-                stdoutSink->blue,
-                stdoutSink->reset,
-                stdoutSink->cyan,
-                stdoutSink->reset,
-                stdoutSink->bold,
-                stdoutSink->reset
+                magenta,
+                bold,
+                reset,
+                blue,
+                reset,
+                cyan,
+                reset,
+                bold,
+                reset
             ));
             sinks.push_back(stdoutSink);
 
