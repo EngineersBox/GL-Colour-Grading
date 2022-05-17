@@ -13,7 +13,7 @@
 #include <iostream>
 #include <regex>
 
-namespace GLColorGrading::Logger {
+namespace GLCG::Logger {
     static const std::string DATETIME_LITERAL_FORMAT = "%Y-%m-%d_%H-%M-%S";
     static const std::string LOG_FORMAT = "[{}{}%Y-%m-%d %H:%M:%S{}] [Thread: {}%t{}] [{}%n{}] [{}%^%-5l%${}] :: %v";
 
@@ -64,7 +64,7 @@ namespace GLColorGrading::Logger {
             spdlog::set_default_logger(combinedLogger);
             combinedLogger->set_level(spdlog::level::trace);
 
-            spdlog::set_error_handler(GLColorGrading::Logger::generalErrorHandler);
+            spdlog::set_error_handler(GLCG::Logger::generalErrorHandler);
         } catch (const spdlog::spdlog_ex& ex) {
             std::cerr << "Logger init failed: " << ex.what() << std::endl;
             exit(1);
