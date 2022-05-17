@@ -2,6 +2,12 @@
 
 OpenGL based colour grading utility
 
+## Overview
+
+* Node based shaders
+* Pipelined shader passes
+* Pass intercept for intermediate tuning
+
 ## Tooling
 
 * White balance
