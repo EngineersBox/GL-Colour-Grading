@@ -5,18 +5,19 @@
 
 #include <glad/glad.h>
 #include "vbo.hpp"
+#include "gpuBuffer.hpp"
 
 namespace GLCG::GPU::Buffers {
-    class VAO {
+    class VAO: public GpuBuffer {
         public:
             GLuint id;
 
             VAO();
 
             void linkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset);
-            void bind();
-            void unbind();
-            void remove();
+            void bind() override;
+            void unbind() override;
+            void remove() override;
     };
 }
 
