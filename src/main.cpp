@@ -34,7 +34,7 @@ int main(int argc, const char* argv[]) {
     GLCG::Logger::init();
     glfwSetErrorCallback(reinterpret_cast<GLFWerrorfun>(GLCG::Logger::errorCallbackGLFW));
     glfwInit();
-    spdlog::info("Initialised GLFW");
+    spdlog::debug("Initialised GLFW");
 
 	// Use OpenGL 3.3
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -68,6 +68,7 @@ int main(int argc, const char* argv[]) {
         VERTEX_FILE_PATH,
         FRAGMENT_FILE_PATH
     );
+    spdlog::info("Compiled and linked shader");
 
     GLCG::GPU::Buffers::VAO VAO1 = GLCG::GPU::Buffers::VAO();
     VAO1.bind();
@@ -81,6 +82,7 @@ int main(int argc, const char* argv[]) {
     VAO1.unbind();
     VBO1.unbind();
     EBO1.unbind();
+    spdlog::info("Created and bound buffers for shader");
 
     GLuint uniformId = glGetUniformLocation(shader.id, "scale");
 
@@ -104,7 +106,7 @@ int main(int argc, const char* argv[]) {
     shader.remove();
 	glfwDestroyWindow(window);
 	glfwTerminate();
-    spdlog::info("Cleaned up GLFW/GLAD/OpenGL resources");
+    spdlog::debug("Cleaned up GLFW/GLAD/OpenGL resources");
 
 	return 0;
 }
