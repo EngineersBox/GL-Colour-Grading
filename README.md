@@ -30,3 +30,5 @@ OpenGL based colour grading utility
 <http://chilliant.blogspot.com.au/2012/08/srgb-approximations-for-hlsl.html>
 
 <https://gist.github.com/sugi-cho/6a01cae436acddd72bdf>
+
+<http://filmicworlds.com/blog/filmic-tonemapping-operators/>
