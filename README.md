@@ -2,6 +2,21 @@
 
 OpenGL based colour grading utility
 
+## Tooling
+
+* White balance
+* Saturation
+* Filmic curves and contrast
+* Lift/Gamma/Gain
+* LUT baking
+* Sharpening masks
+* Three-way correction
+* Fast correction
+* Curves
+* Matching
+* Qualifiers
+* Masks
+
 ## Reference Resources
 
 <http://filmicworlds.com/blog/minimal-color-grading-tools/>
