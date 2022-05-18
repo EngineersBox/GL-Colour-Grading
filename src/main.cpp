@@ -87,13 +87,15 @@ int main(int argc, const char* argv[]) {
 
     GLuint uniformId = glGetUniformLocation(shader.id, "scale");
 
+    const char* imagePath = "../assets/images/golden_gate.png";
     GLCG::Resources::Texture goldenGate = GLCG::Resources::Texture(
-        "../assets/images/golden_gate.png",
+        imagePath,
         GL_TEXTURE_2D,
         GL_TEXTURE0,
         GL_RGB,
         GL_UNSIGNED_BYTE
     );
+    spdlog::debug("Loaded image from: {}", imagePath);
     goldenGate.assignTextureUnit(shader, "tex0", 0);
 
     spdlog::debug("Starting event loop");
