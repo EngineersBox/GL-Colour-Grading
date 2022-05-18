@@ -98,7 +98,7 @@ int main(int argc, const char* argv[]) {
         GL_TEXTURE0
     );
     spdlog::debug("Loaded image from: {}", imagePath);
-    goldenGate.assignTextureUnit(coreShader, "tex0", 0);
+    GLCG::Resources::Texture::assignTextureUnit(coreShader, "tex0", 0);
 
     spdlog::debug("Starting event loop");
 	// Main event loop
