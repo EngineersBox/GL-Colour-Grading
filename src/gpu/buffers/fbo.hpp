@@ -12,6 +12,7 @@ namespace GLCG::GPU::Buffers {
     class FBO: public BindableResource {
         public:
             FBO(int width, int height);
+            virtual ~FBO() = default;
 
             void activate();
             void finalise();

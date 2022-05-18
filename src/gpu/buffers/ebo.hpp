@@ -12,6 +12,7 @@ namespace GLCG::GPU::Buffers {
             GLuint id;
 
             EBO(const GLuint* indices, GLsizeiptr size);
+            virtual ~EBO() = default;
 
             void bind() override;
             void unbind() override;

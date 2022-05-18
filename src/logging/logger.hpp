@@ -12,6 +12,11 @@
 #include <ctime>
 #include <iostream>
 #include <regex>
+#include <chrono>
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/date_time/posix_time/posix_time_io.hpp>
+#include <iostream>
+#include <sstream>
 
 namespace GLCG::Logger {
     const std::string reset = "\033[m";
@@ -20,20 +25,37 @@ namespace GLCG::Logger {
     const std::string magenta = "\033[35m";
     const std::string cyan = "\033[36m";
 
-    static constexpr char DATETIME_LITERAL_FORMAT[] = "%Y-%m-%d_%H-%M-%S";
-    static constexpr char LOG_FORMAT[] = "[{}{}%Y-%m-%d %H:%M:%S{}] [Thread: {}%t{}] [{}%n{}] [{}%^%-5l%${}] :: %v";
+    static constexpr const char* const DATETIME_LITERAL_FORMAT = "%Y-%m-%d_%H-%M-%S";
+    static constexpr const char* const LOG_FORMAT = "[{}{}%Y-%m-%d %H:%M:%S{}] [Thread: {}%t{}] [{}%n{}] [{}%^%-5l%${}] :: %v";
 
-    static std::string getCurrentTime(const std::string& date_format) {
-        std::time_t rawtime;
-        char date_buffer[80];
-        std::time(&rawtime);
-        struct tm* timeinfo = std::localtime(&rawtime);
-        std::strftime(date_buffer, sizeof(date_buffer), date_format.c_str(), timeinfo);
-        return {date_buffer};
+    std::string formatTime(const char *const formatString) {
+        std::stringstream ss;
+        static std::locale loc = std::locale(
+            ss.getloc(),
+            new boost::posix_time::time_facet(formatString)
+        );
+        ss.imbue(loc);
+        ss << boost::posix_time::microsec_clock::universal_time();
+        return ss.str();
+    }
+
+    static inline std::string encodeAnsiColours() {
+        return fmt::format(
+            LOG_FORMAT,
+            magenta,
+            bold,
+            reset,
+            blue,
+            reset,
+            cyan,
+            reset,
+            bold,
+            reset
+        );
     }
 
     static std::string getLogFileName() {
-        return "../logs/gl_colour_grading_" + getCurrentTime(DATETIME_LITERAL_FORMAT) + ".log";
+        return "../logs/gl_colour_grading_" + formatTime(DATETIME_LITERAL_FORMAT) + ".log";
     }
 
     static void generalErrorHandler(const std::string& msg) {
@@ -45,37 +67,26 @@ namespace GLCG::Logger {
         try {
             std::vector<spdlog::sink_ptr> sinks;
 
-            auto stdoutSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+            std::shared_ptr<spdlog::sinks::wincolor_stdout_sink<spdlog::details::console_mutex>> stdoutSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
             stdoutSink->set_level(consoleLevel);
-            stdoutSink->set_pattern(fmt::format(
-                LOG_FORMAT,
-                magenta,
-                bold,
-                reset,
-                blue,
-                reset,
-                cyan,
-                reset,
-                bold,
-                reset
-            ));
+            stdoutSink->set_pattern(encodeAnsiColours());
             sinks.push_back(stdoutSink);
 
-            auto basicFileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(getLogFileName());
+            std::shared_ptr<spdlog::sinks::basic_file_sink<std::mutex>> basicFileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(getLogFileName());
             basicFileSink->set_level(fileLevel);
             basicFileSink->set_pattern(std::regex_replace(LOG_FORMAT, std::regex("\\{\\}"), ""));
             sinks.push_back(basicFileSink);
 
-            std::shared_ptr<spdlog::logger> combinedLogger = std::make_shared<spdlog::logger>("GL Colour Grading", begin(sinks), end(sinks));
+            std::shared_ptr<spdlog::logger> combinedLogger = std::make_shared<spdlog::logger>("GLCG", begin(sinks), end(sinks));
             spdlog::set_default_logger(combinedLogger);
             combinedLogger->set_level(spdlog::level::trace);
 
             spdlog::set_error_handler(GLCG::Logger::generalErrorHandler);
         } catch (const spdlog::spdlog_ex& ex) {
-            std::cerr << "Logger init failed: " << ex.what() << std::endl;
+            spdlog::set_pattern(encodeAnsiColours());
+            spdlog::error("Custom logger init failed: {}", ex.what());
             exit(1);
         }
-//        spdlog::set_pattern(LOG_FORMAT);
     }
 
     static void init() {
