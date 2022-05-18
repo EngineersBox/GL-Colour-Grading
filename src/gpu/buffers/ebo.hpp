@@ -11,7 +11,7 @@ namespace GLCG::GPU::Buffers {
         public:
             GLuint id;
 
-            EBO(GLuint* indices, GLsizeiptr size);
+            EBO(const GLuint* indices, GLsizeiptr size);
 
             void bind() override;
             void unbind() override;

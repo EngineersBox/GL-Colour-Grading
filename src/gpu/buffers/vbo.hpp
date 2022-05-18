@@ -11,7 +11,7 @@ namespace GLCG::GPU::Buffers {
         public:
             GLuint id;
 
-            VBO(GLfloat* vertices, GLsizeiptr size);
+            VBO(const GLfloat* vertices, GLsizeiptr size);
 
             void bind() override;
             void unbind() override;
