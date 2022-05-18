@@ -15,7 +15,7 @@ namespace GLCG::Resources {
             GLenum type;
             Texture(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType);
 
-            void assignTextureUnit(GPU::Shaders::Shader& shader, const char* uniform, GLuint unit);
+            static void assignTextureUnit(GPU::Shaders::Shader& shader, const char* uniform, GLuint unit);
             void bind() override;
             void unbind() override;
             void destroy() override;

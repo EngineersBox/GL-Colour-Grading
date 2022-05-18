@@ -114,7 +114,7 @@ int main(int argc, const char* argv[]) {
         glUniform1f(uniformId, 0.5f);
         goldenGate.bind();
         VAO1.bind();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         fbo.finalise();
         glfwSwapBuffers(window);

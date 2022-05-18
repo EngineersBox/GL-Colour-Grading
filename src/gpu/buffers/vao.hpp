@@ -15,7 +15,7 @@ namespace GLCG::GPU::Buffers {
             VAO();
             virtual ~VAO() = default;
 
-            void linkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset);
+            static void linkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset);
             void bind() override;
             void unbind() override;
             void destroy() override;

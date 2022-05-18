@@ -26,8 +26,8 @@ namespace GLCG::GPU::Buffers {
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
 
         // Create frame buffer object
-        glGenFramebuffers(1, &_FBO);
-        glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
+        glGenFramebuffers(1, &fbo);
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
         // Create frame buffer Texture
         glGenTextures(1, &framebufferTexture);
@@ -40,10 +40,10 @@ namespace GLCG::GPU::Buffers {
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, framebufferTexture, 0);
 
         // Create render buffer object
-        glGenRenderbuffers(1, &_RBO);
-        glBindRenderbuffer(GL_RENDERBUFFER, _RBO);
+        glGenRenderbuffers(1, &rbo);
+        glBindRenderbuffer(GL_RENDERBUFFER, rbo);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _RBO);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
 
         if (GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER); fboStatus != GL_FRAMEBUFFER_COMPLETE) {
             spdlog::error("Error during framebuffer intialisation: {}", fboStatus);
@@ -55,7 +55,7 @@ namespace GLCG::GPU::Buffers {
     }
 
     void FBO::bind() {
-        glBindFramebuffer(GL_FRAMEBUFFER, this->_FBO);
+        glBindFramebuffer(GL_FRAMEBUFFER, this->fbo);
     }
 
     void FBO::finalise() {
@@ -68,7 +68,7 @@ namespace GLCG::GPU::Buffers {
     }
 
     void FBO::destroy() {
-        glDeleteFramebuffers(1, &this->_FBO);
+        glDeleteFramebuffers(1, &this->fbo);
         this->shader.destroy();
     }
 }

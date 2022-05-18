@@ -25,9 +25,9 @@ namespace GLCG::GPU::Buffers {
             GLCG::GPU::Shaders::Shader shader;
             unsigned int rectVAO;
             unsigned int rectVBO;
-            unsigned int _FBO;
+            unsigned int fbo;
             unsigned int framebufferTexture;
-            unsigned int _RBO;
+            unsigned int rbo;
             static constexpr std::array<float, 24> rectangleVertices = {
                 1.0f, -1.0f,  1.0f, 0.0f,
                 -1.0f, -1.0f,  0.0f, 0.0f,
