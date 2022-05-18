@@ -15,7 +15,7 @@ namespace GLCG::GPU::Shaders {
             Shader(const char* vertexFile, const char* fragmentFile);
 
             void activate() const;
-            void remove() const;
+            void destroy() const;
 
         private:
             static GLuint createCompiledShader(const char* source, const ProgramType type);

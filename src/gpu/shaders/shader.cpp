@@ -8,11 +8,8 @@ namespace GLCG::GPU::Shaders {
         std::string vertexCode = Reader::readFileIntoString(vertexFile);
         std::string fragmentCode = Reader::readFileIntoString(fragmentFile);
 
-        const char* vertexSource = vertexCode.c_str();
-        const char* fragmentSource = fragmentCode.c_str();
-
-        GLuint vertexShader = createCompiledShader(vertexSource, ProgramType::VERTEX);
-        GLuint fragmentShader = createCompiledShader(fragmentSource, ProgramType::FRAGMENT);
+        GLuint vertexShader = createCompiledShader(vertexCode.c_str(), ProgramType::VERTEX);
+        GLuint fragmentShader = createCompiledShader(fragmentCode.c_str(), ProgramType::FRAGMENT);
 
         this->id = glCreateProgram();
         glAttachShader(this->id, vertexShader);
@@ -28,7 +25,7 @@ namespace GLCG::GPU::Shaders {
         glUseProgram(this->id);
     }
 
-    void Shader::remove() const {
+    void Shader::destroy() const {
         glDeleteProgram(this->id);
     }
 

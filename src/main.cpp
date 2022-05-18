@@ -7,13 +7,11 @@
 #include "gpu/buffers/vao.hpp"
 #include "gpu/buffers/vbo.hpp"
 #include "gpu/buffers/ebo.hpp"
+#include "gpu/buffers/fbo.hpp"
 #include "resources/texture.hpp"
 
 static constexpr int WINDOW_WIDTH = 1920;
 static constexpr int WINDOW_HEIGHT = 1080;
-
-static constexpr char VERTEX_FILE_PATH[] = "../assets/shaders/triangle.vsh";
-static constexpr char FRAGMENT_FILE_PATH[] = "../assets/shaders/triangle.fsh";
 
 // Vertices coordinates
 GLfloat vertices[] = {
@@ -28,6 +26,17 @@ GLfloat vertices[] = {
 GLuint indices[] = {
     0, 2, 1, // Upper triangle
     0, 3, 2 // Lower triangle
+};
+
+float rectangleVertices[] = {
+    // Coords    // texCoords
+    1.0f, -1.0f,  1.0f, 0.0f,
+    -1.0f, -1.0f,  0.0f, 0.0f,
+    -1.0f,  1.0f,  0.0f, 1.0f,
+
+    1.0f,  1.0f,  1.0f, 1.0f,
+    1.0f, -1.0f,  1.0f, 0.0f,
+    -1.0f,  1.0f,  0.0f, 1.0f
 };
 
 int main(int argc, const char* argv[]) {
@@ -64,11 +73,17 @@ int main(int argc, const char* argv[]) {
     spdlog::trace("OpenGL Version: {}", glGetString(GL_VERSION));
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    GLCG::GPU::Shaders::Shader shader = GLCG::GPU::Shaders::Shader(
-        VERTEX_FILE_PATH,
-        FRAGMENT_FILE_PATH
+    GLCG::GPU::Buffers::FBO fbo = GLCG::GPU::Buffers::FBO(
+        WINDOW_WIDTH,
+        WINDOW_HEIGHT
     );
-    spdlog::info("Compiled and linked shader");
+    GLCG::GPU::Shaders::Shader coreShader = GLCG::GPU::Shaders::Shader(
+        "../assets/shaders/core.vsh",
+        "../assets/shaders/core.fsh"
+    );
+    spdlog::info("Compiled and linked core core");
+
+    coreShader.activate();
 
     GLCG::GPU::Buffers::VAO VAO1 = GLCG::GPU::Buffers::VAO();
     VAO1.bind();
@@ -83,9 +98,9 @@ int main(int argc, const char* argv[]) {
     VAO1.unbind();
     VBO1.unbind();
     EBO1.unbind();
-    spdlog::info("Created and bound buffers for shader");
+    spdlog::info("Created and bound buffers for coreShader");
 
-    GLuint uniformId = glGetUniformLocation(shader.id, "scale");
+    GLuint uniformId = glGetUniformLocation(coreShader.id, "scale");
 
     const char* imagePath = "../assets/images/golden_gate.png";
     GLCG::Resources::Texture goldenGate = GLCG::Resources::Texture(
@@ -96,18 +111,23 @@ int main(int argc, const char* argv[]) {
         GL_UNSIGNED_BYTE
     );
     spdlog::debug("Loaded image from: {}", imagePath);
-    goldenGate.assignTextureUnit(shader, "tex0", 0);
+    goldenGate.assignTextureUnit(coreShader, "tex0", 0);
 
     spdlog::debug("Starting event loop");
 	// Main event loop
 	while (!glfwWindowShouldClose(window)) {
+        fbo.bind();
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-        shader.activate();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glEnable(GL_DEPTH_TEST);
+
+        coreShader.activate();
         glUniform1f(uniformId, 0.5f);
         goldenGate.bind();
         VAO1.bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+        fbo.finalise();
         glfwSwapBuffers(window);
         glfwPollEvents();
 	}
@@ -117,7 +137,8 @@ int main(int argc, const char* argv[]) {
     VBO1.destroy();
     EBO1.destroy();
     goldenGate.destroy();
-    shader.remove();
+    coreShader.destroy();
+    fbo.destroy();
 	glfwDestroyWindow(window);
 	glfwTerminate();
     spdlog::debug("Cleaned up GLFW/GLAD/OpenGL resources");
