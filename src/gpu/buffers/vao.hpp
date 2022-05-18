@@ -5,10 +5,10 @@
 
 #include <glad/glad.h>
 #include "vbo.hpp"
-#include "gpuBuffer.hpp"
+#include "bindableResource.hpp"
 
 namespace GLCG::GPU::Buffers {
-    class VAO: public GpuBuffer {
+    class VAO: public BindableResource {
         public:
             GLuint id;
 

@@ -4,10 +4,10 @@
 #define GL_COLOUR_GRADING_EBO_HPP
 
 #include <glad/glad.h>
-#include "gpuBuffer.hpp"
+#include "bindableResource.hpp"
 
 namespace GLCG::GPU::Buffers {
-    class EBO: public GpuBuffer {
+    class EBO: public BindableResource {
         public:
             GLuint id;
 

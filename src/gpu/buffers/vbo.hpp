@@ -4,10 +4,10 @@
 #define GL_COLOUR_GRADING_VBO_HPP
 
 #include <glad/glad.h>
-#include "gpuBuffer.hpp"
+#include "bindableResource.hpp"
 
 namespace GLCG::GPU::Buffers {
-    class VBO: public GpuBuffer {
+    class VBO: public BindableResource {
         public:
             GLuint id;
 

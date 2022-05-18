@@ -7,6 +7,7 @@
 #include "gpu/buffers/vao.hpp"
 #include "gpu/buffers/vbo.hpp"
 #include "gpu/buffers/ebo.hpp"
+#include "resources/texture.hpp"
 
 static constexpr int WINDOW_WIDTH = 1920;
 static constexpr int WINDOW_HEIGHT = 1080;
@@ -14,20 +15,19 @@ static constexpr int WINDOW_HEIGHT = 1080;
 static constexpr char VERTEX_FILE_PATH[] = "../assets/shaders/triangle.vsh";
 static constexpr char FRAGMENT_FILE_PATH[] = "../assets/shaders/triangle.fsh";
 
+// Vertices coordinates
 GLfloat vertices[] = {
-    -0.5f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.8f, 0.3f,  0.02f, // Lower left corner
-    0.5f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.8f, 0.3f,  0.02f, // Lower right corner
-    0.0f,  0.5f * float(sqrt(3)) * 2 / 3, 0.0f,     1.0f, 0.6f,  0.32f, // Upper corner
-    -0.25f, 0.5f * float(sqrt(3)) * 1 / 6, 0.0f,     0.9f, 0.45f, 0.17f, // Inner left
-    0.25f, 0.5f * float(sqrt(3)) * 1 / 6, 0.0f,     0.9f, 0.45f, 0.17f, // Inner right
-    0.0f, -0.5f * float(sqrt(3)) * 1 / 3, 0.0f,     0.8f, 0.3f,  0.02f  // Inner down
+        //     COORDINATES     /        COLORS      /   TexCoord  //
+    -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
+    -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,	0.0f, 1.0f, // Upper left corner
+    0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,	1.0f, 1.0f, // Upper right corner
+    0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,	1.0f, 0.0f  // Lower right corner
 };
 
 // Indices for vertices order
 GLuint indices[] = {
-    0, 3, 5, // Lower left triangle
-    3, 2, 4, // Lower right triangle
-    5, 4, 1 // Upper triangle
+    0, 2, 1, // Upper triangle
+    0, 3, 2 // Lower triangle
 };
 
 int main(int argc, const char* argv[]) {
@@ -76,8 +76,9 @@ int main(int argc, const char* argv[]) {
     GLCG::GPU::Buffers::VBO VBO1 = GLCG::GPU::Buffers::VBO(vertices, sizeof(vertices));
     GLCG::GPU::Buffers::EBO EBO1 = GLCG::GPU::Buffers::EBO(indices, sizeof(indices));
 
-    VAO1.linkAttrib(VBO1, 0, 3, GL_FLOAT, 6 * sizeof(float), nullptr);
-    VAO1.linkAttrib(VBO1, 1, 3, GL_FLOAT, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    VAO1.linkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), nullptr);
+    VAO1.linkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    VAO1.linkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
     VAO1.unbind();
     VBO1.unbind();
@@ -86,6 +87,15 @@ int main(int argc, const char* argv[]) {
 
     GLuint uniformId = glGetUniformLocation(shader.id, "scale");
 
+    GLCG::Resources::Texture goldenGate = GLCG::Resources::Texture(
+        "../assets/images/golden_gate.png",
+        GL_TEXTURE_2D,
+        GL_TEXTURE0,
+        GL_RGB,
+        GL_UNSIGNED_BYTE
+    );
+    goldenGate.assignTextureUnit(shader, "tex0", 0);
+
     spdlog::debug("Starting event loop");
 	// Main event loop
 	while (!glfwWindowShouldClose(window)) {
@@ -93,8 +103,9 @@ int main(int argc, const char* argv[]) {
         glClear(GL_COLOR_BUFFER_BIT);
         shader.activate();
         glUniform1f(uniformId, 0.5f);
+        goldenGate.bind();
         VAO1.bind();
-        glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
         glfwSwapBuffers(window);
         glfwPollEvents();
 	}
@@ -103,6 +114,7 @@ int main(int argc, const char* argv[]) {
     VAO1.destroy();
     VBO1.destroy();
     EBO1.destroy();
+    goldenGate.destroy();
     shader.remove();
 	glfwDestroyWindow(window);
 	glfwTerminate();
