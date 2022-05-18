@@ -94,10 +94,8 @@ int main(int argc, const char* argv[]) {
     const char* imagePath = "../assets/images/golden_gate.png";
     GLCG::Resources::Texture goldenGate = GLCG::Resources::Texture(
         imagePath,
-        GL_TEXTURE_2D,
-        GL_TEXTURE0,
-        GL_RGB,
-        GL_UNSIGNED_BYTE
+        "diffuse",
+        GL_TEXTURE0
     );
     spdlog::debug("Loaded image from: {}", imagePath);
     goldenGate.assignTextureUnit(coreShader, "tex0", 0);

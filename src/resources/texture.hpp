@@ -12,13 +12,31 @@ namespace GLCG::Resources {
     class Texture: public GPU::BindableResource {
         public:
             GLuint id;
-            GLenum type;
-            Texture(const char* image, GLenum texType, GLenum slot, GLenum format, GLenum pixelType);
+            const char* type;
+            GLuint unit;
+
+            Texture(const char* image, const char* texType, GLuint slot);
 
             static void assignTextureUnit(GPU::Shaders::Shader& shader, const char* uniform, GLuint unit);
             void bind() override;
             void unbind() override;
             void destroy() override;
+
+            [[nodiscard]] constexpr int getWidth() const noexcept {
+                return this->width;
+            }
+            [[nodiscard]] constexpr int getHeight() const noexcept {
+                return this->height;
+            }
+            [[nodiscard]] constexpr int getChannels() const noexcept {
+                return this->channels;
+            }
+        private:
+            int width = 0;
+            int height = 0;
+            int channels = 0;
+
+            inline void generateTexImage(uint8_t const* bytes) const;
     };
 }
 
