@@ -3,6 +3,8 @@
 #ifndef GL_COLOUR_GRADING_FBO_HPP
 #define GL_COLOUR_GRADING_FBO_HPP
 
+#include <array>
+
 #include "../shaders/shader.hpp"
 #include "../bindableResource.hpp"
 
@@ -25,12 +27,10 @@ namespace GLCG::GPU::Buffers {
             unsigned int _FBO;
             unsigned int framebufferTexture;
             unsigned int _RBO;
-            static constexpr float rectangleVertices[] = {
-                // Coords    // texCoords
+            static constexpr std::array<float, 24> rectangleVertices = {
                 1.0f, -1.0f,  1.0f, 0.0f,
                 -1.0f, -1.0f,  0.0f, 0.0f,
                 -1.0f,  1.0f,  0.0f, 1.0f,
-
                 1.0f,  1.0f,  1.0f, 1.0f,
                 1.0f, -1.0f,  1.0f, 0.0f,
                 -1.0f,  1.0f,  0.0f, 1.0f

@@ -19,7 +19,7 @@ namespace GLCG::GPU::Buffers {
         glGenBuffers(1, &rectVBO);
         glBindVertexArray(rectVAO);
         glBindBuffer(GL_ARRAY_BUFFER, rectVBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(rectangleVertices), &rectangleVertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(FBO::rectangleVertices), &FBO::rectangleVertices, GL_STATIC_DRAW);
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
         glEnableVertexAttribArray(1);
