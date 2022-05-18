@@ -14,7 +14,9 @@ namespace GLCG::GPU::Buffers {
             void activate();
             void finalise();
             void bind() override;
-            void unbind() override {};
+            void unbind() override {
+                throw std::exception("Cannot unbind FBO");
+            };
             void destroy() override;
         private:
             GLCG::GPU::Shaders::Shader shader;
