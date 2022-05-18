@@ -47,10 +47,11 @@ namespace GLCG::GPU::Buffers {
 
         if (GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER); fboStatus != GL_FRAMEBUFFER_COMPLETE) {
             spdlog::error("Error during framebuffer intialisation: {}", fboStatus);
+            exit(1);
         }
     }
 
-    void FBO::activate() {
+    void FBO::activate() const {
         this->shader.activate();
     }
 
@@ -58,7 +59,7 @@ namespace GLCG::GPU::Buffers {
         glBindFramebuffer(GL_FRAMEBUFFER, this->fbo);
     }
 
-    void FBO::finalise() {
+    void FBO::finalise() const {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         this->shader.activate();
         glBindVertexArray(rectVAO);
