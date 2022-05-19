@@ -9,12 +9,23 @@ namespace GLCG::GPU::Buffers {
             "../assets/shaders/framebuffer.fsh"
         ) {
         spdlog::info("Compiled and linked core framebuffer");
-        activate();
+        this->activate();
         glUniform1i(glGetUniformLocation(this->shader.id, "screenTexture"), 0);
 
         glEnable(GL_DEPTH_TEST);
 
-        // Prepare frame buffer rectangle VBO and VAO
+        this->prepareRectangeVBOVAO();
+        this->createFBO();
+        this->createFBOTexture(width, height);
+        this->createRBO(width, height);
+
+        if (GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER); fboStatus != GL_FRAMEBUFFER_COMPLETE) {
+            spdlog::error("Error during framebuffer intialisation: {}", fboStatus);
+            exit(1);
+        }
+    }
+
+    void FBO::prepareRectangeVBOVAO() {
         glGenVertexArrays(1, &rectVAO);
         glGenBuffers(1, &rectVBO);
         glBindVertexArray(rectVAO);
@@ -24,12 +35,14 @@ namespace GLCG::GPU::Buffers {
         glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), nullptr);
         glEnableVertexAttribArray(1);
         glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void*)(2 * sizeof(float)));
+    }
 
-        // Create frame buffer object
+    void FBO::createFBO() {
         glGenFramebuffers(1, &fbo);
         glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+    }
 
-        // Create frame buffer Texture
+    void FBO::createFBOTexture(const int width, const int height) {
         glGenTextures(1, &framebufferTexture);
         glBindTexture(GL_TEXTURE_2D, framebufferTexture);
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, nullptr);
@@ -38,17 +51,13 @@ namespace GLCG::GPU::Buffers {
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE); // Prevents edge bleeding
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE); // Prevents edge bleeding
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, framebufferTexture, 0);
+    }
 
-        // Create render buffer object
+    void FBO::createRBO(const int width, const int height) {
         glGenRenderbuffers(1, &rbo);
         glBindRenderbuffer(GL_RENDERBUFFER, rbo);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, rbo);
-
-        if (GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER); fboStatus != GL_FRAMEBUFFER_COMPLETE) {
-            spdlog::error("Error during framebuffer intialisation: {}", fboStatus);
-            exit(1);
-        }
     }
 
     void FBO::activate() const {
