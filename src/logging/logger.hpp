@@ -28,16 +28,7 @@ namespace GLCG::Logger {
     static constexpr const char* const DATETIME_LITERAL_FORMAT = "%Y-%m-%d_%H-%M-%S";
     static constexpr const char* const LOG_FORMAT = "[{}{}%Y-%m-%d %H:%M:%S{}] [Thread: {}%t{}] [{}%n{}] [{}%^%-5l%${}] :: %v";
 
-    std::string formatTime(const char *const formatString) {
-        std::stringstream ss;
-        static std::locale loc = std::locale(
-            ss.getloc(),
-            new boost::posix_time::time_facet(formatString)
-        );
-        ss.imbue(loc);
-        ss << boost::posix_time::microsec_clock::universal_time();
-        return ss.str();
-    }
+    std::string formatTime(const char *formatString);
 
     static inline std::string encodeAnsiColours() {
         return fmt::format(

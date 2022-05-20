@@ -1,5 +1,4 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+#include "core/grader.hpp"
 #include <spdlog/spdlog.h>
 
 #include "logging/logger.hpp"
@@ -30,41 +29,12 @@ static constexpr GLuint indices[] = {
 
 int main(int argc, const char* argv[]) {
     GLCG::Logger::init();
-    glfwSetErrorCallback(reinterpret_cast<GLFWerrorfun>(GLCG::Logger::errorCallbackGLFW));
-    glfwInit();
-    spdlog::debug("Initialised GLFW");
-
-	// Use OpenGL 3.3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	// Using core profile for only modern APIs
-#ifdef __APPLE__
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-	GLFWwindow* window = glfwCreateWindow(
-		WINDOW_WIDTH,
-		WINDOW_HEIGHT,
-		"GL Rendering",
-		nullptr,
-		nullptr
-	);
-	if (window == nullptr) {
-        spdlog::error("Failed to create GLFW window");
-		glfwTerminate();
-		return 1;
-	}
-	// Contextualise the current window to draw to
-	glfwMakeContextCurrent(window);
-
-	gladLoadGL();
-    spdlog::trace("OpenGL Version: {}", glGetString(GL_VERSION));
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    GLCG::Grader grader = GLCG::Grader();
+    grader.init();
 
     GLCG::GPU::Buffers::FBO fbo = GLCG::GPU::Buffers::FBO(
-        WINDOW_WIDTH,
-        WINDOW_HEIGHT
+        grader.getWidth(),
+        grader.getHeight()
     );
     GLCG::GPU::Shaders::Shader coreShader = GLCG::GPU::Shaders::Shader(
         "../assets/shaders/core.vsh",
@@ -102,7 +72,7 @@ int main(int argc, const char* argv[]) {
 
     spdlog::debug("Starting event loop");
 	// Main event loop
-	while (!glfwWindowShouldClose(window)) {
+	while (!glfwWindowShouldClose(grader.getWindow())) {
         fbo.bind();
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -115,7 +85,7 @@ int main(int argc, const char* argv[]) {
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         fbo.finalise();
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(grader.getWindow());
         glfwPollEvents();
 	}
 
@@ -126,8 +96,7 @@ int main(int argc, const char* argv[]) {
     goldenGate.destroy();
     coreShader.destroy();
     fbo.destroy();
-	glfwDestroyWindow(window);
-	glfwTerminate();
+    grader.destroy();
     spdlog::debug("Cleaned up GLFW/GLAD/OpenGL resources");
 
 	return 0;
