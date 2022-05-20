@@ -1,6 +1,6 @@
-#include "core/grader.hpp"
 #include <spdlog/spdlog.h>
 
+#include "core/grader.hpp"
 #include "logging/logger.hpp"
 #include "gpu/shaders/shader.hpp"
 #include "gpu/buffers/vao.hpp"
@@ -25,7 +25,7 @@ static constexpr GLuint indices[] = {
 
 int main(int argc, const char* argv[]) {
     GLCG::Logger::init();
-    GLCG::Grader grader = GLCG::Grader("../assets/config/grader.cfg");
+    GLCG::Core::Grader grader = GLCG::Core::Grader("../assets/config/grader.cfg");
     grader.init();
 
     GLCG::GPU::Buffers::FBO fbo = GLCG::GPU::Buffers::FBO(

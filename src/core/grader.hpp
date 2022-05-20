@@ -9,7 +9,9 @@
 #include <GLFW/glfw3.h>
 #include <libconfig.h++>
 
-namespace GLCG {
+#include "config.hpp"
+
+namespace GLCG::Core {
     class Grader {
         public:
             explicit Grader(const char* filePath);
@@ -21,25 +23,14 @@ namespace GLCG {
                 return this->window;
             }
             [[nodiscard]] constexpr int getWidth() const {
-                return this->width;
+                return this->config.window.width;
             }
             [[nodiscard]] constexpr int getHeight() const {
-                return this->height;
-            }
-            [[nodiscard]] constexpr int getOpenGlMajorVersion() const {
-                return this->openGlMajorVersion;
-            }
-            [[nodiscard]] constexpr int getOpenGlMinorVersion() const {
-                return this->openGlMinorVersion;
+                return this->config.window.height;
             }
         private:
-            libconfig::Config config;
             GLFWwindow* window = nullptr;
-            int width = 0;
-            int height = 0;
-            int openGlMajorVersion = 0;
-            int openGlMinorVersion = 0;
-            std::string windowTitle;
+            Config config;
 
             void initGLContext();
             void destroyGLContext();
