@@ -9,22 +9,18 @@
 #include "gpu/buffers/fbo.hpp"
 #include "resources/texture.hpp"
 
-static constexpr int WINDOW_WIDTH = 1920;
-static constexpr int WINDOW_HEIGHT = 1080;
-
 // Vertices coordinates
 static constexpr GLfloat vertices[] = {
-    //     COORDINATES              /        COLORS                /   TexCoord  //
-    -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Lower left corner
-    -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, // Upper left corner
-    0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, // Upper right corner
-    0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f  // Lower right corner
+    -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+    -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+    0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+    0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f
 };
 
 // Indices for vertices order
 static constexpr GLuint indices[] = {
-    0, 2, 1, // Upper triangle
-    0, 3, 2 // Lower triangle
+    0, 2, 1,
+    0, 3, 2
 };
 
 int main(int argc, const char* argv[]) {
