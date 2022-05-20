@@ -25,7 +25,7 @@ static constexpr GLuint indices[] = {
 
 int main(int argc, const char* argv[]) {
     GLCG::Logger::init();
-    GLCG::Grader grader = GLCG::Grader();
+    GLCG::Grader grader = GLCG::Grader("../assets/config/grader.cfg");
     grader.init();
 
     GLCG::GPU::Buffers::FBO fbo = GLCG::GPU::Buffers::FBO(
@@ -62,10 +62,10 @@ int main(int argc, const char* argv[]) {
         "diffuse",
         GL_TEXTURE0
     );
-    spdlog::debug("Loaded image from: {}", imagePath);
+    spdlog::info("Loaded image from: {}", imagePath);
     GLCG::Resources::Texture::assignTextureUnit(coreShader, "tex0", 0);
 
-    spdlog::debug("Starting event loop");
+    spdlog::info("Starting event loop");
     // Main event loop
     while (!glfwWindowShouldClose(grader.getWindow())) {
         fbo.bind();

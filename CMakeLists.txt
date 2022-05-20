@@ -60,3 +60,7 @@ target_link_libraries(GL_Colour_Grading PRIVATE Boost::filesystem Boost::iostrea
 find_path(STB_INCLUDE_DIRS "stb.h")
 target_include_directories(GL_Colour_Grading PRIVATE ${STB_INCLUDE_DIRS})
 
+# libconfig
+find_library(LIBCONFIGPP_LOCATION libconfig++)
+find_library(LIBCONFIG_LOCATION libconfig)
+target_link_libraries(GL_Colour_Grading PRIVATE ${LIBCONFIGPP_LOCATION} ${LIBCONFIG_LOCATION})
