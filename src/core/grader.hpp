@@ -19,7 +19,7 @@ namespace GLCG::Core {
             void init();
             void destroy();
 
-            [[nodiscard]] GLFWwindow* getWindow() const {
+            [[nodiscard]] constexpr GLFWwindow* getWindow() const {
                 return this->window;
             }
             [[nodiscard]] constexpr int getWidth() const {
