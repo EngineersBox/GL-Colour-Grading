@@ -41,7 +41,6 @@ int main(int argc, const char* argv[]) {
         "../assets/shaders/core.fsh"
     );
     spdlog::info("Compiled and linked core core");
-
     coreShader.activate();
 
     GLCG::GPU::Buffers::VAO VAO1 = GLCG::GPU::Buffers::VAO();
@@ -71,8 +70,8 @@ int main(int argc, const char* argv[]) {
     GLCG::Resources::Texture::assignTextureUnit(coreShader, "tex0", 0);
 
     spdlog::debug("Starting event loop");
-	// Main event loop
-	while (!glfwWindowShouldClose(grader.getWindow())) {
+    // Main event loop
+    while (!glfwWindowShouldClose(grader.getWindow())) {
         fbo.bind();
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -87,17 +86,17 @@ int main(int argc, const char* argv[]) {
         fbo.finalise();
         glfwSwapBuffers(grader.getWindow());
         glfwPollEvents();
-	}
+    }
 
-	// Clean up OpenGL resources
+    // Clean up OpenGL resources
     VAO1.destroy();
     VBO1.destroy();
     EBO1.destroy();
     goldenGate.destroy();
     coreShader.destroy();
     fbo.destroy();
-    grader.destroy();
-    spdlog::debug("Cleaned up GLFW/GLAD/OpenGL resources");
 
-	return 0;
+    grader.destroy();
+
+    return 0;
 }
