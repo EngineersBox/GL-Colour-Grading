@@ -17,21 +17,21 @@ namespace GLCG {
             void init();
             void destroy();
 
-        [[nodiscard]] GLFWwindow* getWindow() const {
-            return this->window;
-        }
-        [[nodiscard]] constexpr int getWidth() const {
-            return this->width;
-        }
-        [[nodiscard]] constexpr int getHeight() const {
-            return this->height;
-        }
-        [[nodiscard]] constexpr int getOpenGlMajorVersion() const {
-            return this->openGlMajorVersion;
-        }
-        [[nodiscard]] constexpr int getOpenGlMinorVersion() const {
-            return this->openGlMinorVersion;
-        }
+            [[nodiscard]] GLFWwindow* getWindow() const {
+                return this->window;
+            }
+            [[nodiscard]] constexpr int getWidth() const {
+                return this->width;
+            }
+            [[nodiscard]] constexpr int getHeight() const {
+                return this->height;
+            }
+            [[nodiscard]] constexpr int getOpenGlMajorVersion() const {
+                return this->openGlMajorVersion;
+            }
+            [[nodiscard]] constexpr int getOpenGlMinorVersion() const {
+                return this->openGlMinorVersion;
+            }
         private:
             libconfig::Config config;
             GLFWwindow* window = nullptr;
