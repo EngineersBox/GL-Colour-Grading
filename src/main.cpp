@@ -30,7 +30,7 @@ int main(int argc, const char* argv[]) {
     grader.init();
 
     GLCG::GPU::WorkGroup wg = GLCG::GPU::WorkGroup();
-    spdlog::trace(wg.summary());
+    spdlog::trace("Work group summary: {}", wg.summary());
 
     GLCG::GPU::Buffers::FBO fbo = GLCG::GPU::Buffers::FBO(
         grader.getWidth(),
