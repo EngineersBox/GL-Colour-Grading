@@ -9,9 +9,10 @@ namespace GLCG::GPU {
     using WorkGroup = struct WorkGroup {
         WorkGroup();
 
-        glm::ivec3 count;
-        glm::ivec3 size;
+        glm::ivec3 count = glm::ivec3(0,0,0);
+        glm::ivec3 size = glm::ivec3(0,0,0);
         int invocations = 0;
+        int sharedMemorySizeBytes = 0;
     };
 }
 

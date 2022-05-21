@@ -33,6 +33,7 @@ int main(int argc, const char* argv[]) {
     spdlog::trace("Count: X={}, Y={}, Z={}", wg.count.x, wg.count.y, wg.count.z);
     spdlog::trace("Size: X={}. Y={}. Z={}", wg.size.x, wg.size.y, wg.size.z);
     spdlog::trace("Invocations: {}", wg.invocations);
+    spdlog::trace("Shared memory: {}B", wg.sharedMemorySizeBytes);
 
     GLCG::GPU::Buffers::FBO fbo = GLCG::GPU::Buffers::FBO(
         grader.getWidth(),
