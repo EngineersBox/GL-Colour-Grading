@@ -8,7 +8,7 @@ namespace GLCG::GPU::Buffers {
             "../assets/shaders/framebuffer.vsh",
             "../assets/shaders/framebuffer.fsh"
         ) {
-        spdlog::info("Compiled and linked core framebuffer");
+        spdlog::info("Compiled and linked framebuffer shader");
         this->activate();
         glUniform1i(glGetUniformLocation(this->shader.id, "screenTexture"), 0);
 

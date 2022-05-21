@@ -59,7 +59,7 @@ int main(int argc, const char* argv[]) {
     VAO1.unbind();
     VBO1.unbind();
     EBO1.unbind();
-    spdlog::info("Created and bound buffers for coreShader");
+    spdlog::info("Created and bound buffers for core shader");
 
     GLint scaleUniformId = glGetUniformLocation(coreShader.id, "scale");
 
