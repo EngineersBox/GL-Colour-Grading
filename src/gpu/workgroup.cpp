@@ -1,6 +1,7 @@
 #include "workgroup.hpp"
 
 #include <glad/glad.h>
+#include "../util/stringUtils.hpp"
 
 namespace GLCG::GPU {
     WorkGroup::WorkGroup() {
@@ -24,5 +25,19 @@ namespace GLCG::GPU {
         glGetIntegerv(GL_MAX_COMPUTE_WORK_GROUP_INVOCATIONS, &this->invocations);
 
         glGetIntegerv(GL_MAX_COMPUTE_SHARED_MEMORY_SIZE, &this->sharedMemorySizeBytes);
+    }
+
+    std::string WorkGroup::summary() {
+        return GLCG::Utils::String::format(
+            "Count: {X=%d Y=%d Z=%d} Size: {X=%d Y=%d Z=%d} Invocations: %d Shared Memory: %d",
+            this->count.x,
+            this->count.y,
+            this->count.z,
+            this->size.x,
+            this->size.y,
+            this->size.z,
+            this->invocations,
+            this->sharedMemorySizeBytes
+        );
     }
 }

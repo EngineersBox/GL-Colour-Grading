@@ -4,10 +4,13 @@
 #define GL_COLOUR_GRADING_WORKGROUP_HPP
 
 #include <glm/vec3.hpp>
+#include <string>
 
 namespace GLCG::GPU {
     using WorkGroup = struct WorkGroup {
         WorkGroup();
+
+        std::string summary();
 
         glm::ivec3 count = glm::ivec3(0,0,0);
         glm::ivec3 size = glm::ivec3(0,0,0);
