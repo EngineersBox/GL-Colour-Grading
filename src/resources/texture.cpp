@@ -67,7 +67,7 @@ namespace GLCG::Resources {
     }
 
     void Texture::assignTextureUnit(GPU::Shaders::Shader& shader, const char* uniform, GLuint unit){
-        GLuint uniformLocation = glGetUniformLocation(shader.id, uniform);
+        GLint uniformLocation = glGetUniformLocation(shader.id, uniform);
         shader.activate();
         glUniform1i(uniformLocation, unit);
     }
