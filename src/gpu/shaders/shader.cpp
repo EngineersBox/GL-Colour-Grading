@@ -29,22 +29,42 @@ namespace GLCG::GPU::Shaders {
         glDeleteProgram(this->id);
     }
 
+    void logShaderError(unsigned int shader,
+                        const ProgramType type,
+                        const char* stage) {
+        GLint maxLength = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+        std::vector<GLchar> errorLog(maxLength);
+        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+        spdlog::error(
+            "[OpenGL] Shader {} error for \"{}\": {}",
+            stage,
+            programTypeToString(type),
+            std::string(errorLog.begin(), errorLog.end())
+        );
+    }
+
     void Shader::compileErrors(unsigned int shader, const ProgramType type) {
         GLint hasCompiled;
-        char infoLog[1024];
         if (type != ProgramType::PROGRAM) {
             glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
             if (hasCompiled == GL_FALSE) {
-                glGetShaderInfoLog(shader, 1024, nullptr, infoLog);
-                spdlog::error("[OpenGL] Shader compilation error for \"{}\": {}", programTypeToString(type), infoLog);
+                logShaderError(
+                    shader,
+                    type,
+                    "compilation"
+                );
                 exit(1);
             }
             return;
         }
         glGetProgramiv(shader, GL_LINK_STATUS, &hasCompiled);
         if (hasCompiled == GL_FALSE) {
-            glGetProgramInfoLog(shader, 1024, nullptr, infoLog);
-            spdlog::error("[OpenGL] Shader linking error for \"{}\": {}", programTypeToString(type), infoLog);
+            logShaderError(
+                shader,
+                type,
+                "linking"
+            );
             exit(1);
         }
     }

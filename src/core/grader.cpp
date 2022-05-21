@@ -42,7 +42,10 @@ namespace GLCG::Core {
         }
         // Contextualise the current window to draw to
         glfwMakeContextCurrent(this->window);
-        glfwSetFramebufferSizeCallback(window, GLCG::Core::Grader::framebufferSizeCallback);
+        glfwSetFramebufferSizeCallback(
+            this->window,
+            GLCG::Core::Grader::framebufferSizeCallback
+        );
 
         gladLoadGL();
         spdlog::trace("OpenGL Version: {}", glGetString(GL_VERSION));

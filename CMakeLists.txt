@@ -32,6 +32,10 @@ target_include_directories(GL_Colour_Grading PUBLIC ${OPENGL_INCLUDE_DIR})
 target_include_directories(GL_Colour_Grading PUBLIC ${OPENGL_LIBRARIES})
 target_link_libraries(GL_Colour_Grading PUBLIC ${OPENGL_LIBRARIES})
 
+# OpenCL
+find_package(OpenCL REQUIRED)
+target_link_libraries(GL_Colour_Grading PRIVATE OpenCL::OpenCL)
+
 # GLFW 3
 find_package(glfw3 CONFIG REQUIRED)
 target_link_libraries(GL_Colour_Grading PRIVATE glfw)
@@ -52,7 +56,7 @@ target_link_libraries(GL_Colour_Grading PRIVATE glm::glm)
 find_package(spdlog CONFIG REQUIRED)
 target_link_libraries(GL_Colour_Grading PRIVATE spdlog::spdlog spdlog::spdlog_header_only)
 
-# boost
+# Boost
 find_package(Boost REQUIRED filesystem iostreams COMPONENTS)
 target_link_libraries(GL_Colour_Grading PRIVATE Boost::filesystem Boost::iostreams)
 
