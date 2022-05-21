@@ -4,6 +4,7 @@
 #define GL_COLOUR_GRADING_FBO_HPP
 
 #include <array>
+#include <stdexcept>
 
 #include "../shaders/shader.hpp"
 #include "../bindableResource.hpp"

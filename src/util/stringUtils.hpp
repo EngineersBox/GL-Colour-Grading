@@ -4,6 +4,8 @@
 #define GL_COLOUR_GRADING_STRINGUTILS_HPP
 
 #include <string>
+#include <memory>
+#include <stdexcept>
 
 namespace GLCG::Utils::String {
     template<typename ... Args>

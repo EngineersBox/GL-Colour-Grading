@@ -1,5 +1,7 @@
 #include "programType.hpp"
 
+#include <stdexcept>
+
 namespace GLCG::GPU::Shaders {
     std::string programTypeToString(ProgramType type) {
         switch (type) {
