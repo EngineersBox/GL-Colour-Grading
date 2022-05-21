@@ -15,7 +15,7 @@ namespace GLCG::GPU::Shaders {
             case ProgramType::FRAGMENT: return GL_FRAGMENT_SHADER;
             case ProgramType::VERTEX: return GL_VERTEX_SHADER;
             case ProgramType::GEOMETRY: return GL_GEOMETRY_SHADER;
-            default: throw std::exception("No such GLenum equivalent for program type");
+            default: throw std::invalid_argument("No such GLenum equivalent for program type");
         }
     }
 }

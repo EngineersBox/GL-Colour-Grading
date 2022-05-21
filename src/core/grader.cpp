@@ -41,7 +41,8 @@ namespace GLCG::Core {
             exit(1);
         }
         // Contextualise the current window to draw to
-        glfwMakeContextCurrent(window);
+        glfwMakeContextCurrent(this->window);
+        glfwSetFramebufferSizeCallback(window, GLCG::Core::Grader::framebufferSizeCallback);
 
         gladLoadGL();
         spdlog::trace("OpenGL Version: {}", glGetString(GL_VERSION));
@@ -52,5 +53,9 @@ namespace GLCG::Core {
         glfwDestroyWindow(this->window);
         glfwTerminate();
         spdlog::info("Cleaned up GLFW/GLAD/OpenGL resources");
+    }
+
+    void Grader::framebufferSizeCallback(GLFWwindow* window, const int width, const int height) {
+        glViewport(0, 0, width, height);
     }
 }

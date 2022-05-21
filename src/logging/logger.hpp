@@ -58,7 +58,7 @@ namespace GLCG::Logger {
         try {
             std::vector<spdlog::sink_ptr> sinks;
 
-            std::shared_ptr<spdlog::sinks::wincolor_stdout_sink<spdlog::details::console_mutex>> stdoutSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
+            auto stdoutSink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
             stdoutSink->set_level(consoleLevel);
             stdoutSink->set_pattern(encodeAnsiColours());
             sinks.push_back(stdoutSink);

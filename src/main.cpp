@@ -8,6 +8,7 @@
 #include "gpu/buffers/ebo.hpp"
 #include "gpu/buffers/fbo.hpp"
 #include "resources/texture.hpp"
+#include "gpu/workgroup.hpp"
 
 // Vertices coordinates
 static constexpr GLfloat vertices[] = {
@@ -28,6 +29,11 @@ int main(int argc, const char* argv[]) {
     GLCG::Core::Grader grader = GLCG::Core::Grader("../assets/config/grader.cfg");
     grader.init();
 
+    GLCG::GPU::WorkGroup wg = GLCG::GPU::WorkGroup();
+    spdlog::trace("Count: X={}, Y={}, Z={}", wg.count.x, wg.count.y, wg.count.z);
+    spdlog::trace("Size: X={}. Y={}. Z={}", wg.size.x, wg.size.y, wg.size.z);
+    spdlog::trace("Invocations: {}", wg.invocations);
+
     GLCG::GPU::Buffers::FBO fbo = GLCG::GPU::Buffers::FBO(
         grader.getWidth(),
         grader.getHeight()
@@ -36,7 +42,7 @@ int main(int argc, const char* argv[]) {
         "../assets/shaders/core.vsh",
         "../assets/shaders/core.fsh"
     );
-    spdlog::info("Compiled and linked core core");
+    spdlog::info("Compiled and linked core shader");
     coreShader.activate();
 
     GLCG::GPU::Buffers::VAO VAO1 = GLCG::GPU::Buffers::VAO();
@@ -54,7 +60,7 @@ int main(int argc, const char* argv[]) {
     EBO1.unbind();
     spdlog::info("Created and bound buffers for coreShader");
 
-    GLuint uniformId = glGetUniformLocation(coreShader.id, "scale");
+    GLint scaleUniformId = glGetUniformLocation(coreShader.id, "scale");
 
     const char* imagePath = "../assets/images/golden_gate.png";
     GLCG::Resources::Texture goldenGate = GLCG::Resources::Texture(
@@ -74,7 +80,7 @@ int main(int argc, const char* argv[]) {
         glEnable(GL_DEPTH_TEST);
 
         coreShader.activate();
-        glUniform1f(uniformId, 0.5f);
+        glUniform1f(scaleUniformId, 0.5f);
         goldenGate.bind();
         VAO1.bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);

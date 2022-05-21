@@ -34,6 +34,7 @@ namespace GLCG::Core {
 
             void initGLContext();
             void destroyGLContext();
+            static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
     };
 }
 

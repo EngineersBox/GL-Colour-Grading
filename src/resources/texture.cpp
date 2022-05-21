@@ -44,7 +44,7 @@ namespace GLCG::Resources {
             0
         );
         if (bytes == nullptr) {
-            throw std::exception("Unable to load image");
+            throw std::runtime_error("Unable to load image");
         }
 
         glGenTextures(1, &this->id);

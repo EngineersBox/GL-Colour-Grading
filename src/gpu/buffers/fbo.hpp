@@ -18,7 +18,7 @@ namespace GLCG::GPU::Buffers {
             void finalise() const;
             void bind() override;
             void unbind() override {
-                throw std::exception("Cannot unbind FBO");
+                throw std::runtime_error("Cannot unbind FBO");
             };
             void destroy() override;
         private:
