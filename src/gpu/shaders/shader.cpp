@@ -174,6 +174,6 @@ namespace GLCG::GPU::Shaders {
         detachAttachedShaders();
         deleteAttachedShaders();
         this->state = ShaderBuildState::DONE;
-        return this->shader;
+        return std::move(this->shader);
     }
 }
