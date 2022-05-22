@@ -8,15 +8,15 @@ namespace GLCG::GPU::Buffers {
             .withVertex("../assets/shaders/framebuffer.vsh")
             .withFragment("../assets/shaders/framebuffer.fsh");
         spdlog::info("Compiled and linked framebuffer shader");
-        this->activate();
+        activate();
         glUniform1i(glGetUniformLocation(this->shader.id, "screenTexture"), 0);
 
         glEnable(GL_DEPTH_TEST);
 
-        this->prepareRectangeVBOVAO();
-        this->createFBO();
-        this->createFBOTexture(width, height);
-        this->createRBO(width, height);
+        prepareRectangeVBOVAO();
+        createFBO();
+        createFBOTexture(width, height);
+        createRBO(width, height);
 
         if (GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER); fboStatus != GL_FRAMEBUFFER_COMPLETE) {
             spdlog::error("Error during framebuffer intialisation: {}", fboStatus);
@@ -72,7 +72,7 @@ namespace GLCG::GPU::Buffers {
         this->shader.activate();
         glBindVertexArray(rectVAO);
         glDisable(GL_DEPTH_TEST);
-        glBindTexture(GL_TEXTURE_2D, framebufferTexture);
+        glBindTexture(GL_TEXTURE_2D, this->framebufferTexture);
         glDrawArrays(GL_TRIANGLES, 0, 6);
     }
 

@@ -136,20 +136,20 @@ namespace GLCG::GPU::Shaders {
         this->state = ShaderBuildState::ATTACHING_SHADERS;
         if (shaderFile == nullptr) {
             throw std::invalid_argument("Shader file cannot be null");
-        } else if (this->attachedShaders.contains(type)) {
+        } else if (this->shader.attachedShaders.contains(type)) {
             throw std::invalid_argument("Shader has already been attached");
         }
         std::string shaderCode = Reader::readFileIntoString(shaderFile);
         GLuint compiledShaderId = Shader::createCompiledShader(shaderCode.c_str(), type);
         glAttachShader(compiledShaderId, this->shader.id);
-        this->attachedShaders[type] = compiledShaderId;
+        this->shader.attachedShaders[type] = compiledShaderId;
     }
 
     void ShaderBuilder::detachAttachedShaders() {
         this->state = ShaderBuildState::DETACHING_SHADERS;
         std::for_each(
-            this->attachedShaders.begin(),
-            this->attachedShaders.end(),
+            this->shader.attachedShaders.begin(),
+            this->shader.attachedShaders.end(),
             [this](std::pair<ProgramType, GLuint> entry) -> void {
                 glDetachShader(this->shader.id, entry.second);
             }
@@ -159,8 +159,8 @@ namespace GLCG::GPU::Shaders {
     void ShaderBuilder::deleteAttachedShaders() {
         this->state = ShaderBuildState::DELETING_SHADERS;
         std::for_each(
-            this->attachedShaders.begin(),
-            this->attachedShaders.end(),
+            this->shader.attachedShaders.begin(),
+            this->shader.attachedShaders.end(),
             [](std::pair<ProgramType, GLuint> entry) -> void {
                 glDeleteShader(entry.second);
             }

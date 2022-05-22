@@ -26,6 +26,8 @@ namespace GLCG::GPU::Shaders {
         private:
             static GLuint createCompiledShader(const char* source, ProgramType type);
             static void compileErrors(unsigned int shader, ProgramType type);
+        protected:
+            std::map<ProgramType, GLuint> attachedShaders;
     };
     enum class ShaderBuildState {
         CREATING_PROGRAM = 0,
@@ -67,7 +69,6 @@ namespace GLCG::GPU::Shaders {
                 return glMajorVersion > major || (glMajorVersion == major && glMinorVersion >= minor);
             }
         protected:
-            std::map<ProgramType, GLuint> attachedShaders;
             ShaderBuildState state;
             Shader shader;
     };

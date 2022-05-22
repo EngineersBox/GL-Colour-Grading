@@ -21,10 +21,10 @@ const float kernel[9] = float[](
 );
 
 void main() {
-    vec3 color = vec3(0.0f);
-    for (int i = 0; i < 9; i++) {
-        color += vec3(texture(screenTexture, texCoords.st + offsets[i])) * kernel[i];
-    }
-    FragColor = vec4(color, 1.0f);
-//    FragColor = vec4(vec3(texture(screenTexture, texCoords.st)), 1.0f);
+    // vec3 color = vec3(0.0f);
+    // for (int i = 0; i < 9; i++) {
+    //     color += vec3(texture(screenTexture, texCoords.st + offsets[i])) * kernel[i];
+    // }
+    // FragColor = vec4(color, 1.0f);
+    FragColor = vec4(vec3(texture(screenTexture, texCoords.st)), 1.0f);
 }
