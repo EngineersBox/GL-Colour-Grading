@@ -59,15 +59,6 @@ namespace GLCG::GPU::Shaders {
             void attachShader(ProgramType type, const char* shaderFile);
             void detachAttachedShaders();
             void deleteAttachedShaders();
-
-            [[nodiscard]]
-            static bool isVersionSupported(const int major, const int minor) {
-                int glMajorVersion;
-                int glMinorVersion;
-                glGetIntegerv(GL_MAJOR_VERSION, &glMajorVersion);
-                glGetIntegerv(GL_MINOR_VERSION, &glMinorVersion);
-                return glMajorVersion > major || (glMajorVersion == major && glMinorVersion >= minor);
-            }
         protected:
             ShaderBuildState state;
             Shader shader;

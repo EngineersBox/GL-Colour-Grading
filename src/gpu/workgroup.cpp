@@ -2,14 +2,11 @@
 
 #include <glad/glad.h>
 #include "../util/stringUtils.hpp"
+#include "../util/openglUtils.hpp"
 
 namespace GLCG::GPU {
     WorkGroup::WorkGroup() {
-        int glMajorVersion;
-        int glMinorVersion;
-        glGetIntegerv(GL_MAJOR_VERSION, &glMajorVersion);
-        glGetIntegerv(GL_MINOR_VERSION, &glMinorVersion);
-        if (glMajorVersion < 4 || (glMajorVersion >= 4 && glMinorVersion < 3)) {
+        if (!Utils::OpenGL::isVersionSupported(4, 3)) {
             // Compute shaders are not supported in versions older than 4.3
             return;
         }
