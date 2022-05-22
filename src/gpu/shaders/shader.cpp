@@ -98,6 +98,7 @@ namespace GLCG::GPU::Shaders {
             throw std::runtime_error("Cannot mark program as separable after linking");
         }
         glProgramParameteri(this->shader.id, GL_PROGRAM_SEPARABLE, GL_TRUE);
+        spdlog::trace("Marker program {} as separable", this->shader.id);
         return *this;
     }
 
@@ -160,6 +161,12 @@ namespace GLCG::GPU::Shaders {
         GLuint compiledShaderId = Shader::createCompiledShader(shaderCode.c_str(), type);
         glAttachShader(this->shader.id, compiledShaderId);
         this->shader.attachedShaders[type] = compiledShaderId;
+        spdlog::trace(
+            "Attached {} shader with id {} to program {}",
+            programTypeToString(type),
+            compiledShaderId,
+            this->shader.id
+        );
     }
 
     void ShaderBuilder::detachAttachedShaders() {
@@ -169,6 +176,12 @@ namespace GLCG::GPU::Shaders {
             this->shader.attachedShaders.end(),
             [this](std::pair<ProgramType, GLuint> entry) -> void {
                 glDetachShader(this->shader.id, entry.second);
+                spdlog::trace(
+                    "Detached {} shader with id {} from program {}",
+                    programTypeToString(entry.first),
+                    entry.second,
+                    this->shader.id
+                );
             }
         );
     }
@@ -180,6 +193,11 @@ namespace GLCG::GPU::Shaders {
             this->shader.attachedShaders.end(),
             [](std::pair<ProgramType, GLuint> entry) -> void {
                 glDeleteShader(entry.second);
+                spdlog::trace(
+                    "Deleted {} shader with id {}",
+                    programTypeToString(entry.first),
+                    entry.second
+                );
             }
         );
     }
@@ -191,6 +209,7 @@ namespace GLCG::GPU::Shaders {
         detachAttachedShaders();
         deleteAttachedShaders();
         this->state = ShaderBuildState::DONE;
+        spdlog::trace("Finished construction of program with id {}", this->shader.id);
         return std::move(this->shader);
     }
 }

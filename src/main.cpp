@@ -87,6 +87,7 @@ int main(int argc, const char* argv[]) {
         glfwPollEvents();
     }
 
+    spdlog::info("Cleaning up OpenGL resources");
     // Clean up OpenGL resources
     VAO1.destroy();
     VBO1.destroy();
