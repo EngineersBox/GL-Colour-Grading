@@ -39,6 +39,7 @@ int main(int argc, const char* argv[]) {
         .withVertex("../assets/shaders/core.vsh")
         .withFragment("../assets/shaders/core.fsh");
     spdlog::info("Compiled and linked core shader");
+    coreShader.validateProgram();
     coreShader.activate();
 
     GLCG::GPU::Buffers::VAO VAO1 = GLCG::GPU::Buffers::VAO();

@@ -10,7 +10,6 @@ namespace GLCG::GPU::Buffers {
             .withVertex("../assets/shaders/framebuffer.vsh")
             .withFragment("../assets/shaders/framebuffer.fsh");
         spdlog::info("Compiled and linked framebuffer shader");
-        glCheckError();
         activate();
         glUniform1i(glGetUniformLocation(this->shader.id, "screenTexture"), 0);
 
@@ -20,6 +19,7 @@ namespace GLCG::GPU::Buffers {
         createFBO();
         createFBOTexture(width, height);
         createRBO(width, height);
+        this->shader.validateProgram();
 
         if (GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER); fboStatus != GL_FRAMEBUFFER_COMPLETE) {
             spdlog::error("Error during framebuffer intialisation: {}", fboStatus);

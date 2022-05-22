@@ -65,13 +65,13 @@ namespace GLCG::GPU::Shaders {
         return shader;
     }
 
-    void Shader::validateProgram(GLuint program) {
-        glValidateProgram(program);
+    void Shader::validateProgram() const {
+        glValidateProgram(this->id);
         GLint isValid;
-        glGetProgramiv(program, GL_VALIDATE_STATUS, &isValid);
+        glGetProgramiv(this->id, GL_VALIDATE_STATUS, &isValid);
         if (isValid == GL_FALSE) {
             logShaderProgramError(
-                program,
+                this->id,
                 ProgramType::PROGRAM,
                 "validation"
             );
