@@ -4,9 +4,9 @@
 #define GL_COLOUR_GRADING_OPENGLFEATURESUPPORTEXCEPTION_HPP
 
 #include <stdexcept>
-#include "../../../util/stringUtils.hpp"
+#include "stringUtils.hpp"
 
-namespace GLCG::GPU::Shaders {
+namespace GLCG::Utils::OpenGL {
     class OpenGLFeatureSupportException : public std::runtime_error {
         public:
             OpenGLFeatureSupportException(const char* feature,

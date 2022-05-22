@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "../../io/reader.hpp"
 #include "../../util/openglUtils.hpp"
+#include "../../util/exception/openGLFeatureSupportException.hpp"
 
 namespace GLCG::GPU::Shaders {
     void Shader::activate() const {
@@ -74,7 +75,7 @@ namespace GLCG::GPU::Shaders {
 
     ShaderBuilder& ShaderBuilder::markSeparable() {
         if (!Utils::OpenGL::isVersionSupported(4, 1)) {
-            throw OpenGLFeatureSupportException(
+            throw Utils::OpenGL::OpenGLFeatureSupportException(
                 "ARB_separate_shader_objects",
                 4, 1
             );
@@ -102,7 +103,7 @@ namespace GLCG::GPU::Shaders {
 
     ShaderBuilder& ShaderBuilder::withCompute(const char* computeFile) {
         if (!Utils::OpenGL::isVersionSupported(4, 3)) {
-            throw OpenGLFeatureSupportException(
+            throw Utils::OpenGL::OpenGLFeatureSupportException(
                 "ARB_compute_shader",
                 4, 3
             );
@@ -113,7 +114,7 @@ namespace GLCG::GPU::Shaders {
 
     ShaderBuilder& ShaderBuilder::withTessellationControl(const char* tessControlFile) {
         if (!Utils::OpenGL::isVersionSupported(4, 0)) {
-            throw OpenGLFeatureSupportException(
+            throw Utils::OpenGL::OpenGLFeatureSupportException(
                 "ARB_tessellation_shader",
                 4, 0
             );
@@ -124,7 +125,7 @@ namespace GLCG::GPU::Shaders {
 
     ShaderBuilder& ShaderBuilder::withTessellationEvaluation(const char* tessEvalFile) {
         if (!Utils::OpenGL::isVersionSupported(4, 0)) {
-            throw OpenGLFeatureSupportException(
+            throw Utils::OpenGL::OpenGLFeatureSupportException(
                 "ARB_tessellation_shader",
                 4, 0
             );
