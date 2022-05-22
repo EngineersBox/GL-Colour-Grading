@@ -22,9 +22,9 @@ namespace GLCG::Utils::OpenGL {
                 case GL_INVALID_FRAMEBUFFER_OPERATION: error = "INVALID_FRAMEBUFFER_OPERATION"; break;
                 default:                               error = "UNKNOWN ERROR"; break;
             }
-            spdlog::error("[OpenGL] Error occurred at {}({}): {}", file, line, error);
+            spdlog::error("[OpenGL] Error occurred at {}({}): {}", file, line - 1, error);
+            exit(1);
         }
-        exit(1);
     }
     [[nodiscard]]
     static bool isVersionSupported(const int major, const int minor) {

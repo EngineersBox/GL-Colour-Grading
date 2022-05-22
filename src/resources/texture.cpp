@@ -2,6 +2,7 @@
 #include <stb_image.h>
 #include <stdexcept>
 #include "texture.hpp"
+#include "../util/openglUtils.hpp"
 
 namespace GLCG::Resources {
     inline void Texture::generateTexImage(uint8_t const* bytes) const {

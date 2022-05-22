@@ -37,7 +37,7 @@ namespace GLCG::GPU::Buffers {
                 1.0f, -1.0f,  1.0f, 0.0f,
                 -1.0f,  1.0f,  0.0f, 1.0f
             };
-            void prepareRectangeVBOVAO();
+            void prepareRectangleVBOVAO();
             void createFBO();
             void createFBOTexture(int width, int height);
             void createRBO(int width, int height);

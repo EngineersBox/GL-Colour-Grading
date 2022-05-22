@@ -15,7 +15,7 @@ namespace GLCG::GPU::Buffers {
 
         glEnable(GL_DEPTH_TEST);
 
-        prepareRectangeVBOVAO();
+        prepareRectangleVBOVAO();
         createFBO();
         createFBOTexture(width, height);
         createRBO(width, height);
@@ -27,7 +27,7 @@ namespace GLCG::GPU::Buffers {
         }
     }
 
-    void FBO::prepareRectangeVBOVAO() {
+    void FBO::prepareRectangleVBOVAO() {
         glGenVertexArrays(1, &rectVAO);
         glGenBuffers(1, &rectVBO);
         glBindVertexArray(rectVAO);

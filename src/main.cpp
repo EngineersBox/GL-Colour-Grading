@@ -59,14 +59,60 @@ int main(int argc, const char* argv[]) {
 
     GLint scaleUniformId = glGetUniformLocation(coreShader.id, "scale");
 
+//    GLCG::GPU::Shaders::Shader core2Shader = GLCG::GPU::Shaders::ShaderBuilder()
+//        .markSeparable()
+//        .withVertex("../assets/shaders/core.vsh")
+//        .withFragment("../assets/shaders/core2.fsh");
+//    glCheckError();
+//    core2Shader.validateProgram();
+//    glCheckError();
+//    core2Shader.activate();
+//    glCheckError();
+//
+//    GLCG::GPU::Buffers::VAO VAO2 = GLCG::GPU::Buffers::VAO();
+//    VAO2.bind();
+//
+//    GLCG::GPU::Buffers::VBO VBO2 = GLCG::GPU::Buffers::VBO(vertices, sizeof(vertices));
+//    GLCG::GPU::Buffers::EBO EBO2 = GLCG::GPU::Buffers::EBO(indices, sizeof(indices));
+//
+//    GLCG::GPU::Buffers::VAO::linkAttrib(VBO2, 0, 3, GL_FLOAT, 8 * sizeof(float), nullptr);
+//    GLCG::GPU::Buffers::VAO::linkAttrib(VBO2, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+//    GLCG::GPU::Buffers::VAO::linkAttrib(VBO2, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+//
+//    VAO2.unbind();
+//    VBO2.unbind();
+//    EBO2.unbind();
+//    spdlog::info("Created and bound buffers for core shader");
+//    GLint scaleUniformId2 = glGetUniformLocation(core2Shader.id, "scale");
+//    glCheckError();
+
     const char* imagePath = "../assets/images/golden_gate.png";
     GLCG::Resources::Texture goldenGate = GLCG::Resources::Texture(
         imagePath,
         "diffuse",
-        GL_TEXTURE0
+        0
     );
     spdlog::info("Loaded image from: {}", imagePath);
     GLCG::Resources::Texture::assignTextureUnit(coreShader, "tex0", 0);
+
+//    GLCG::Resources::Texture::assignTextureUnit(core2Shader, "tex0", 0);
+//    glCheckError();
+//
+//    GLuint pipeline;
+//    glGenProgramPipelines(1, &pipeline);
+//    glCheckError();
+//    glUseProgramStages(
+//        pipeline,
+//        GL_VERTEX_SHADER_BIT | GL_FRAGMENT_SHADER_BIT,
+//        coreShader.id
+//    );
+//    glCheckError();
+//    glUseProgramStages(
+//        pipeline,
+//        GL_FRAGMENT_SHADER_BIT,
+//        core2Shader.id
+//    );
+//    glCheckError();
 
     spdlog::info("Starting event loop");
     // Main event loop
@@ -82,6 +128,29 @@ int main(int argc, const char* argv[]) {
         VAO1.bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
+//        glUseProgram(0);
+//        glBindProgramPipeline(pipeline);
+//        glActiveShaderProgram(pipeline, coreShader.id);
+//        glUniform1f(scaleUniformId, 0.5f);
+//        glCheckError();
+//        goldenGate.bind();
+//        glCheckError();
+//        VAO1.bind();
+//        glCheckError();
+//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+//        glCheckError();
+//
+//        glActiveShaderProgram(pipeline, core2Shader.id);
+//        glCheckError();
+//        glUniform1f(scaleUniformId2, 0.5f);
+//        glCheckError();
+//        goldenGate.bind();
+//        glCheckError();
+//        VAO2.bind();
+//        glCheckError();
+//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+//        glCheckError();
+
         fbo.finalise();
         glfwSwapBuffers(grader.getWindow());
         glfwPollEvents();
@@ -92,8 +161,12 @@ int main(int argc, const char* argv[]) {
     VAO1.destroy();
     VBO1.destroy();
     EBO1.destroy();
+//    VAO2.destroy();
+//    VBO2.destroy();
+//    EBO2.destroy();
     goldenGate.destroy();
     coreShader.destroy();
+//    core2Shader.destroy();
     fbo.destroy();
 
     grader.destroy();
