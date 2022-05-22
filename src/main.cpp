@@ -9,6 +9,7 @@
 #include "gpu/buffers/fbo.hpp"
 #include "resources/texture.hpp"
 #include "gpu/workgroup.hpp"
+#include "util/openglUtils.hpp"
 
 // Vertices coordinates
 static constexpr GLfloat vertices[] = {
@@ -31,13 +32,11 @@ int main(int argc, const char* argv[]) {
 
     GLCG::GPU::WorkGroup wg = GLCG::GPU::WorkGroup();
     spdlog::trace("Work group summary: {}", wg.summary());
-
     GLCG::GPU::Buffers::FBO fbo = GLCG::GPU::Buffers::FBO(
         grader.getWidth(),
         grader.getHeight()
     );
     GLCG::GPU::Shaders::Shader coreShader = GLCG::GPU::Shaders::Shader::builder()
-        .markSeparable()
         .withVertex("../assets/shaders/core.vsh")
         .withFragment("../assets/shaders/core.fsh");
     spdlog::info("Compiled and linked core shader");

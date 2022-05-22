@@ -2,12 +2,15 @@
 
 #include <spdlog/spdlog.h>
 
+#include "../../util/openglUtils.hpp"
+
 namespace GLCG::GPU::Buffers {
     FBO::FBO(const int width, const int height) {
         this->shader = Shaders::Shader::builder()
             .withVertex("../assets/shaders/framebuffer.vsh")
             .withFragment("../assets/shaders/framebuffer.fsh");
         spdlog::info("Compiled and linked framebuffer shader");
+        glCheckError();
         activate();
         glUniform1i(glGetUniformLocation(this->shader.id, "screenTexture"), 0);
 

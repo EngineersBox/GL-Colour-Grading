@@ -4,6 +4,7 @@
 #include <iterator>
 #include <algorithm>
 #include "../../io/reader.hpp"
+#include "../../util/openglUtils.hpp"
 
 namespace GLCG::GPU::Shaders {
     void Shader::activate() const {
@@ -14,13 +15,13 @@ namespace GLCG::GPU::Shaders {
         glDeleteProgram(this->id);
     }
 
-    void logShaderError(unsigned int shader,
-                        const ProgramType type,
-                        const char* stage) {
+    void logShaderProgramError(unsigned int shader,
+                               const ProgramType type,
+                               const char* stage) {
         GLint maxLength = 0;
-        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+        (type == ProgramType::PROGRAM ? glGetProgramiv : glGetShaderiv)(shader, GL_INFO_LOG_LENGTH, &maxLength);
         std::vector<GLchar> errorLog(maxLength);
-        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+        (type == ProgramType::PROGRAM ? glGetProgramInfoLog : glGetShaderInfoLog)(shader, maxLength, &maxLength, &errorLog[0]);
         spdlog::error(
             "[OpenGL] Shader {} error for \"{}\": {}",
             stage,
@@ -34,10 +35,10 @@ namespace GLCG::GPU::Shaders {
         if (type != ProgramType::PROGRAM) {
             glGetShaderiv(shader, GL_COMPILE_STATUS, &hasCompiled);
             if (hasCompiled == GL_FALSE) {
-                logShaderError(
+                logShaderProgramError(
                     shader,
                     type,
-                    "compilation"
+                    "linking"
                 );
                 exit(1);
             }
@@ -45,10 +46,10 @@ namespace GLCG::GPU::Shaders {
         }
         glGetProgramiv(shader, GL_LINK_STATUS, &hasCompiled);
         if (hasCompiled == GL_FALSE) {
-            logShaderError(
+            logShaderProgramError(
                 shader,
                 type,
-                "linking"
+                "compilation"
             );
             exit(1);
         }
@@ -141,7 +142,7 @@ namespace GLCG::GPU::Shaders {
         }
         std::string shaderCode = Reader::readFileIntoString(shaderFile);
         GLuint compiledShaderId = Shader::createCompiledShader(shaderCode.c_str(), type);
-        glAttachShader(compiledShaderId, this->shader.id);
+        glAttachShader(this->shader.id, compiledShaderId);
         this->shader.attachedShaders[type] = compiledShaderId;
     }
 
