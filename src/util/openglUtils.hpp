@@ -1,5 +1,3 @@
-
-
 #pragma once
 
 #ifndef GL_COLOUR_GRADING_OPENGLUTILS_HPP
@@ -10,7 +8,7 @@
 #include <spdlog/spdlog.h>
 
 namespace GLCG::Utils::OpenGL {
-    static GLenum _glCheckError(const char *file, int line) {
+    static void _glCheckError(const char *file, int line) {
         GLenum errorCode;
         while ((errorCode = glGetError()) != GL_NO_ERROR) {
             std::string error;
@@ -25,9 +23,8 @@ namespace GLCG::Utils::OpenGL {
                 default:                               error = "UNKNOWN ERROR"; break;
             }
             spdlog::error("[OpenGL] Error occurred at {}({}): {}", file, line, error);
-            exit(1);
         }
-        return errorCode;
+        exit(1);
     }
     [[nodiscard]]
     static bool isVersionSupported(const int major, const int minor) {
