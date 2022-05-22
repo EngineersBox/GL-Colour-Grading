@@ -24,7 +24,8 @@ namespace GLCG::GPU::Shaders {
         std::vector<GLchar> errorLog(maxLength);
         (type == ProgramType::PROGRAM ? glGetProgramInfoLog : glGetShaderInfoLog)(shader, maxLength, &maxLength, &errorLog[0]);
         spdlog::error(
-            "[OpenGL] Shader {} error for \"{}\": {}",
+            "[OpenGL] [ID: {}] Shader {} error for \"{}\": {}",
+            shader,
             stage,
             programTypeToString(type),
             std::string(errorLog.begin(), errorLog.end())
@@ -62,6 +63,20 @@ namespace GLCG::GPU::Shaders {
         glCompileShader(shader);
         compileErrors(shader, type);
         return shader;
+    }
+
+    void Shader::validateProgram(GLuint program) {
+        glValidateProgram(program);
+        GLint isValid;
+        glGetProgramiv(program, GL_VALIDATE_STATUS, &isValid);
+        if (isValid == GL_FALSE) {
+            logShaderProgramError(
+                program,
+                ProgramType::PROGRAM,
+                "validation"
+            );
+            exit(1);
+        }
     }
 
     ShaderBuilder Shader::builder() {

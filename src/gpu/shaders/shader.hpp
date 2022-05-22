@@ -26,6 +26,7 @@ namespace GLCG::GPU::Shaders {
         private:
             static GLuint createCompiledShader(const char* source, ProgramType type);
             static void compileErrors(unsigned int shader, ProgramType type);
+            static void validateProgram(GLuint program);
         protected:
             std::map<ProgramType, GLuint> attachedShaders;
     };
