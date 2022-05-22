@@ -6,20 +6,70 @@
 #include <glad/glad.h>
 #include <exception>
 #include <string>
+#include <map>
+
 #include "programType.hpp"
+#include "exception/openGLFeatureSupportException.hpp"
 
 namespace GLCG::GPU::Shaders {
+    class ShaderBuilder;
     class Shader {
         public:
-            GLuint id;
-            Shader(const char* vertexFile, const char* fragmentFile);
+            GLuint id = 0;
+            Shader() = default;
 
             void activate() const;
             void destroy() const;
 
+            friend class ShaderBuilder;
+            static ShaderBuilder builder();
         private:
             static GLuint createCompiledShader(const char* source, ProgramType type);
             static void compileErrors(unsigned int shader, ProgramType type);
+    };
+    enum class ShaderBuildState {
+        CREATING_PROGRAM = 0,
+        ATTACHING_SHADERS = 1,
+        LINKING_PROGRAM = 2,
+        DETACHING_SHADERS = 3,
+        DELETING_SHADERS = 4,
+        DONE = 5
+    };
+    class ShaderBuilder {
+        public:
+            ShaderBuilder();
+
+            ShaderBuilder& markSeparable();
+            ShaderBuilder& withVertex(const char* vertexFile);
+            ShaderBuilder& withFragment(const char* fragmentFile);
+            ShaderBuilder& withGeometry(const char* geometryFile);
+            ShaderBuilder& withCompute(const char* computeFile);
+            ShaderBuilder& withTessellationControl(const char* tessControlFile);
+            ShaderBuilder& withTessellationEvaluation(const char* tessEvalFile);
+
+            operator Shader();
+
+            [[nodiscard]]
+            constexpr ShaderBuildState getState() const noexcept {
+                return this->state;
+            }
+        private:
+            void attachShader(ProgramType type, const char* shaderFile);
+            void detachAttachedShaders();
+            void deleteAttachedShaders();
+
+            [[nodiscard]]
+            static bool isVersionSupported(const int major, const int minor) {
+                int glMajorVersion;
+                int glMinorVersion;
+                glGetIntegerv(GL_MAJOR_VERSION, &glMajorVersion);
+                glGetIntegerv(GL_MINOR_VERSION, &glMinorVersion);
+                return glMajorVersion > major || (glMajorVersion == major && glMinorVersion >= minor);
+            }
+        protected:
+            std::map<ProgramType, GLuint> attachedShaders;
+            ShaderBuildState state;
+            Shader shader;
     };
 }
 

@@ -5,6 +5,9 @@
 
 namespace GLCG::Pipelines {
     class Pipeline {
+        public:
+            Pipeline() {}
+
 
     };
 }

@@ -36,10 +36,10 @@ int main(int argc, const char* argv[]) {
         grader.getWidth(),
         grader.getHeight()
     );
-    GLCG::GPU::Shaders::Shader coreShader = GLCG::GPU::Shaders::Shader(
-        "../assets/shaders/core.vsh",
-        "../assets/shaders/core.fsh"
-    );
+    GLCG::GPU::Shaders::Shader coreShader = GLCG::GPU::Shaders::Shader::builder()
+        .markSeparable()
+        .withVertex("../assets/shaders/core.vsh")
+        .withFragment("../assets/shaders/core.fsh");
     spdlog::info("Compiled and linked core shader");
     coreShader.activate();
 

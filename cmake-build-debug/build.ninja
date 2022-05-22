@@ -1,0 +1,269 @@
+## This file contains all the build statements describing the
+# compilation DAG.
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# 
+# Which is the root file.
+# =============================================================================
+
+# =============================================================================
+# Project: GL_Colour_Grading
+# Configurations: Debug
+# =============================================================================
+
+#############################################
+# Minimal version of Ninja required by this file
+
+ninja_required_version = 1.8
+
+
+#############################################
+# Set configuration variable for custom commands.
+
+CONFIGURATION = Debug
+# =============================================================================
+# Include auxiliary files.
+
+
+#############################################
+# Include rules file.
+
+include CMakeFiles/rules.ninja
+
+# =============================================================================
+
+#############################################
+# Logical path to working directory; prefix for absolute paths.
+
+cmake_ninja_workdir = /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/cmake-build-debug/
+# =============================================================================
+# Object build statements for EXECUTABLE target GL_Colour_Grading
+
+
+#############################################
+# Order-only phony target for GL_Colour_Grading
+
+build cmake_object_order_depends_target_GL_Colour_Grading: phony || CMakeFiles/GL_Colour_Grading.dir
+
+build CMakeFiles/GL_Colour_Grading.dir/src/core/config.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/core/config.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/core/config.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/core
+
+build CMakeFiles/GL_Colour_Grading.dir/src/core/grader.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/core/grader.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/core/grader.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/core
+
+build CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/ebo.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/gpu/buffers/ebo.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/ebo.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers
+
+build CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/fbo.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/gpu/buffers/fbo.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/fbo.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers
+
+build CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/vao.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/gpu/buffers/vao.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/vao.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers
+
+build CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/vbo.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/gpu/buffers/vbo.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/vbo.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers
+
+build CMakeFiles/GL_Colour_Grading.dir/src/gpu/gpu.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/gpu/gpu.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/gpu/gpu.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/gpu
+
+build CMakeFiles/GL_Colour_Grading.dir/src/gpu/shaders/programType.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/gpu/shaders/programType.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/gpu/shaders/programType.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/gpu/shaders
+
+build CMakeFiles/GL_Colour_Grading.dir/src/gpu/shaders/shader.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/gpu/shaders/shader.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/gpu/shaders/shader.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/gpu/shaders
+
+build CMakeFiles/GL_Colour_Grading.dir/src/gpu/workgroup.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/gpu/workgroup.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/gpu/workgroup.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/gpu
+
+build CMakeFiles/GL_Colour_Grading.dir/src/logging/logger.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/logging/logger.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/logging/logger.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/logging
+
+build CMakeFiles/GL_Colour_Grading.dir/src/main.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/main.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/main.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src
+
+build CMakeFiles/GL_Colour_Grading.dir/src/pipeline/pass/pipelinePass.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/pipeline/pass/pipelinePass.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/pipeline/pass/pipelinePass.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/pipeline/pass
+
+build CMakeFiles/GL_Colour_Grading.dir/src/pipeline/pipeline.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/pipeline/pipeline.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/pipeline/pipeline.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/pipeline
+
+build CMakeFiles/GL_Colour_Grading.dir/src/resources/texture.cpp.o: CXX_COMPILER__GL_Colour_Grading_Debug /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/src/resources/texture.cpp || cmake_object_order_depends_target_GL_Colour_Grading
+  DEFINES = -DFMT_LOCALE -DGLEW_STATIC -DSPDLOG_COMPILED_LIB -DSPDLOG_FMT_EXTERNAL
+  DEP_FILE = CMakeFiles/GL_Colour_Grading.dir/src/resources/texture.cpp.o.d
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0 -std=gnu++20
+  INCLUDES = -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/core -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/buffers -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders/exception -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/gpu/shaders -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/io -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/logging -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline/pass -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/pipeline -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/resources -I/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/src/util -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks -isystem /Users/jackkilrain/vcpkg/installed/x64-osx/include
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  OBJECT_FILE_DIR = CMakeFiles/GL_Colour_Grading.dir/src/resources
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target GL_Colour_Grading
+
+
+#############################################
+# Link the executable GL_Colour_Grading
+
+build GL_Colour_Grading: CXX_EXECUTABLE_LINKER__GL_Colour_Grading_Debug CMakeFiles/GL_Colour_Grading.dir/src/core/config.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/core/grader.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/ebo.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/fbo.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/vao.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/vbo.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/gpu/gpu.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/gpu/shaders/programType.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/gpu/shaders/shader.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/gpu/workgroup.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/logging/logger.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/main.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/pipeline/pass/pipelinePass.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/pipeline/pipeline.cpp.o CMakeFiles/GL_Colour_Grading.dir/src/resources/texture.cpp.o | /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libglfw3.a /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libGLEWd.a /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libglad.a /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libspdlogd.a /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libboost_filesystem.a /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libboost_iostreams.a /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/liblibconfig++.a /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/liblibconfig.a /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libfmtd.a /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libboost_regex.a
+  FLAGS = -g -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk -mmacosx-version-min=12.0
+  LINK_LIBRARIES = -framework  OpenGL  -framework  OpenGL  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libglfw3.a  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libGLEWd.a  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libglad.a  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libspdlogd.a  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libboost_filesystem.a  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libboost_iostreams.a  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/liblibconfig++.a  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/liblibconfig.a  -framework  OpenCL  -framework Cocoa  -framework IOKit  -framework CoreFoundation  -framework  OpenGL  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libfmtd.a  /Users/jackkilrain/vcpkg/installed/x64-osx/debug/lib/libboost_regex.a
+  OBJECT_DIR = CMakeFiles/GL_Colour_Grading.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = GL_Colour_Grading
+  TARGET_PDB = GL_Colour_Grading.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/cmake-build-debug && /usr/local/Cellar/cmake/3.23.1/bin/ccmake -S/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading -B/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/cmake-build-debug
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build edit_cache: phony CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/cmake-build-debug && /usr/local/Cellar/cmake/3.23.1/bin/cmake --regenerate-during-build -S/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading -B/Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/cmake-build-debug
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build rebuild_cache: phony CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Target aliases.
+
+# =============================================================================
+# Folder targets.
+
+# =============================================================================
+
+#############################################
+# Folder: /Users/jackkilrain/Desktop/Projects/C:C++/GL-Colour-Grading/cmake-build-debug
+
+build all: phony GL_Colour_Grading
+
+# =============================================================================
+# Built-in targets
+
+
+#############################################
+# Phony target to force glob verification run.
+
+build /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake_force: phony
+
+
+#############################################
+# Re-run CMake to check if globbed directories changed.
+
+build /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/cmake-build-debug/CMakeFiles/cmake.verify_globs: VERIFY_GLOBS | /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake_force
+  pool = console
+  restat = 1
+
+
+#############################################
+# Re-run CMake if any of its inputs changed.
+
+build build.ninja: RERUN_CMAKE /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/cmake-build-debug/CMakeFiles/cmake.verify_globs | ../CMakeLists.txt /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/boost/vcpkg-cmake-wrapper.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-config-version.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-config.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-targets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-targets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-targets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladConfig.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladConfigVersion.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladTargets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladTargets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladTargets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/CopyImportedTargetProperties.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/glew-config.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/glew-targets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/glew-targets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/glew-targets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/vcpkg-cmake-wrapper.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3Config.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3ConfigVersion.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3Targets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3Targets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3Targets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glm/glm-config.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfig.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfigTargets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfigTargets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfigTargets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfigVersion.cmake /Users/jackkilrain/vcpkg/scripts/buildsystems/vcpkg.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeCInformation.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeCXXInformation.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeDependentOption.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeGenericSystem.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakePushCheckState.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CheckCSourceCompiles.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CheckIncludeFile.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CheckLibraryExists.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CheckSymbolExists.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/AppleClang-C.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/AppleClang-CXX.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/Clang.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/GNU.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindBoost.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindOpenCL.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindOpenGL.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindPackageMessage.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindThreads.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-AppleClang-C.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-AppleClang-CXX.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-Clang-C.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-Clang-CXX.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-Clang.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Darwin-Initialize.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Darwin.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/UnixPaths.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/SelectLibraryConfigurations.cmake CMakeCache.txt CMakeFiles/3.23.1/CMakeCCompiler.cmake CMakeFiles/3.23.1/CMakeCXXCompiler.cmake CMakeFiles/3.23.1/CMakeSystem.cmake
+  pool = console
+
+
+#############################################
+# A missing CMake input file is not an error.
+
+build ../CMakeLists.txt /Users/jackkilrain/Desktop/Projects/C$:C++/GL-Colour-Grading/cmake-build-debug/CMakeFiles/VerifyGlobs.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/boost/vcpkg-cmake-wrapper.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-config-version.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-config.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-targets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-targets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/fmt/fmt-targets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladConfig.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladConfigVersion.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladTargets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladTargets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glad/gladTargets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/CopyImportedTargetProperties.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/glew-config.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/glew-targets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/glew-targets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/glew-targets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glew/vcpkg-cmake-wrapper.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3Config.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3ConfigVersion.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3Targets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3Targets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glfw3/glfw3Targets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/glm/glm-config.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfig.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfigTargets-debug.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfigTargets-release.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfigTargets.cmake /Users/jackkilrain/vcpkg/installed/x64-osx/share/spdlog/spdlogConfigVersion.cmake /Users/jackkilrain/vcpkg/scripts/buildsystems/vcpkg.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeCInformation.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeCXXInformation.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeDependentOption.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeGenericSystem.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakePushCheckState.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CheckCSourceCompiles.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CheckIncludeFile.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CheckLibraryExists.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/CheckSymbolExists.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/AppleClang-C.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/AppleClang-CXX.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/Clang.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Compiler/GNU.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindBoost.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindOpenCL.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindOpenGL.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindPackageMessage.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/FindThreads.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-AppleClang-C.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-AppleClang-CXX.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-Clang-C.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-Clang-CXX.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Apple-Clang.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Darwin-Initialize.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/Darwin.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/Platform/UnixPaths.cmake /usr/local/Cellar/cmake/3.23.1/share/cmake/Modules/SelectLibraryConfigurations.cmake CMakeCache.txt CMakeFiles/3.23.1/CMakeCCompiler.cmake CMakeFiles/3.23.1/CMakeCXXCompiler.cmake CMakeFiles/3.23.1/CMakeSystem.cmake: phony
+
+
+#############################################
+# Clean all the built files.
+
+build clean: CLEAN
+
+
+#############################################
+# Print all primary targets available.
+
+build help: HELP
+
+
+#############################################
+# Make the all target the default.
+
+default all

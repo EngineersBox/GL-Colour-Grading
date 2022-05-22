@@ -3,11 +3,10 @@
 #include <spdlog/spdlog.h>
 
 namespace GLCG::GPU::Buffers {
-    FBO::FBO(const int width, const int height):
-        shader(
-            "../assets/shaders/framebuffer.vsh",
-            "../assets/shaders/framebuffer.fsh"
-        ) {
+    FBO::FBO(const int width, const int height) {
+        this->shader = Shaders::Shader::builder()
+            .withVertex("../assets/shaders/framebuffer.vsh")
+            .withFragment("../assets/shaders/framebuffer.fsh");
         spdlog::info("Compiled and linked framebuffer shader");
         this->activate();
         glUniform1i(glGetUniformLocation(this->shader.id, "screenTexture"), 0);

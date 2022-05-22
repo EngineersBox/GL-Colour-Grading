@@ -16,8 +16,8 @@ CMakeCache.txt
 
 Makefile
 
-build
-build/*
+builder
+builder/*
 
 memory_analysis
 memory_analysis/*
@@ -26,5 +26,5 @@ memory_analysis/*
 .cache/*
 
 .idea/
-cmake-build-debug/
-cmake-build-debug-visual-studio/
+cmake-builder-debug/
+cmake-builder-debug-visual-studio/

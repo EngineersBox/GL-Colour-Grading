@@ -11,6 +11,9 @@ namespace GLCG::GPU::Shaders {
         FRAGMENT,
         VERTEX,
         GEOMETRY,
+        COMPUTE,
+        TESSELATION_CONTROL,
+        TESSELATION_EVALUATION,
         PROGRAM,
     };
     std::string programTypeToString(ProgramType type);

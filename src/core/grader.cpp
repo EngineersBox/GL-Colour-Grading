@@ -36,7 +36,7 @@ namespace GLCG::Core {
             nullptr
         );
         if (this->window == nullptr) {
-            spdlog::error("Failed to create GLFW window");
+            spdlog::error("Failed to builder GLFW window");
             glfwTerminate();
             exit(1);
         }
