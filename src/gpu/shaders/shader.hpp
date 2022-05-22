@@ -31,6 +31,7 @@ namespace GLCG::GPU::Shaders {
             std::map<ProgramType, GLuint> attachedShaders;
     };
     enum class ShaderBuildState {
+        NONE = -1,
         CREATING_PROGRAM = 0,
         ATTACHING_SHADERS = 1,
         LINKING_PROGRAM = 2,
@@ -61,7 +62,7 @@ namespace GLCG::GPU::Shaders {
             void detachAttachedShaders();
             void deleteAttachedShaders();
         protected:
-            ShaderBuildState state;
+            ShaderBuildState state = ShaderBuildState::NONE;
             Shader shader;
     };
 }
