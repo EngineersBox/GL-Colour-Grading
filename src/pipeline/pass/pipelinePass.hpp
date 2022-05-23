@@ -3,6 +3,7 @@
 #ifndef GL_COLOUR_GRADING_PIPELINEPASS_HPP
 #define GL_COLOUR_GRADING_PIPELINEPASS_HPP
 
+#include "../../gpu/shaders/shader.hpp"
 #include "../../resources/texture.hpp"
 
 namespace GLCG::Pipelines {
@@ -12,6 +13,7 @@ namespace GLCG::Pipelines {
 
             virtual void apply();
         private:
+            GPU::Shaders::Shader* shader = nullptr;
             Resources::Texture* texture = nullptr;
     };
 }

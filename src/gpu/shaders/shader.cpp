@@ -171,7 +171,7 @@ namespace GLCG::GPU::Shaders {
 
     void ShaderBuilder::detachAttachedShaders() {
         this->state = ShaderBuildState::DETACHING_SHADERS;
-        std::for_each(
+        std::ranges::for_each(
             this->shader.attachedShaders.begin(),
             this->shader.attachedShaders.end(),
             [this](std::pair<ProgramType, GLuint> entry) -> void {
@@ -188,7 +188,7 @@ namespace GLCG::GPU::Shaders {
 
     void ShaderBuilder::deleteAttachedShaders() {
         this->state = ShaderBuildState::DELETING_SHADERS;
-        std::for_each(
+        std::ranges::for_each(
             this->shader.attachedShaders.begin(),
             this->shader.attachedShaders.end(),
             [](std::pair<ProgramType, GLuint> entry) -> void {
