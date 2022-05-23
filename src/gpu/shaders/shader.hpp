@@ -59,8 +59,8 @@ namespace GLCG::GPU::Shaders {
             }
         private:
             void attachShader(ProgramType type, const char* shaderFile);
-            void detachAttachedShaders();
-            void deleteAttachedShaders();
+            void detachShaders();
+            void deleteShaders();
         protected:
             ShaderBuildState state = ShaderBuildState::NONE;
             Shader shader;

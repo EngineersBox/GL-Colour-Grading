@@ -169,7 +169,7 @@ namespace GLCG::GPU::Shaders {
         );
     }
 
-    void ShaderBuilder::detachAttachedShaders() {
+    void ShaderBuilder::detachShaders() {
         this->state = ShaderBuildState::DETACHING_SHADERS;
         std::ranges::for_each(
             this->shader.attachedShaders.begin(),
@@ -186,7 +186,7 @@ namespace GLCG::GPU::Shaders {
         );
     }
 
-    void ShaderBuilder::deleteAttachedShaders() {
+    void ShaderBuilder::deleteShaders() {
         this->state = ShaderBuildState::DELETING_SHADERS;
         std::ranges::for_each(
             this->shader.attachedShaders.begin(),
@@ -206,8 +206,8 @@ namespace GLCG::GPU::Shaders {
         this->state = ShaderBuildState::LINKING_PROGRAM;
         glLinkProgram(this->shader.id);
         Shader::compileErrors(this->shader.id, ProgramType::PROGRAM);
-        detachAttachedShaders();
-        deleteAttachedShaders();
+        detachShaders();
+        deleteShaders();
         this->state = ShaderBuildState::DONE;
         spdlog::trace("Finished construction of program with id {}", this->shader.id);
         return std::move(this->shader);
