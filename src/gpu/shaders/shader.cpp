@@ -3,6 +3,8 @@
 #include <spdlog/spdlog.h>
 #include <iterator>
 #include <algorithm>
+#include <execution>
+
 #include "../../io/reader.hpp"
 #include "../../util/openglUtils.hpp"
 #include "../../util/exception/openGLFeatureSupportException.hpp"
@@ -171,35 +173,30 @@ namespace GLCG::GPU::Shaders {
 
     void ShaderBuilder::detachShaders() {
         this->state = ShaderBuildState::DETACHING_SHADERS;
-        std::ranges::for_each(
-            this->shader.attachedShaders.begin(),
-            this->shader.attachedShaders.end(),
-            [this](std::pair<ProgramType, GLuint> entry) -> void {
-                glDetachShader(this->shader.id, entry.second);
-                spdlog::trace(
-                    "Detached {} shader with id {} from program {}",
-                    programTypeToString(entry.first),
-                    entry.second,
-                    this->shader.id
-                );
-            }
-        );
+        #pragma omp parallel for
+        for (auto [programType, id] : this->shader.attachedShaders) {
+            glDetachShader(this->shader.id, id);
+            spdlog::trace(
+                "Detached {} shader with id {} from program {}",
+                programTypeToString(programType),
+                id,
+                this->shader.id
+            );
+        }
     }
 
     void ShaderBuilder::deleteShaders() {
         this->state = ShaderBuildState::DELETING_SHADERS;
-        std::ranges::for_each(
-            this->shader.attachedShaders.begin(),
-            this->shader.attachedShaders.end(),
-            [](std::pair<ProgramType, GLuint> entry) -> void {
-                glDeleteShader(entry.second);
-                spdlog::trace(
-                    "Deleted {} shader with id {}",
-                    programTypeToString(entry.first),
-                    entry.second
-                );
-            }
-        );
+        #pragma omp parallel for
+        for (auto [programType, id] : this->shader.attachedShaders) {
+            glDeleteShader(id);
+            spdlog::trace(
+                "Deleted {} shader with id {}",
+                programTypeToString(programType),
+                id
+            );
+        }
+        this->shader.attachedShaders.clear();
     }
 
     ShaderBuilder::operator Shader() {
