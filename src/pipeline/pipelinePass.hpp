@@ -3,8 +3,8 @@
 #ifndef GL_COLOUR_GRADING_PIPELINEPASS_HPP
 #define GL_COLOUR_GRADING_PIPELINEPASS_HPP
 
-#include "../../gpu/shaders/shader.hpp"
-#include "../../resources/texture.hpp"
+#include "shaders/shader.hpp"
+#include "texture.hpp"
 
 namespace GLCG::Pipelines {
     class PipelinePass {

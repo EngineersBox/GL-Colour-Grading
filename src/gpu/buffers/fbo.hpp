@@ -29,7 +29,7 @@ namespace GLCG::GPU::Buffers {
             unsigned int fbo;
             unsigned int framebufferTexture;
             unsigned int rbo;
-            static constexpr std::array<float, 24> rectangleVertices = {
+            static constexpr std::array<float, 24> const RECTANGLE_VERTICES = {
                 1.0f, -1.0f,  1.0f, 0.0f,
                 -1.0f, -1.0f,  0.0f, 0.0f,
                 -1.0f,  1.0f,  0.0f, 1.0f,
