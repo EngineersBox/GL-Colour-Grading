@@ -11,31 +11,36 @@
 #include "../util/stringUtils.hpp"
 
 namespace GLCG::Pipelines {
-    enum PipelinePassBlendMode {};
+    enum PipelinePassBlendMode {
+        ADDITIVE,
+        SUBTRACTIVE,
+        LIGHTEN,
+        DARKEN
+    };
     class Pipeline {
         public:
             Pipeline() = default;
 
-            size_t addPass(PipelinePass pass) {
+            size_t addPass(PipelinePass&& pass) {
                 this->graph.emplace_back(std::move(pass));
                 return this->graph.size() - 1;
             }
-            size_t addParallelPass(std::vector<Graph<PipelinePass>> parallelPasses) {
+            size_t addParallelPass(std::vector<Graph<PipelinePass>>&& parallelPasses) {
                 if (this->graph.empty()) {
                     throw std::runtime_error("Parallel pass cannot be first node");
                 } else if (this->graph.back().type == GraphNodeType::PARALLEL) {
                     throw std::runtime_error("Cannot chain non-nested parallel passes without intermediary join");
                 }
-                this->graph.emplace_back(std::move(parallelPasses));
+                this->graph.emplace_back(ParallelGraphNode<PipelinePass>{std::move(parallelPasses)});
                 return this->graph.size() - 1;
             }
-            size_t addBlendPass(PipelinePass blendPass, PipelinePassBlendMode blendMode) {
+            size_t addBlendPass(PipelinePass&& blendPass, PipelinePassBlendMode blendMode) {
                 if (this->graph.empty()) {
                     throw std::runtime_error("Parallel pass cannot be first node");
                 } else if (this->graph.back().type != GraphNodeType::PARALLEL) {
                     throw std::runtime_error("Cannot join from a non-parallel pass");
                 }
-                this->graph.emplace_back(std::move(blendPass), blendMode);
+                this->graph.emplace_back(JoinGraphNode<PipelinePass, PipelinePassBlendMode>{std::move(blendPass), blendMode});
                 return this->graph.size() - 1;
             }
             void removePass(const size_t index) {

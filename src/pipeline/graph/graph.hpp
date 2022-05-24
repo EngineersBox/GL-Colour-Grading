@@ -6,41 +6,53 @@
 #include <type_traits>
 #include <list>
 #include <vector>
+#include <memory>
 
 namespace GLCG::Pipelines {
-    enum class GraphNodeType {
-        NORMAL,
-        PARALLEL,
-        JOIN
+    enum class GraphNodeModifyBehaviour {
+        MAKE_SERIAL = 0,
+        MAKE_PARALLEL_PREFIXED = 1,
     };
     template<typename T>
     struct GraphNode {
-        explicit GraphNode(T value):
-            value(value),
-            type(GraphNodeType::NORMAL) {}
+        public:
+            explicit GraphNode(T&& value, std::shared_ptr<GraphNode<T>> prev = nullptr, std::shared_ptr<GraphNode<T>> next = nullptr): value(std::move(value)) {
+                if (prev != nullptr) {
+                    this->prevNodes.push_back(std::move(prev));
+                }
+                if (next != nullptr) {
+                    this->nextNodes.push_back(std::move(next));
+                }
+            }
 
-        explicit GraphNode(T value, GraphNodeType type):
-            value(std::move(value)),
-            type(type){}
-        T value;
-        GraphNodeType type;
+            void insertAfter(T&& newValue);
+            void insertBefore(T&& newValue);
+
+            [[nodiscard]]
+            constexpr bool isSplitNode() const noexcept;
+
+            [[nodiscard]]
+            constexpr bool isJoinNode() const noexcept;
+
+            [[nodiscard]]
+            constexpr bool isNormalNode() const noexcept;
+
+            std::unique_ptr<T> getvalue();
+
+            std::vector<std::shared_ptr<GraphNode<T>>> nextNodes;
+            std::vector<std::shared_ptr<GraphNode<T>>> prevNodes;
+        private:
+            T value;
     };
 
     template<typename T>
-    using Graph = std::list<GraphNode<T>>;
-
-    template<typename T>
-    struct ParallelGraphNode: public GraphNode<std::vector<Graph<T>>> {
-        explicit ParallelGraphNode(std::vector<Graph<T>> value):
-            GraphNode<std::vector<Graph<T>>>(value, GraphNodeType::PARALLEL) {}
-    };
-
-    template<typename T, typename O> requires std::is_enum_v<O>
-    struct JoinGraphNode: public GraphNode<T> {
-        explicit JoinGraphNode(T value, O joinOperation):
-            GraphNode<T>(value, GraphNodeType::JOIN),
-            joinOperation(joinOperation) {}
-        O joinOperation;
+    class Graph {
+        public:
+            // constructor
+            Graph() = default;
+        private:
+            std::shared_ptr<GraphNode<T>> head;
+            std::shared_ptr<GraphNode<T>> tail;
     };
 }
 
