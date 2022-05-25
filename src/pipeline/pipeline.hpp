@@ -24,51 +24,35 @@ namespace GLCG::Pipelines {
         DARKEN
     };
 
+    struct NormalVertex: public CoreVertexMeta {
+        PipelinePass pass;
+    };
+
+    struct BlendVertex: public CoreVertexMeta {
+        PipelinePassBlendMode blendMode;
+    };
+
     class Pipeline {
         public:
             Pipeline() = default;
 
-            size_t addPass(PipelinePass const& pass) {
-//                this->graph.emplace_back(NormalNode<PipelinePass>(pass));
-                return this->graph.num_vertices();
-            }
-
-            size_t addParallelPass(CoreGraph& parallelPasses, Vertex& toAppendAfter, Vertex& toAppendFrom) {
-//                if (this->graph.empty()) {
-//                    throw std::runtime_error("Parallel pass cannot be first node");
-//                } else if (this->graph.back().type == NodeType::PARALLEL) {
-//                    throw std::runtime_error("Cannot chain non-nested parallel passes without intermediary join");
-//                }
-//                this->graph.emplace_back(ParallelNode<PipelinePass>(parallelPasses));
-
-                mergeGraphs(this->graph, toAppendAfter, parallelPasses, toAppendFrom);
-                return this->graph.num_vertices();
-            }
-
-            size_t addBlendPass(PipelinePass const& blendPass, PipelinePassBlendMode blendMode) {
-//                if (this->graph.empty()) {
-//                    throw std::runtime_error("Parallel pass cannot be first node");
-//                } else if (this->graph.back().type != NodeType::PARALLEL) {
-//                    throw std::runtime_error("Cannot join from a non-parallel pass");
-//                }
-//                this->graph.emplace_back(JoinNode<PipelinePass, PipelinePassBlendMode>(blendPass, blendMode));
-                return this->graph.num_vertices();
-            }
-
-            void removePass() {
-
-            }
+            size_t addPass(PipelinePass const& pass);
+            size_t addParallelPass(CoreGraph& parallelPasses, Vertex& toAppendAfter, Vertex& toAppendFrom);
+            size_t addBlendPass(PipelinePass const& blendPass, PipelinePassBlendMode blendMode);
+            void removePass();
 
             [[nodiscard]]
-            std::string graphToString() {
-                std::stringstream ss;
-                auto bundleMap = get(boost::vertex_bundle, this->graph);
-                for (Vertex v : boost::make_iterator_range(vertices(this->graph))) {
-                    CoreVertexMeta& bundle = bundleMap[v];
-                    ss << bundle.toString();
-                }
-                return ss.str();
-            }
+            std::string graphToString();
+
+            [[nodiscard]]
+            boost::iterator_range<CoreGraph::vertex_iterator> getVertexIteratorRange() noexcept;
+            [[nodiscard]]
+            boost::iterator_range<CoreGraph::vertex_iterator> getVertexIteratorRange() const noexcept;
+
+            [[nodiscard]]
+            boost::iterator_range<CoreGraph::edge_iterator> getEdgeIteratorRange() noexcept;
+            [[nodiscard]]
+            boost::iterator_range<CoreGraph::edge_iterator> getEdgeIteratorRange() const noexcept;
 
         private:
             CoreGraph graph;
