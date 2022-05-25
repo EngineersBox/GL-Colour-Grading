@@ -7,26 +7,29 @@
 #include <list>
 #include <vector>
 #include <memory>
+#include <map>
+#include <string>
 
 namespace GLCG::Pipelines {
-    enum class GraphNodeModifyBehaviour {
-        MAKE_SERIAL = 0,
-        MAKE_PARALLEL_PREFIXED = 1,
-    };
     template<typename T>
     struct GraphNode {
         public:
-            explicit GraphNode(T&& value, std::shared_ptr<GraphNode<T>> prev = nullptr, std::shared_ptr<GraphNode<T>> next = nullptr): value(std::move(value)) {
+            explicit GraphNode(std::string&& name,
+                               T&& value,
+                               std::pair<std::string, std::shared_ptr<GraphNode<T>>> prev = nullptr,
+                               std::pair<std::string, std::shared_ptr<GraphNode<T>>> next = nullptr):
+                    name(std::move(name)),
+                    value(std::move(value)) {
                 if (prev != nullptr) {
-                    this->prevNodes.push_back(std::move(prev));
+                    this->prevNodes[prev.first] = std::make_shared(prev.second);
                 }
                 if (next != nullptr) {
-                    this->nextNodes.push_back(std::move(next));
+                    this->nextNodes[next.first] = std::make_shared(next.second);
                 }
             }
 
-            void insertAfter(T&& newValue);
-            void insertBefore(T&& newValue);
+            void insertAfter(std::string newName, T&& newValue);
+            void insertBefore(std::string newName, T&& newValue);
 
             [[nodiscard]]
             constexpr bool isSplitNode() const noexcept;
@@ -37,10 +40,11 @@ namespace GLCG::Pipelines {
             [[nodiscard]]
             constexpr bool isNormalNode() const noexcept;
 
-            std::unique_ptr<T> getvalue();
+            std::unique_ptr<T> getValue();
 
-            std::vector<std::shared_ptr<GraphNode<T>>> nextNodes;
-            std::vector<std::shared_ptr<GraphNode<T>>> prevNodes;
+            std::map<std::string, std::shared_ptr<GraphNode<T>>> nextNodes;
+            std::map<std::string, std::shared_ptr<GraphNode<T>>> prevNodes;
+            std::string name;
         private:
             T value;
     };
@@ -51,8 +55,8 @@ namespace GLCG::Pipelines {
             // constructor
             Graph() = default;
         private:
-            std::shared_ptr<GraphNode<T>> head;
-            std::shared_ptr<GraphNode<T>> tail;
+            std::pair<std::string, std::shared_ptr<GraphNode<T>>> head;
+            std::pair<std::string, std::shared_ptr<GraphNode<T>>> tail;
     };
 }
 

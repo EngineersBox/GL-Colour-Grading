@@ -5,9 +5,10 @@
 
 #include <utility>
 #include <algorithm>
+#include <memory>
 
 #include "pipelinePass.hpp"
-#include "graph/graph.hpp"
+#include "graph/coreGraph.hpp"
 #include "../util/stringUtils.hpp"
 
 namespace GLCG::Pipelines {
@@ -21,28 +22,31 @@ namespace GLCG::Pipelines {
         public:
             Pipeline() = default;
 
-            size_t addPass(PipelinePass&& pass) {
-                this->graph.emplace_back(std::move(pass));
+            size_t addPass(PipelinePass const& pass) {
+                this->graph.emplace_back(NormalNode<PipelinePass>(pass));
                 return this->graph.size() - 1;
             }
-            size_t addParallelPass(std::vector<Graph<PipelinePass>>&& parallelPasses) {
+
+            size_t addParallelPass(std::vector<CoreGraph<PipelinePass>>& parallelPasses) {
                 if (this->graph.empty()) {
                     throw std::runtime_error("Parallel pass cannot be first node");
-                } else if (this->graph.back().type == GraphNodeType::PARALLEL) {
+                } else if (this->graph.back().type == NodeType::PARALLEL) {
                     throw std::runtime_error("Cannot chain non-nested parallel passes without intermediary join");
                 }
-                this->graph.emplace_back(ParallelGraphNode<PipelinePass>{std::move(parallelPasses)});
+                this->graph.emplace_back(ParallelNode<PipelinePass>(parallelPasses));
                 return this->graph.size() - 1;
             }
-            size_t addBlendPass(PipelinePass&& blendPass, PipelinePassBlendMode blendMode) {
+
+            size_t addBlendPass(PipelinePass const& blendPass, PipelinePassBlendMode blendMode) {
                 if (this->graph.empty()) {
                     throw std::runtime_error("Parallel pass cannot be first node");
-                } else if (this->graph.back().type != GraphNodeType::PARALLEL) {
+                } else if (this->graph.back().type != NodeType::PARALLEL) {
                     throw std::runtime_error("Cannot join from a non-parallel pass");
                 }
-                this->graph.emplace_back(JoinGraphNode<PipelinePass, PipelinePassBlendMode>{std::move(blendPass), blendMode});
+                this->graph.emplace_back(JoinNode<PipelinePass, PipelinePassBlendMode>(blendPass, blendMode));
                 return this->graph.size() - 1;
             }
+
             void removePass(const size_t index) {
                 if (this->graph.empty() || this->graph.size() - 1 > index) {
                     throw std::runtime_error(Utils::String::format(
@@ -55,7 +59,7 @@ namespace GLCG::Pipelines {
             }
 
         private:
-            Graph<PipelinePass> graph;
+            CoreGraph<PipelinePass> graph;
     };
 }
 
