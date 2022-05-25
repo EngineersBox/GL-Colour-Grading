@@ -20,7 +20,7 @@ namespace GLCG::Utils::String {
             throw std::runtime_error("Error during formatting.");
         }
         auto size = static_cast<size_t>(size_s);
-        std::unique_ptr<char[]> buf(new char[ size ]);
+        std::unique_ptr<char[]> buf(new char[size]);
         std::snprintf(
             buf.get(),
             size,

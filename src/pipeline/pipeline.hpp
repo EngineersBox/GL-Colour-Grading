@@ -24,21 +24,32 @@ namespace GLCG::Pipelines {
         DARKEN
     };
 
+    static std::string blendModeToString(PipelinePassBlendMode blendMode) {
+        switch (blendMode) {
+            case PipelinePassBlendMode::ADDITIVE: return "ADDITIVE";
+            case PipelinePassBlendMode::SUBTRACTIVE: return "SUBTRACTIVE";
+            case PipelinePassBlendMode::LIGHTEN: return "LIGHTEN";
+            case PipelinePassBlendMode::DARKEN: return "DARKEN";
+            default: throw std::invalid_argument("Unknown blend mode");
+        }
+    }
+
     struct NormalVertex: public CoreVertexMeta {
         PipelinePass pass;
     };
 
     struct BlendVertex: public CoreVertexMeta {
         PipelinePassBlendMode blendMode;
+        virtual std::string toString() override;
     };
 
     class Pipeline {
         public:
             Pipeline() = default;
 
-            size_t addPass(PipelinePass const& pass);
-            size_t addParallelPass(CoreGraph& parallelPasses, Vertex& toAppendAfter, Vertex& toAppendFrom);
-            size_t addBlendPass(PipelinePass const& blendPass, PipelinePassBlendMode blendMode);
+            size_t addPass(const std::string& name, PipelinePass const& pass);
+            size_t addParallelPass(const std::string& name, CoreGraph& parallelPasses, Vertex& toAppendAfter, Vertex& toAppendFrom);
+            size_t addBlendPass(const std::string& name, PipelinePass const& blendPass, PipelinePassBlendMode blendMode);
             void removePass();
 
             [[nodiscard]]

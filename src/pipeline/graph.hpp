@@ -24,20 +24,41 @@ namespace GLCG::Pipelines {
     }
 
     struct CoreVertexMeta {
+        std::string name;
         VertexType type;
         virtual std::string toString();
     };
 
     using CoreGraph = boost::directed_graph<CoreVertexMeta, boost::no_property, boost::no_property>;
     using Vertex = CoreGraph::vertex_descriptor;
+    using VertexIterator = CoreGraph::vertex_iterator;
     using Edge = CoreGraph::edge_descriptor;
+    using EdgeIterator = CoreGraph::edge_iterator;
 
-    static void mergeGraphs(CoreGraph& graph1, Vertex graph1Vertex, const CoreGraph& graph2, Vertex graph2Vertex) {
-        std::vector<Vertex> orig2copy_data(num_vertices(graph2));
-        auto mapV = make_iterator_property_map(orig2copy_data.begin(), get(boost::vertex_index, graph2));
-        boost::copy_graph(graph2, graph1, boost::orig_to_copy(mapV));
-        Vertex graph2SourceVertex = mapV[graph2Vertex];
-        boost::add_edge(graph1Vertex, graph2SourceVertex, graph1);
+    namespace Graph {
+        static VertexIterator findVertex(const CoreGraph& graph, const std::string_view& name) {
+            VertexIterator iter, iterEnd;
+            for (boost::tie(iter, iterEnd) = vertices(graph); iter != iterEnd; ++iter) {
+                if (graph[*iter].name == name) return iter;
+            }
+            return iterEnd;
+        }
+
+        static bool hasVertex(const CoreGraph& graph, const std::string_view& name) {
+            VertexIterator iter, iterEnd;
+            for (boost::tie(iter, iterEnd) = vertices(graph); iter != iterEnd; ++iter) {
+                if (graph[*iter].name == name) return true;
+            }
+            return false;
+        }
+
+        static void mergeGraphs(CoreGraph& graph1, Vertex graph1Vertex, const CoreGraph& graph2, Vertex graph2Vertex) {
+            std::vector<Vertex> orig2copy_data(num_vertices(graph2));
+            auto mapV = make_iterator_property_map(orig2copy_data.begin(), get(boost::vertex_index, graph2));
+            boost::copy_graph(graph2, graph1, boost::orig_to_copy(mapV));
+            Vertex graph2SourceVertex = mapV[graph2Vertex];
+            boost::add_edge(graph1Vertex, graph2SourceVertex, graph1);
+        }
     }
 }
 

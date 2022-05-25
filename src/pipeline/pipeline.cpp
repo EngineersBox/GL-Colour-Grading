@@ -1,12 +1,26 @@
 #include "pipeline.hpp"
 
 namespace GLCG::Pipelines {
-    size_t Pipeline::addPass(PipelinePass const& pass) {
-//                this->graph.emplace_back(NormalNode<PipelinePass>(pass));
+    std::string BlendVertex::toString() {
+        return Utils::String::format(
+            "{ NAME: %s, TYPE: %s, MODE: %s }",
+            this->name.c_str(),
+            vertexTypeToString(this->type).c_str(),
+            blendModeToString(this->blendMode).c_str()
+        );
+    }
+
+    size_t Pipeline::addPass(const std::string& name, PipelinePass const& pass) {
+        if (Graph::hasVertex(this->graph, name)) {
+            throw std::runtime_error("Vertex already exists");
+        }
         return this->graph.num_vertices();
     }
 
-    size_t Pipeline::addParallelPass(CoreGraph& parallelPasses, Vertex& toAppendAfter, Vertex& toAppendFrom) {
+    size_t Pipeline::addParallelPass(const std::string& name, CoreGraph& parallelPasses, Vertex& toAppendAfter, Vertex& toAppendFrom) {
+        if (Graph::hasVertex(this->graph, name)) {
+            throw std::runtime_error("Vertex already exists");
+        }
 //                if (this->graph.empty()) {
 //                    throw std::runtime_error("Parallel pass cannot be first node");
 //                } else if (this->graph.back().type == NodeType::PARALLEL) {
@@ -17,11 +31,14 @@ namespace GLCG::Pipelines {
         /* NOTE: Verify this behaves as expected, can always resort to std::vector<PipelinePass>
          * NOTE: and construct parallel nodes manually as well as link edges.
          */
-        mergeGraphs(this->graph, toAppendAfter, parallelPasses, toAppendFrom);
+        Graph::mergeGraphs(this->graph, toAppendAfter, parallelPasses, toAppendFrom);
         return this->graph.num_vertices();
     }
 
-    size_t Pipeline::addBlendPass(PipelinePass const& blendPass, PipelinePassBlendMode blendMode) {
+    size_t Pipeline::addBlendPass(const std::string& name, PipelinePass const& blendPass, PipelinePassBlendMode blendMode) {
+        if (Graph::hasVertex(this->graph, name)) {
+            throw std::runtime_error("Vertex already exists");
+        }
 //                if (this->graph.empty()) {
 //                    throw std::runtime_error("Parallel pass cannot be first node");
 //                } else if (this->graph.back().type != NodeType::PARALLEL) {
