@@ -14,6 +14,9 @@ namespace GLCG::Pipelines {
 //                }
 //                this->graph.emplace_back(ParallelNode<PipelinePass>(parallelPasses));
 
+        /* NOTE: Verify this behaves as expected, can always resort to std::vector<PipelinePass>
+         * NOTE: and construct parallel nodes manually as well as link edges.
+         */
         mergeGraphs(this->graph, toAppendAfter, parallelPasses, toAppendFrom);
         return this->graph.num_vertices();
     }
