@@ -8,9 +8,11 @@
 #include <stdexcept>
 #include <boost/graph/directed_graph.hpp>
 #include <boost/graph/copy.hpp>
+#include <utility>
 
 namespace GLCG::Pipelines {
     enum class VertexType {
+        NONE,
         NORMAL,
         BLEND
     };
@@ -24,8 +26,11 @@ namespace GLCG::Pipelines {
     }
 
     struct CoreVertexMeta {
+        explicit CoreVertexMeta(std::string const& name, VertexType type):
+            name(name),
+            type(type) {}
         std::string name;
-        VertexType type;
+        VertexType type = VertexType::NONE;
         virtual std::string toString();
     };
 

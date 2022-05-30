@@ -35,10 +35,16 @@ namespace GLCG::Pipelines {
     }
 
     struct NormalVertex: public CoreVertexMeta {
+        explicit NormalVertex(std::string const& name, PipelinePass pass):
+            CoreVertexMeta(name, VertexType::NORMAL),
+            pass(std::move(pass)) {}
         PipelinePass pass;
     };
 
     struct BlendVertex: public CoreVertexMeta {
+        explicit BlendVertex(std::string const& name, PipelinePassBlendMode blendMode):
+            CoreVertexMeta(name, VertexType::BLEND),
+            blendMode(blendMode) {}
         PipelinePassBlendMode blendMode;
         virtual std::string toString() override;
     };
