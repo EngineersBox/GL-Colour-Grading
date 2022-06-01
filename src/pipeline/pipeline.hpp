@@ -54,7 +54,8 @@ namespace GLCG::Pipelines {
             Pipeline() = default;
 
             CoreGraph::vertex_descriptor addVertex(const CoreVertexMeta& vertex);
-            void removeVertex(auto vertexIterator);
+            void removeVertex(CoreGraph::vertex_iterator vertexIterator);
+            void removeVertex(const std::string& name);
 
             [[nodiscard]]
             std::string graphToString();

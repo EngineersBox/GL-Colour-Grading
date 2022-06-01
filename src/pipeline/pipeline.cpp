@@ -19,14 +19,29 @@ namespace GLCG::Pipelines {
         return this->graph.add_vertex(vertex);
     }
 
-    void Pipeline::removeVertex(auto vertexIterator) {
+    void Pipeline::removeVertex(CoreGraph::vertex_iterator vertexIterator) {
         this->graph.remove_vertex_and_renumber_indices(std::move(vertexIterator));
+    }
+
+    void Pipeline::removeVertex(const std::string &name) {
+        boost::iterator_range<CoreGraph::vertex_iterator> iter = getVertexIteratorRange();
+        CoreGraph::vertex_iterator matchedIter = std::find_if(
+            iter.begin(),
+            iter.end(),
+            [this, name](const Vertex& current) -> bool{
+                return this->graph[current].name == name;
+            }
+        );
+        if (matchedIter == iter.end()) {
+            throw std::runtime_error("Vertex does not exist");
+        }
+        removeVertex(matchedIter);
     }
 
     std::string Pipeline::graphToString() {
         std::stringstream ss;
         auto bundleMap = get(boost::vertex_bundle, this->graph);
-        for (Vertex v : boost::make_iterator_range(vertices(this->graph))) {
+        for (Vertex v : getVertexIteratorRange()) {
             CoreVertexMeta& bundle = bundleMap[v];
             ss << bundle.toString();
         }
