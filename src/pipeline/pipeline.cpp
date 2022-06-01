@@ -1,5 +1,7 @@
 #include "pipeline.hpp"
 
+#include <utility>
+
 namespace GLCG::Pipelines {
     std::string BlendVertex::toString() {
         return Utils::String::format(
@@ -10,46 +12,15 @@ namespace GLCG::Pipelines {
         );
     }
 
-    size_t Pipeline::addPass(const std::string& name, PipelinePass const& pass) {
-        if (Graph::hasVertex(this->graph, name)) {
+    CoreGraph::vertex_descriptor Pipeline::addVertex(const CoreVertexMeta& vertex) {
+        if (Graph::hasVertex(this->graph, vertex.name)) {
             throw std::runtime_error("Vertex already exists");
         }
-        return this->graph.num_vertices();
+        return this->graph.add_vertex(vertex);
     }
 
-    size_t Pipeline::addParallelPass(const std::string& name, CoreGraph& parallelPasses, Vertex& toAppendAfter, Vertex& toAppendFrom) {
-        if (Graph::hasVertex(this->graph, name)) {
-            throw std::runtime_error("Vertex already exists");
-        }
-//                if (this->graph.empty()) {
-//                    throw std::runtime_error("Parallel pass cannot be first node");
-//                } else if (this->graph.back().type == NodeType::PARALLEL) {
-//                    throw std::runtime_error("Cannot chain non-nested parallel passes without intermediary join");
-//                }
-//                this->graph.emplace_back(ParallelNode<PipelinePass>(parallelPasses));
-
-        /* NOTE: Verify this behaves as expected, can always resort to std::vector<PipelinePass>
-         * NOTE: and construct parallel nodes manually as well as link edges.
-         */
-        Graph::mergeGraphs(this->graph, toAppendAfter, parallelPasses, toAppendFrom);
-        return this->graph.num_vertices();
-    }
-
-    size_t Pipeline::addBlendPass(const std::string& name, PipelinePass const& blendPass, PipelinePassBlendMode blendMode) {
-        if (Graph::hasVertex(this->graph, name)) {
-            throw std::runtime_error("Vertex already exists");
-        }
-//                if (this->graph.empty()) {
-//                    throw std::runtime_error("Parallel pass cannot be first node");
-//                } else if (this->graph.back().type != NodeType::PARALLEL) {
-//                    throw std::runtime_error("Cannot join from a non-parallel pass");
-//                }
-//                this->graph.emplace_back(JoinNode<PipelinePass, PipelinePassBlendMode>(blendPass, blendMode));
-        return this->graph.num_vertices();
-    }
-
-    void Pipeline::removePass() {
-
+    void Pipeline::removeVertex(auto vertexIterator) {
+        this->graph.remove_vertex_and_renumber_indices(std::move(vertexIterator));
     }
 
     std::string Pipeline::graphToString() {

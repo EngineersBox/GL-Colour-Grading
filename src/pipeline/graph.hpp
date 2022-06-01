@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <stdexcept>
+#include <algorithm>
 #include <boost/graph/directed_graph.hpp>
 #include <boost/graph/copy.hpp>
 #include <utility>
@@ -26,6 +27,7 @@ namespace GLCG::Pipelines {
     }
 
     struct CoreVertexMeta {
+        CoreVertexMeta() = default;
         explicit CoreVertexMeta(std::string const& name, VertexType type):
             name(name),
             type(type) {}
@@ -50,11 +52,14 @@ namespace GLCG::Pipelines {
         }
 
         static bool hasVertex(const CoreGraph& graph, const std::string_view& name) {
-            VertexIterator iter, iterEnd;
-            for (boost::tie(iter, iterEnd) = vertices(graph); iter != iterEnd; ++iter) {
-                if (graph[*iter].name == name) return true;
-            }
-            return false;
+            boost::iterator_range<VertexIterator> iter = boost::make_iterator_range(vertices(graph));
+            return std::any_of(
+                iter.begin(),
+                iter.end(),
+                [&graph, name](const Vertex& current) -> bool {
+                    return graph[current].name == name;
+                }
+            );
         }
 
         static void mergeGraphs(CoreGraph& graph1, Vertex graph1Vertex, const CoreGraph& graph2, Vertex graph2Vertex) {

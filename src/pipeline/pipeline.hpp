@@ -53,10 +53,8 @@ namespace GLCG::Pipelines {
         public:
             Pipeline() = default;
 
-            size_t addPass(const std::string& name, PipelinePass const& pass);
-            size_t addParallelPass(const std::string& name, CoreGraph& parallelPasses, Vertex& toAppendAfter, Vertex& toAppendFrom);
-            size_t addBlendPass(const std::string& name, PipelinePass const& blendPass, PipelinePassBlendMode blendMode);
-            void removePass();
+            CoreGraph::vertex_descriptor addVertex(const CoreVertexMeta& vertex);
+            void removeVertex(auto vertexIterator);
 
             [[nodiscard]]
             std::string graphToString();
