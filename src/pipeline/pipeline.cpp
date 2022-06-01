@@ -20,6 +20,7 @@ namespace GLCG::Pipelines {
     }
 
     void Pipeline::removeVertex(CoreGraph::vertex_iterator vertexIterator) {
+        // BUG: Fix this ambiguous boost::next issue
         this->graph.remove_vertex_and_renumber_indices(std::move(vertexIterator));
     }
 
