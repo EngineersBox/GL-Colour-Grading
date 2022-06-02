@@ -30,15 +30,12 @@ namespace GLCG::Pipelines {
 
     void Pipeline::removeVertex(const std::string &name) {
         boost::iterator_range<CoreGraph::vertex_iterator> iter = getVertexIteratorRange();
-        CoreGraph::vertex_iterator matchedIter = std::find_if(
-            iter.begin(),
-            iter.end(),
-            [this, name](const Vertex& current) -> bool{
-                return this->graph[current].name == name;
-            }
-        );
+        CoreGraph::vertex_iterator matchedIter = Graph::findVertex(this->graph, name);
         if (matchedIter == iter.end()) {
-            throw std::runtime_error("Vertex does not exist");
+            throw std::runtime_error(Utils::String::format(
+                "Vertex \"%s\" does not exist",
+                name.c_str()
+            ));
         }
         removeVertex(matchedIter);
     }

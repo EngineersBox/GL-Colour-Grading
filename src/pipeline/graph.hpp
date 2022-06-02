@@ -44,11 +44,14 @@ namespace GLCG::Pipelines {
 
     namespace Graph {
         static VertexIterator findVertex(const CoreGraph& graph, const std::string_view& name) {
-            VertexIterator iter, iterEnd;
-            for (boost::tie(iter, iterEnd) = vertices(graph); iter != iterEnd; ++iter) {
-                if (graph[*iter].name == name) return iter;
-            }
-            return iterEnd;
+            boost::iterator_range<CoreGraph::vertex_iterator> iter = boost::make_iterator_range(vertices(graph));
+            return std::find_if(
+                iter.begin(),
+                iter.end(),
+                [&graph, &name](const Vertex& current) -> bool{
+                    return graph[current].name == name;
+                }
+            );
         }
 
         static bool hasVertex(const CoreGraph& graph, const std::string_view& name) {
