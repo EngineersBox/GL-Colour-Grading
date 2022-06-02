@@ -19,6 +19,10 @@ namespace GLCG::Pipelines {
         return this->graph.add_vertex(vertex);
     }
 
+    std::pair<CoreGraph::edge_descriptor, bool> Pipeline::addEdge(CoreGraph::vertex_descriptor vertex1, CoreGraph::vertex_descriptor vertex2) {
+        return this->graph.add_edge(vertex1, vertex2);
+    }
+
     void Pipeline::removeVertex(CoreGraph::vertex_iterator vertexIterator) {
         // BUG: Fix this ambiguous boost::next issue
         this->graph.remove_vertex_and_renumber_indices(std::move(vertexIterator));
