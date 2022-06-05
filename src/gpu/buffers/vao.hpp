@@ -12,6 +12,8 @@ namespace GLCG::GPU::Buffers {
         public:
             GLuint id;
 
+            VAO(const VAO&) = default;
+            VAO(VAO&&) = default;
             VAO();
             virtual ~VAO() = default;
 

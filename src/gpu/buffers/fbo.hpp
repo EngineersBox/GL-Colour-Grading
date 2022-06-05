@@ -22,6 +22,11 @@ namespace GLCG::GPU::Buffers {
                 throw std::runtime_error("Cannot unbind FBO");
             };
             void destroy() override;
+
+            [[nodiscard]]
+            constexpr unsigned int getTextureId() const noexcept {
+                return this->framebufferTexture;
+            }
         private:
             GLCG::GPU::Shaders::Shader shader;
             unsigned int rectVAO;

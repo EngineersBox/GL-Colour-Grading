@@ -11,4 +11,9 @@ Based on <https://webglfundamentals.org/webgl/lessons/webgl-image-processing-con
 * Graph nodes:
   * Pass value: apply changes in sequence to buffered texture
   * Parallel value: parallel nested graphs, with copied buffered texture to each pass value
-  * Blend value: blend together the results of previous parallel value
+  * Blend value: blend together the results of previous parallel value, acts as a barrier
+
+## Parallelism
+
+Graph will be traversed in order, and parallel processed when graph has a split to n sub graphs.
+When a blend node is present, it will act as a barrier to all previous parallel processes.
