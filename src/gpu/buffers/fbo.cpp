@@ -1,13 +1,13 @@
 #include "fbo.hpp"
 
 #include <spdlog/spdlog.h>
-
+#include <stdexcept>
 
 namespace GLCG::GPU::Buffers {
     FBO::FBO(const int width, const int height) {
         this->shader = Shaders::Shader::builder()
-            .withVertex("../assets/shaders/framebuffer.vsh")
-            .withFragment("../assets/shaders/framebuffer.fsh");
+            .withVertex(FBO::FRAMEBUFFER_VERTEX_SHADER_PATH)
+            .withFragment(FBO::FRAMEBUFFER_FRAGMENT_SHADER_PATH);
         spdlog::info("Compiled and linked framebuffer shader");
         activate();
         glUniform1i(glGetUniformLocation(this->shader.id, "screenTexture"), 0);
@@ -21,8 +21,10 @@ namespace GLCG::GPU::Buffers {
         this->shader.validateProgram();
 
         if (const GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER); fboStatus != GL_FRAMEBUFFER_COMPLETE) {
-            spdlog::error("Error during framebuffer intialisation: {}", fboStatus);
-            exit(1);
+            throw std::runtime_error(Utils::String::format(
+                "Error during framebuffer initialisation: %zu",
+                fboStatus
+            ));
         }
     }
 

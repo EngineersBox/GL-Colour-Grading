@@ -23,9 +23,12 @@ namespace GLCG::Pipelines {
         return this->graph.add_edge(vertex1, vertex2);
     }
 
-    void Pipeline::removeVertex(CoreGraph::vertex_iterator vertexIterator) {
-        // BUG: Fix this ambiguous boost::next issue
-        this->graph.remove_vertex_and_renumber_indices(std::move(vertexIterator));
+    void Pipeline::removeVertex(const CoreGraph::vertex_iterator& vertexIterator) {
+        /* Note: Manually calling remove then renumber since for some reason a compiler error is generated about an
+         * ambiguous call to boost::next internally
+         */
+        this->graph.remove_vertex(*vertexIterator);
+        this->graph.renumber_indices();
     }
 
     void Pipeline::removeVertex(const std::string &name) {

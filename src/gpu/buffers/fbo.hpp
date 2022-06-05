@@ -29,11 +29,12 @@ namespace GLCG::GPU::Buffers {
             }
         private:
             GLCG::GPU::Shaders::Shader shader;
-            unsigned int rectVAO;
-            unsigned int rectVBO;
-            unsigned int fbo;
-            unsigned int framebufferTexture;
-            unsigned int rbo;
+            unsigned int rectVAO = 0;
+            unsigned int rectVBO = 0;
+            unsigned int fbo = 0;
+            unsigned int framebufferTexture = 0;
+            unsigned int rbo = 0;
+
             static constexpr std::array<float, 24> const RECTANGLE_VERTICES = {
                 1.0f, -1.0f,  1.0f, 0.0f,
                 -1.0f, -1.0f,  0.0f, 0.0f,
@@ -42,6 +43,9 @@ namespace GLCG::GPU::Buffers {
                 1.0f, -1.0f,  1.0f, 0.0f,
                 -1.0f,  1.0f,  0.0f, 1.0f
             };
+            static constexpr const char* FRAMEBUFFER_FRAGMENT_SHADER_PATH = "../assets/shaders/framebuffer.fsh";
+            static constexpr const char* FRAMEBUFFER_VERTEX_SHADER_PATH = "../assets/shaders/framebuffer.vsh";
+
             void prepareRectangleVBOVAO();
             void createFBO();
             void createFBOTexture(int width, int height);

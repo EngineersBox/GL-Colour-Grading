@@ -55,7 +55,7 @@ namespace GLCG::Pipelines {
 
             CoreGraph::vertex_descriptor addVertex(const CoreVertexMeta& vertex);
             std::pair<CoreGraph::edge_descriptor, bool> addEdge(CoreGraph::vertex_descriptor vertex1, CoreGraph::vertex_descriptor vertex2);
-            void removeVertex(CoreGraph::vertex_iterator vertexIterator);
+            void removeVertex(const CoreGraph::vertex_iterator& vertexIterator);
             void removeVertex(const std::string& name);
 
             [[nodiscard]]
