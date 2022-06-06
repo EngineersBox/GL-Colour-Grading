@@ -7,11 +7,11 @@
 #include <sstream>
 #include <stdexcept>
 #include <algorithm>
-#include <boost/range/adaptors.hpp>
-#include <boost/graph/directed_graph.hpp>
-#include <boost/graph/copy.hpp>
 #include <utility>
 #include <functional>
+#include <boost/graph/directed_graph.hpp>
+#include <boost/graph/copy.hpp>
+#include <boost/range/adaptor/transformed.hpp>
 
 namespace GLCG::Pipelines {
     enum class VertexType {

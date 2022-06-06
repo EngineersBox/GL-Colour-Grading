@@ -57,8 +57,8 @@ find_package(spdlog CONFIG REQUIRED)
 target_link_libraries(GL_Colour_Grading PRIVATE spdlog::spdlog spdlog::spdlog_header_only)
 
 # Boost
-find_package(Boost REQUIRED filesystem iostreams graph COMPONENTS)
-target_link_libraries(GL_Colour_Grading PRIVATE Boost::filesystem Boost::iostreams Boost::graph)
+find_package(Boost REQUIRED COMPONENTS filesystem iostreams graph)
+target_link_libraries(GL_Colour_Grading PRIVATE Boost::filesystem Boost::iostreams)
 
 # stb
 find_path(STB_INCLUDE_DIRS "stb.h")

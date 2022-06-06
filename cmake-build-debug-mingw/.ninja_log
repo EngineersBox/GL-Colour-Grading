@@ -1,0 +1,18 @@
+# ninja log v5
+3	40	0	E:/GL-Colour-Grading/cmake-build-debug-mingw/CMakeFiles/cmake.verify_globs	7427c2fe573893b
+14	54	6762246452644918	CMakeFiles/GL_Colour_Grading.dir/src/gpu/gpu.cpp.obj	4fbc863b7272e323
+5	95	6762246453054922	CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/ebo.cpp.obj	ea17127be03741be
+10	99	6762246453094917	CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/vao.cpp.obj	d61550e6ec790f02
+17	111	6762246453204913	CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/vbo.cpp.obj	c967b351ea3f42c5
+12	365	6762246455754931	CMakeFiles/GL_Colour_Grading.dir/src/gpu/shaders/programType.cpp.obj	b3fd3d8bb7fabdaf
+41	532	6762246457424921	CMakeFiles/GL_Colour_Grading.dir/src/pipeline/pipelinePass.cpp.obj	2a1e36a2f2cabc47
+7	1044	6762246462534922	CMakeFiles/GL_Colour_Grading.dir/src/gpu/buffers/fbo.cpp.obj	55d4567445192da3
+4	1770	6762246469774902	CMakeFiles/GL_Colour_Grading.dir/src/core/config.cpp.obj	27c13d2174751095
+19	1835	6762246470414929	CMakeFiles/GL_Colour_Grading.dir/src/gpu/workgroup.cpp.obj	d3fd165544d30d22
+48	2317	6762246475241077	CMakeFiles/GL_Colour_Grading.dir/src/resources/texture.cpp.obj	ccbe6c0a3f8e2b87
+31	3231	6762246484381061	CMakeFiles/GL_Colour_Grading.dir/src/pipeline/core/graph.cpp.obj	f81faabfd7148939
+34	3385	6762246485921098	CMakeFiles/GL_Colour_Grading.dir/src/pipeline/rendering/pipelineRenderer.cpp.obj	cf168bd4170fa3f7
+37	3478	6762246486851062	CMakeFiles/GL_Colour_Grading.dir/src/pipeline/pipeline.cpp.obj	aa8fafc740df320c
+1	4923	6762246501229586	CMakeFiles/GL_Colour_Grading.dir/src/core/grader.cpp.obj	1cb424c89b1d6957
+28	5488	6762246506856691	CMakeFiles/GL_Colour_Grading.dir/src/logging/logger.cpp.obj	8cfe7b6e0e234a16
+26	6769	6762246519642857	CMakeFiles/GL_Colour_Grading.dir/src/main.cpp.obj	2f87d38c3c3b0c84

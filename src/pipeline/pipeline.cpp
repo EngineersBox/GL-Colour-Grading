@@ -1,8 +1,5 @@
 #include "pipeline.hpp"
 
-#include <utility>
-#include <algorithm>
-
 namespace GLCG::Pipelines {
     boost::iterator_range<VertexIterator> Pipeline::getVertexIteratorRange() noexcept {
         return boost::make_iterator_range(vertices(this->graph));
