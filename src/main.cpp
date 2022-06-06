@@ -9,6 +9,7 @@
 #include "gpu/buffers/fbo.hpp"
 #include "resources/texture.hpp"
 #include "gpu/workgroup.hpp"
+#include "pipeline/rendering/pipelineRenderer.hpp"
 
 // Vertices coordinates
 static constexpr GLfloat vertices[] = {

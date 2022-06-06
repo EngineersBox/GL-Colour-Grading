@@ -13,7 +13,7 @@
 #include <boost/graph/copy.hpp>
 
 #include "pipelinePass.hpp"
-#include "graph.hpp"
+#include "core/graph.hpp"
 #include "../util/stringUtils.hpp"
 
 namespace GLCG::Pipelines {
@@ -51,26 +51,28 @@ namespace GLCG::Pipelines {
 
     class Pipeline {
         public:
-            Pipeline() = default;
-
-            CoreGraph::vertex_descriptor addVertex(const CoreVertexMeta& vertex);
-            std::pair<CoreGraph::edge_descriptor, bool> addEdge(CoreGraph::vertex_descriptor vertex1, CoreGraph::vertex_descriptor vertex2);
-            void removeVertex(const CoreGraph::vertex_iterator& vertexIterator);
+            Vertex addVertex(const CoreVertexMeta& vertex);
+            std::pair<Edge, bool> addEdge(Vertex vertex1, Vertex vertex2);
+            void removeVertex(const VertexIterator& vertexIterator);
             void removeVertex(const std::string& name);
 
             [[nodiscard]]
+            boost::iterator_range<VertexIterator> getVertexIteratorRange() noexcept;
+            [[nodiscard]]
+            boost::iterator_range<VertexIterator> getVertexIteratorRange() const noexcept;
+
+            [[nodiscard]]
+            boost::iterator_range<EdgeIterator> getEdgeIteratorRange() noexcept;
+            [[nodiscard]]
+            boost::iterator_range<EdgeIterator> getEdgeIteratorRange() const noexcept;
+
+            [[nodiscard]]
+            CoreGraph::VertexBundleIterator getVertexBundleIterator() noexcept;
+            [[nodiscard]]
+            CoreGraph::VertexBundleConstIterator getVertexBundleIterator() const noexcept;
+
+            [[nodiscard]]
             std::string graphToString();
-
-            [[nodiscard]]
-            boost::iterator_range<CoreGraph::vertex_iterator> getVertexIteratorRange() noexcept;
-            [[nodiscard]]
-            boost::iterator_range<CoreGraph::vertex_iterator> getVertexIteratorRange() const noexcept;
-
-            [[nodiscard]]
-            boost::iterator_range<CoreGraph::edge_iterator> getEdgeIteratorRange() noexcept;
-            [[nodiscard]]
-            boost::iterator_range<CoreGraph::edge_iterator> getEdgeIteratorRange() const noexcept;
-
         private:
             CoreGraph graph;
     };
