@@ -12,12 +12,20 @@ namespace GLCG::Pipelines {
     }
 
     template<typename T>
+    template<typename R>
+    typename DirectedGraphWrapper<T>::template Accessor<R> DirectedGraphWrapper<T>::generateAccessor() noexcept {
+        return [map = get(boost::vertex_bundle, this)](const InternalVertex v) -> R {
+            return map[v];
+        };
+    }
+
+    template<typename T>
     typename DirectedGraphWrapper<T>::VertexBundleIterator DirectedGraphWrapper<T>::vertexBundlesIterator() noexcept {
-        return vertices(this) | boost::adaptors::transformed(Accessor(get(boost::vertex_bundle, this)));
+        return vertices(this) | boost::adaptors::transformed(generateAccessor<T&>());
     }
 
     template<typename T>
     typename DirectedGraphWrapper<T>::VertexBundleConstIterator DirectedGraphWrapper<T>::vertexBundlesIterator() const noexcept {
-        return vertices(this) | boost::adaptors::transformed(Accessor(get(boost::vertex_bundle, this)));
+        return vertices(this) | boost::adaptors::transformed(generateAccessor<const T&>());
     }
 }

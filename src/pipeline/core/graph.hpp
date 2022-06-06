@@ -11,6 +11,7 @@
 #include <boost/graph/directed_graph.hpp>
 #include <boost/graph/copy.hpp>
 #include <utility>
+#include <functional>
 
 namespace GLCG::Pipelines {
     enum class VertexType {
@@ -46,22 +47,18 @@ namespace GLCG::Pipelines {
             using InternalVertex = typename InternalCoreGraph<T>::vertex_descriptor;
             using InternalVertexIterator = typename InternalCoreGraph<T>::vertex_iterator;
 
-            struct Accessor: std::unary_function<const InternalVertex, T&> {
-                explicit Accessor(const boost::property_map<InternalCoreGraph<T>, T> bundleMap):
-                    bundleMap(bundleMap),
-                    std::unary_function<const InternalVertex, T&>() {}
-                T& operator()(const InternalVertex v) noexcept {
-                    return this->bundleMap[v];
-                }
-                T& operator()(const InternalVertex v) const noexcept {
-                    return this->bundleMap[v];
-                }
-                private:
-                    const boost::property_map<InternalCoreGraph<T>, T> bundleMap;
-            };
+            template<typename R>
+            using Accessor = std::function<R(const InternalVertex)>;
+
+            template<typename R>
+            using InternalVertexBundleIterator = boost::transformed_range<Accessor<R>, const std::pair<InternalVertexIterator, InternalVertexIterator>>;
+
+            template<typename R>
+            [[nodiscard]]
+            Accessor<R> generateAccessor() noexcept;
         public:
-            using VertexBundleIterator = boost::transformed_range<Accessor, std::pair<InternalVertexIterator, InternalVertexIterator>>;
-            using VertexBundleConstIterator = boost::transformed_range<Accessor, std::pair<InternalVertexIterator, InternalVertexIterator>>;
+            using VertexBundleIterator = InternalVertexBundleIterator<T&>;
+            using VertexBundleConstIterator = InternalVertexBundleIterator<const T&>;
 
             [[nodiscard]]
             VertexBundleIterator vertexBundlesIterator() noexcept;
