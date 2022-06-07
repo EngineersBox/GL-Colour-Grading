@@ -12,15 +12,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
 # Include source content
-file (GLOB_RECURSE GL_Colour_Grading_SOURCES CONFIGURE_DEPENDS "src/*.cpp")
-file (GLOB_RECURSE GL_Colour_Grading_HEADERS CONFIGURE_DEPENDS "src/*.hpp")
+file(GLOB_RECURSE GL_Colour_Grading_SOURCES CONFIGURE_DEPENDS "src/**.cpp")
+file(GLOB_RECURSE GL_Colour_Grading_HEADERS CONFIGURE_DEPENDS "src/**.hpp")
 
-set (GL_Colour_Grading_INCLUDE_DIRS "")
-foreach (_headerFile ${GL_Colour_Grading_HEADERS})
+set(GL_Colour_Grading_INCLUDE_DIRS "")
+foreach(_headerFile ${GL_Colour_Grading_HEADERS})
     get_filename_component(_dir ${_headerFile} PATH)
-    list (APPEND GL_Colour_Grading_INCLUDE_DIRS ${_dir})
+    list(APPEND GL_Colour_Grading_INCLUDE_DIRS ${_dir})
 endforeach()
-list (REMOVE_DUPLICATES GL_Colour_Grading_INCLUDE_DIRS)
+list(REMOVE_DUPLICATES GL_Colour_Grading_INCLUDE_DIRS)
 
 # Mark executable
 add_executable(GL_Colour_Grading ${GL_Colour_Grading_SOURCES})

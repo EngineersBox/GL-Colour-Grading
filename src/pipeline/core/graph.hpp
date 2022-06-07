@@ -30,8 +30,8 @@ namespace GLCG::Pipelines {
 
     struct CoreVertexMeta {
         CoreVertexMeta() = default;
-        explicit CoreVertexMeta(std::string const& name, VertexType type):
-            name(name),
+        explicit CoreVertexMeta(std::string name, VertexType type):
+            name(std::move(name)),
             type(type) {}
         std::string name;
         VertexType type = VertexType::NONE;
@@ -51,7 +51,7 @@ namespace GLCG::Pipelines {
             using Accessor = std::function<R(const InternalVertex)>;
 
             template<typename R>
-            using InternalVertexBundleIterator = boost::transformed_range<Accessor<R>, const std::pair<InternalVertexIterator, InternalVertexIterator>>;
+            using InternalVertexBundleIterator = boost::range_detail::transformed_range<Accessor<R>, const std::pair<InternalVertexIterator, InternalVertexIterator>>;
 
             template<typename R>
             [[nodiscard]]
