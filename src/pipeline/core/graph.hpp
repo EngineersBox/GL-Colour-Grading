@@ -55,16 +55,27 @@ namespace GLCG::Pipelines {
 
             template<typename R>
             [[nodiscard]]
-            Accessor<R> generateAccessor() noexcept;
+            Accessor<R> generateAccessor() noexcept {
+                return [map = get(boost::vertex_bundle, *this)](const InternalVertex v) -> R {
+                    return map[v];
+                };
+            }
+
         public:
+            DirectedGraphWrapper() = default;
+
             using VertexBundleIterator = InternalVertexBundleIterator<T&>;
             using VertexBundleConstIterator = InternalVertexBundleIterator<const T&>;
 
             [[nodiscard]]
-            VertexBundleIterator vertexBundlesIterator() noexcept;
+            VertexBundleIterator vertexBundlesIterator() noexcept {
+                return boost::vertices(*this) | boost::adaptors::transformed(generateAccessor<T&>());
+            }
 
-            [[nodiscard]]
-            VertexBundleConstIterator vertexBundlesIterator() const noexcept;
+//            [[nodiscard]]
+//            VertexBundleConstIterator vertexBundlesIterator() const noexcept {
+//                return boost::vertices(*this) | boost::adaptors::transformed(generateAccessor<const T&>());
+//            }
     };
 
     using CoreGraph = DirectedGraphWrapper<CoreVertexMeta>;

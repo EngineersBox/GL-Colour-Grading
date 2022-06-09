@@ -70,8 +70,8 @@ namespace GLCG::Pipelines {
             // BUG: Fix this linker error error LNK2019: unresolved external symbol "public: struct boost::range_detail::transformed_range<...>"
             [[nodiscard]]
             CoreGraph::VertexBundleIterator getVertexBundleIterator() noexcept;
-            [[nodiscard]]
-            CoreGraph::VertexBundleConstIterator getVertexBundleIterator() const noexcept;
+//            [[nodiscard]]
+//            CoreGraph::VertexBundleConstIterator getVertexBundleIterator() const noexcept;
 
             [[nodiscard]]
             std::string graphToString();
