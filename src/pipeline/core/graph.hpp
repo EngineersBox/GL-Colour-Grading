@@ -84,7 +84,6 @@ namespace GLCG::Pipelines {
 
     using CoreGraph = DirectedGraphWrapper<CoreVertexMeta>;
 
-
     namespace Graph {
         static CoreGraph::VertexIterator findVertex(const CoreGraph& graph, const std::string_view& name) {
             boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(vertices(graph));
