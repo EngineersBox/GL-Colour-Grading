@@ -2,8 +2,6 @@
 
 #include <stdexcept>
 
-#include "../../util/stringUtils.hpp"
-
 namespace GLCG:: Pipelines {
     void PipelineRenderer::render() {
         for (const CoreVertexMeta& vertex : this->pipeline->getVertexBundleIterator()) {
