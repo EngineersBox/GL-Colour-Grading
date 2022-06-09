@@ -66,6 +66,10 @@ namespace GLCG::Pipelines {
 
             using VertexBundleIterator = InternalVertexBundleIterator<T&>;
             using VertexBundleConstIterator = InternalVertexBundleIterator<const T&>;
+            using Vertex = typename InternalCoreGraph<T>::vertex_descriptor;
+            using VertexIterator = typename InternalCoreGraph<T>::vertex_iterator;
+            using Edge = typename InternalCoreGraph<T>::edge_descriptor;
+            using EdgeIterator = typename InternalCoreGraph<T>::edge_iterator;
 
             [[nodiscard]]
             VertexBundleIterator vertexBundlesIterator() noexcept {
@@ -79,39 +83,39 @@ namespace GLCG::Pipelines {
     };
 
     using CoreGraph = DirectedGraphWrapper<CoreVertexMeta>;
-    using Vertex = CoreGraph::vertex_descriptor;
-    using VertexIterator = CoreGraph::vertex_iterator;
-    using Edge = CoreGraph::edge_descriptor;
-    using EdgeIterator = CoreGraph::edge_iterator;
+
 
     namespace Graph {
-        static VertexIterator findVertex(const CoreGraph& graph, const std::string_view& name) {
-            boost::iterator_range<VertexIterator> iter = boost::make_iterator_range(vertices(graph));
+        static CoreGraph::VertexIterator findVertex(const CoreGraph& graph, const std::string_view& name) {
+            boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(vertices(graph));
             return std::find_if(
                 iter.begin(),
                 iter.end(),
-                [&graph, &name](const Vertex& current) -> bool{
+                [&graph, &name](const CoreGraph::Vertex& current) -> bool{
                     return graph[current].name == name;
                 }
             );
         }
 
         static bool hasVertex(const CoreGraph& graph, const std::string_view& name) {
-            boost::iterator_range<VertexIterator> iter = boost::make_iterator_range(vertices(graph));
+            boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(vertices(graph));
             return std::any_of(
                 iter.begin(),
                 iter.end(),
-                [&graph, name](const Vertex& current) -> bool {
+                [&graph, name](const CoreGraph::Vertex& current) -> bool {
                     return graph[current].name == name;
                 }
             );
         }
 
-        static void mergeGraphs(InternalCoreGraph<CoreVertexMeta>& graph1, Vertex graph1Vertex, const InternalCoreGraph<CoreVertexMeta>& graph2, Vertex graph2Vertex) {
-            std::vector<Vertex> orig2copy_data(num_vertices(graph2));
+        static void mergeGraphs(InternalCoreGraph<CoreVertexMeta>& graph1,
+                                CoreGraph::Vertex graph1Vertex,
+                                const InternalCoreGraph<CoreVertexMeta>& graph2,
+                                CoreGraph::Vertex graph2Vertex) {
+            std::vector<CoreGraph::Vertex> orig2copy_data(num_vertices(graph2));
             auto mapV = make_iterator_property_map(orig2copy_data.begin(), get(boost::vertex_index, graph2));
             boost::copy_graph(graph2, graph1, boost::orig_to_copy(mapV));
-            Vertex graph2SourceVertex = mapV[graph2Vertex];
+            CoreGraph::Vertex graph2SourceVertex = mapV[graph2Vertex];
             boost::add_edge(graph1Vertex, graph2SourceVertex, graph1);
         }
     }

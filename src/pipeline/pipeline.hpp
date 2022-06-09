@@ -57,20 +57,20 @@ namespace GLCG::Pipelines {
 
     class Pipeline {
         public:
-            Vertex addVertex(const CoreVertexMeta& vertex);
-            std::pair<Edge, bool> addEdge(Vertex vertex1, Vertex vertex2);
-            void removeVertex(const VertexIterator& vertexIterator);
+            CoreGraph::Vertex addVertex(const CoreVertexMeta& vertex);
+            std::pair<CoreGraph::Edge, bool> addEdge(CoreGraph::Vertex vertex1, CoreGraph::Vertex vertex2);
+            void removeVertex(const CoreGraph::VertexIterator& vertexIterator);
             void removeVertex(const std::string& name);
 
             [[nodiscard]]
-            boost::iterator_range<VertexIterator> getVertexIteratorRange() noexcept;
+            boost::iterator_range<CoreGraph::VertexIterator> getVertexIteratorRange() noexcept;
             [[nodiscard]]
-            boost::iterator_range<VertexIterator> getVertexIteratorRange() const noexcept;
+            boost::iterator_range<CoreGraph::VertexIterator> getVertexIteratorRange() const noexcept;
 
             [[nodiscard]]
-            boost::iterator_range<EdgeIterator> getEdgeIteratorRange() noexcept;
+            boost::iterator_range<CoreGraph::EdgeIterator> getEdgeIteratorRange() noexcept;
             [[nodiscard]]
-            boost::iterator_range<EdgeIterator> getEdgeIteratorRange() const noexcept;
+            boost::iterator_range<CoreGraph::EdgeIterator> getEdgeIteratorRange() const noexcept;
 
             [[nodiscard]]
             CoreGraph::VertexBundleIterator getVertexBundleIterator() noexcept;
