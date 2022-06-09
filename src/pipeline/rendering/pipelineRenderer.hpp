@@ -15,6 +15,8 @@ namespace GLCG::Pipelines {
                 pipeline(std::move(pipeline)) {};
 
             virtual void render();
+            virtual void renderBlendPass(const BlendVertex& blendVertex);
+            virtual void renderNormalPass(const NormalVertex& normalVertex);
         private:
             std::unique_ptr<Pipeline> pipeline;
     };
