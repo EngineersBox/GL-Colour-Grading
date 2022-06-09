@@ -39,7 +39,7 @@ namespace GLCG::Pipelines {
     };
 
     template<typename T>
-    using InternalCoreGraph = boost::directed_graph<T, boost::vecS, boost::vecS>;
+    using InternalCoreGraph = boost::directed_graph<T, boost::no_property, boost::no_property>;
 
     template<typename T>
     class DirectedGraphWrapper: public InternalCoreGraph<T> {
@@ -62,6 +62,7 @@ namespace GLCG::Pipelines {
 
             [[nodiscard]]
             VertexBundleIterator vertexBundlesIterator() noexcept;
+
             [[nodiscard]]
             VertexBundleConstIterator vertexBundlesIterator() const noexcept;
     };
@@ -74,7 +75,7 @@ namespace GLCG::Pipelines {
 
     namespace Graph {
         static VertexIterator findVertex(const CoreGraph& graph, const std::string_view& name) {
-            boost::iterator_range<CoreGraph::vertex_iterator> iter = boost::make_iterator_range(vertices(graph));
+            boost::iterator_range<VertexIterator> iter = boost::make_iterator_range(vertices(graph));
             return std::find_if(
                 iter.begin(),
                 iter.end(),

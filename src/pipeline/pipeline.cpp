@@ -2,17 +2,17 @@
 
 namespace GLCG::Pipelines {
     boost::iterator_range<VertexIterator> Pipeline::getVertexIteratorRange() noexcept {
-        return boost::make_iterator_range(vertices(this->graph));
+        return boost::make_iterator_range(boost::vertices(this->graph));
     }
     boost::iterator_range<VertexIterator> Pipeline::getVertexIteratorRange() const noexcept {
-        return boost::make_iterator_range(vertices(this->graph));
+        return boost::make_iterator_range(boost::vertices(this->graph));
     }
 
     boost::iterator_range<EdgeIterator> Pipeline::getEdgeIteratorRange() noexcept {
-        return boost::make_iterator_range(edges(this->graph));
+        return boost::make_iterator_range(boost::edges(this->graph));
     }
     boost::iterator_range<EdgeIterator> Pipeline::getEdgeIteratorRange() const noexcept {
-        return boost::make_iterator_range(edges(this->graph));
+        return boost::make_iterator_range(boost::edges(this->graph));
     }
 
     CoreGraph::VertexBundleIterator Pipeline::getVertexBundleIterator() noexcept {

@@ -21,11 +21,11 @@ namespace GLCG::Pipelines {
 
     template<typename T>
     typename DirectedGraphWrapper<T>::VertexBundleIterator DirectedGraphWrapper<T>::vertexBundlesIterator() noexcept {
-        return vertices(this) | boost::adaptors::transformed(generateAccessor<T&>());
+        return boost::vertices(this) | boost::adaptors::transformed(generateAccessor<T&>());
     }
 
     template<typename T>
     typename DirectedGraphWrapper<T>::VertexBundleConstIterator DirectedGraphWrapper<T>::vertexBundlesIterator() const noexcept {
-        return vertices(this) | boost::adaptors::transformed(generateAccessor<const T&>());
+        return boost::vertices(this) | boost::adaptors::transformed(generateAccessor<const T&>());
     }
 }
