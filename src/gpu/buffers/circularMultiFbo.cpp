@@ -8,9 +8,14 @@ namespace GLCG::GPU::Buffers {
             FBO(width, height)
         }{}
 
-    void CircularMultiFBO::bind() {
-        this->fbos[this->index].bind();
-        this->index = (this->index + 1) % 2;
+    void CircularMultiFBO::bindNextFBO() {
+        this->fbos[this->fboIndex].bind();
+        this->fboIndex = (this->fboIndex + 1) % 2;
+    }
+
+    void CircularMultiFBO::bindNextTexture() {
+        glBindTexture(GL_TEXTURE_2D, this->fbos[this->textureIndex].getTextureId());
+        this->textureIndex = (this->textureIndex + 1) % 2;
     }
 
     void CircularMultiFBO::destroy() {

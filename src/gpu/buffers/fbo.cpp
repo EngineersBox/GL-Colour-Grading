@@ -9,7 +9,7 @@ namespace GLCG::GPU::Buffers {
             .withVertex(FBO::FRAMEBUFFER_VERTEX_SHADER_PATH)
             .withFragment(FBO::FRAMEBUFFER_FRAGMENT_SHADER_PATH);
         spdlog::info("Compiled and linked framebuffer shader");
-        activate();
+        this->shader.activate();
         glUniform1i(glGetUniformLocation(this->shader.id, "screenTexture"), 0);
 
         glEnable(GL_DEPTH_TEST);
