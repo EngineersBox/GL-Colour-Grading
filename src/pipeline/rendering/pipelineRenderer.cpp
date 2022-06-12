@@ -13,14 +13,14 @@ namespace GLCG:: Pipelines {
         for (const CoreVertexMeta& vertex : this->pipeline->getVertexBundleIterator()) {
             switch (vertex.type) {
                 case VertexType::NORMAL:
-                    preRenderIteration();
-                    renderNormalPass(dynamic_cast<const NormalVertex&>(vertex));
-                    postRenderIteration();
+                    invokeWrappedRenderPass([this, &vertex]() -> void {
+                        renderNormalPass(dynamic_cast<const NormalVertex&>(vertex));
+                    });
                     break;
                 case VertexType::BLEND:
-                    preRenderIteration();
-                    renderBlendPass(dynamic_cast<const BlendVertex&>(vertex));
-                    postRenderIteration();
+                    invokeWrappedRenderPass([this, &vertex]() -> void {
+                        renderBlendPass(dynamic_cast<const BlendVertex&>(vertex));
+                    });
                     break;
                 default: std::runtime_error(Utils::String::format(
                     "Cannot render pipeline pass \"%s\" with no specified type",
@@ -28,6 +28,12 @@ namespace GLCG:: Pipelines {
                 ));
             }
         }
+    }
+
+    void PipelineRenderer::invokeWrappedRenderPass(const typename PipelineRenderer::RenderPassMethod& renderPassMethod) {
+        this->preRenderIteration();
+        renderPassMethod();
+        this->postRenderIteration();
     }
 
     void PipelineRenderer::renderBlendPass(const BlendVertex& blendVertex) {

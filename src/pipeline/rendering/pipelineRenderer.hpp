@@ -4,6 +4,7 @@
 #define GL_COLOUR_GRADING_PIPELINERENDERER_HPP
 
 #include <memory>
+#include <functional>
 
 #include "../pipeline.hpp"
 #include "../../gpu/buffers/circularMultiFbo.hpp"
@@ -19,6 +20,9 @@ namespace GLCG::Pipelines {
             virtual void render();
             virtual void renderBlendPass(const BlendVertex& blendVertex);
             virtual void renderNormalPass(const NormalVertex& normalVertex);
+
+            using RenderPassMethod = std::function<void(void)>;
+            void invokeWrappedRenderPass(const RenderPassMethod& renderPassMethod);
         private:
             std::unique_ptr<Pipeline> pipeline;
             GPU::Buffers::CircularMultiFBO fbo;
