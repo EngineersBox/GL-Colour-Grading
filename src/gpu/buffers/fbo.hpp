@@ -15,8 +15,8 @@ namespace GLCG::GPU::Buffers {
             FBO(int width, int height);
             virtual ~FBO() = default;
 
-            void activate() const;
-            void finalise() const;
+            virtual void activate() const;
+            virtual void finalise() const;
             void bind() override;
             void unbind() override {
                 throw std::runtime_error("Cannot unbind FBO");

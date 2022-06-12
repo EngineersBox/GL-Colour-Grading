@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "../pipeline.hpp"
+#include "../../gpu/buffers/fbo.hpp"
 
 namespace GLCG::Pipelines {
     class PipelineRenderer {
@@ -19,6 +20,7 @@ namespace GLCG::Pipelines {
             virtual void renderNormalPass(const NormalVertex& normalVertex);
         private:
             std::unique_ptr<Pipeline> pipeline;
+            GPU::Buffers::FBO fbo;
     };
 }
 
