@@ -33,7 +33,7 @@ namespace GLCG::Pipelines {
     }
 
     CoreGraph::Vertex Pipeline::addVertex(const CoreVertexMeta& vertex) {
-        if (Graph::hasVertex(this->graph, vertex.name)) {
+        if (this->graph.hasVertex(vertex.name)) {
             throw std::runtime_error("Vertex already exists");
         }
         return this->graph.add_vertex(vertex);
@@ -53,7 +53,7 @@ namespace GLCG::Pipelines {
 
     void Pipeline::removeVertex(const std::string &name) {
         boost::iterator_range<CoreGraph::VertexIterator> iter = getVertexIteratorRange();
-        CoreGraph::VertexIterator matchedIter = Graph::findVertex(this->graph, name);
+        CoreGraph::VertexIterator matchedIter = this->graph.findVertex(name);
         if (matchedIter == iter.end()) {
             throw std::runtime_error(Utils::String::format(
                 "Vertex \"%s\" does not exist",

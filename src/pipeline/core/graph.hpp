@@ -91,44 +91,17 @@ namespace GLCG::Pipelines {
                     | boost::adaptors::transformed(generateEdgeTargetAccessor())
                     | boost::adaptors::transformed(generateAccessor<T&>());
             }
+
+            InternalVertex firstVertex();
+            InternalVertex lastVertex();
+            VertexIterator findVertex(const std::string_view& name);
+            bool hasVertex(const std::string_view& name);
+            void mergeGraphs(Vertex graph1Vertex,
+                             const InternalCoreGraph<CoreVertexMeta>& graph2,
+                             Vertex graph2Vertex);
     };
 
     using CoreGraph = DirectedGraphWrapper<CoreVertexMeta>;
-
-    namespace Graph {
-        static CoreGraph::VertexIterator findVertex(const CoreGraph& graph, const std::string_view& name) {
-            boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(vertices(graph));
-            return std::find_if(
-                iter.begin(),
-                iter.end(),
-                [&graph, &name](const CoreGraph::Vertex& current) -> bool{
-                    return graph[current].name == name;
-                }
-            );
-        }
-
-        static bool hasVertex(const CoreGraph& graph, const std::string_view& name) {
-            boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(vertices(graph));
-            return std::any_of(
-                iter.begin(),
-                iter.end(),
-                [&graph, name](const CoreGraph::Vertex& current) -> bool {
-                    return graph[current].name == name;
-                }
-            );
-        }
-
-        static void mergeGraphs(InternalCoreGraph<CoreVertexMeta>& graph1,
-                                CoreGraph::Vertex graph1Vertex,
-                                const InternalCoreGraph<CoreVertexMeta>& graph2,
-                                CoreGraph::Vertex graph2Vertex) {
-            std::vector<CoreGraph::Vertex> orig2copy_data(num_vertices(graph2));
-            auto mapV = make_iterator_property_map(orig2copy_data.begin(), get(boost::vertex_index, graph2));
-            boost::copy_graph(graph2, graph1, boost::orig_to_copy(mapV));
-            CoreGraph::Vertex graph2SourceVertex = mapV[graph2Vertex];
-            boost::add_edge(graph1Vertex, graph2SourceVertex, graph1);
-        }
-    }
 }
 
 #endif //GL_COLOUR_GRADING_GRAPH_HPP
