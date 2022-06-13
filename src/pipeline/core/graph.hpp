@@ -62,15 +62,6 @@ namespace GLCG::Pipelines {
                 };
             }
 
-            using EdgeTargetAccessor = std::function<InternalVertex(const InternalEdge)>;
-
-            [[nodiscard]]
-            EdgeTargetAccessor generateEdgeTargetAccessor() noexcept {
-                return [this](const InternalEdge edge) -> InternalVertex {
-                    return boost::target(edge, *this);
-                };
-            }
-
         public:
             DirectedGraphWrapper() = default;
 
@@ -87,9 +78,7 @@ namespace GLCG::Pipelines {
 
             [[nodiscard]]
             VertexBundleIterator neighbouringVertexBundlesIterator(const InternalVertex vertex) noexcept {
-                return boost::out_edges(vertex, *this)
-                    | boost::adaptors::transformed(generateEdgeTargetAccessor())
-                    | boost::adaptors::transformed(generateAccessor<T&>());
+                return boost::adjacent_vertices(vertex, *this) | boost::adaptors::transformed(generateAccessor<T&>());
             }
 
             InternalVertex firstVertex();
