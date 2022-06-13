@@ -81,8 +81,6 @@ namespace GLCG::Pipelines {
                 return boost::adjacent_vertices(vertex, *this) | boost::adaptors::transformed(generateAccessor<T&>());
             }
 
-            InternalVertex firstVertex() noexcept;
-            InternalVertex lastVertex() noexcept;
             VertexIterator findVertex(const std::string_view& name);
             bool hasVertex(const std::string_view& name);
             void mergeGraphs(Vertex graph1Vertex,
