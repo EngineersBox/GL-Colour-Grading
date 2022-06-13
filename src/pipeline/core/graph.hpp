@@ -46,7 +46,6 @@ namespace GLCG::Pipelines {
         private:
             using InternalVertex = typename InternalCoreGraph<T>::vertex_descriptor;
             using InternalVertexIterator = typename InternalCoreGraph<T>::vertex_iterator;
-            using InternalEdge = typename InternalCoreGraph<T>::edge_descriptor;
 
             template<typename R>
             using VertexAccessor = std::function<R(const InternalVertex)>;
