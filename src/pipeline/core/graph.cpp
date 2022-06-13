@@ -12,12 +12,12 @@ namespace GLCG::Pipelines {
     }
 
     template<typename T>
-    typename DirectedGraphWrapper<T>::InternalVertex DirectedGraphWrapper<T>::firstVertex() {
+    typename DirectedGraphWrapper<T>::InternalVertex DirectedGraphWrapper<T>::firstVertex() noexcept {
         return static_cast<InternalVertex>(static_cast<boost::iterator_range<CoreGraph::VertexIterator>>(boost::make_iterator_range(vertexBundlesIterator())).begin());
     }
 
     template<typename T>
-    typename DirectedGraphWrapper<T>::InternalVertex DirectedGraphWrapper<T>::lastVertex() {
+    typename DirectedGraphWrapper<T>::InternalVertex DirectedGraphWrapper<T>::lastVertex() noexcept {
         return static_cast<InternalVertex>(static_cast<boost::iterator_range<CoreGraph::VertexIterator>>(boost::make_iterator_range(vertexBundlesIterator())).end());
     }
 
