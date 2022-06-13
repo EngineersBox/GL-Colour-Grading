@@ -30,6 +30,10 @@ namespace GLCG:: Pipelines {
         }
     }
 
+    void PipelineRenderer::renderParallel() {
+
+    }
+
     void PipelineRenderer::invokeWrappedRenderPass(const typename PipelineRenderer::RenderPassMethod& renderPassMethod) {
         this->preRenderIteration();
         renderPassMethod();

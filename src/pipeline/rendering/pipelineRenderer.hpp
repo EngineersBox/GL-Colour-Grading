@@ -18,6 +18,7 @@ namespace GLCG::Pipelines {
                              int height);
 
             virtual void render();
+            virtual void renderParallel();
             virtual void renderBlendPass(const BlendVertex& blendVertex);
             virtual void renderNormalPass(const NormalVertex& normalVertex);
 

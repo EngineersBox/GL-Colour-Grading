@@ -18,9 +18,10 @@ namespace GLCG::Pipelines {
     CoreGraph::VertexBundleIterator Pipeline::getVertexBundleIterator() noexcept {
         return this->graph.vertexBundlesIterator();
     }
-//    CoreGraph::VertexBundleConstIterator Pipeline::getVertexBundleIterator() const noexcept {
-//        return this->graph.vertexBundlesIterator();
-//    }
+
+    CoreGraph::VertexBundleIterator Pipeline::getNeighbouringVertexBundleIterator(const CoreGraph::Vertex vertex) noexcept {
+        return this->graph.neighbouringVertexBundlesIterator(vertex);
+    }
 
     std::string BlendVertex::toString() {
         return Utils::String::format(

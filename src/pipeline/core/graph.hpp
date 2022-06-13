@@ -46,18 +46,28 @@ namespace GLCG::Pipelines {
         private:
             using InternalVertex = typename InternalCoreGraph<T>::vertex_descriptor;
             using InternalVertexIterator = typename InternalCoreGraph<T>::vertex_iterator;
+            using InternalEdge = typename InternalCoreGraph<T>::edge_descriptor;
 
             template<typename R>
-            using Accessor = std::function<R(const InternalVertex)>;
+            using VertexAccessor = std::function<R(const InternalVertex)>;
 
             template<typename R>
-            using InternalVertexBundleIterator = boost::range_detail::transformed_range<Accessor<R>, const std::pair<InternalVertexIterator, InternalVertexIterator>>;
+            using InternalVertexBundleIterator = boost::range_detail::transformed_range<VertexAccessor<R>, const std::pair<InternalVertexIterator, InternalVertexIterator>>;
 
             template<typename R>
             [[nodiscard]]
-            Accessor<R> generateAccessor() noexcept {
+            VertexAccessor<R> generateAccessor() noexcept {
                 return [map = get(boost::vertex_bundle, *this)](const InternalVertex v) -> R {
                     return map[v];
+                };
+            }
+
+            using EdgeTargetAccessor = std::function<InternalVertex(const InternalEdge)>;
+
+            [[nodiscard]]
+            EdgeTargetAccessor generateEdgeTargetAccessor() noexcept {
+                return [this](const InternalEdge edge) -> InternalVertex {
+                    return boost::target(edge, *this);
                 };
             }
 
@@ -65,7 +75,6 @@ namespace GLCG::Pipelines {
             DirectedGraphWrapper() = default;
 
             using VertexBundleIterator = InternalVertexBundleIterator<T&>;
-            using VertexBundleConstIterator = InternalVertexBundleIterator<const T&>;
             using Vertex = typename InternalCoreGraph<T>::vertex_descriptor;
             using VertexIterator = typename InternalCoreGraph<T>::vertex_iterator;
             using Edge = typename InternalCoreGraph<T>::edge_descriptor;
@@ -76,10 +85,12 @@ namespace GLCG::Pipelines {
                 return boost::vertices(*this) | boost::adaptors::transformed(generateAccessor<T&>());
             }
 
-//            [[nodiscard]]
-//            VertexBundleConstIterator vertexBundlesIterator() const noexcept {
-//                return boost::vertices(*this) | boost::adaptors::transformed(generateAccessor<const T&>());
-//            }
+            [[nodiscard]]
+            VertexBundleIterator neighbouringVertexBundlesIterator(const InternalVertex vertex) noexcept {
+                return boost::out_edges(vertex, *this)
+                    | boost::adaptors::transformed(generateEdgeTargetAccessor())
+                    | boost::adaptors::transformed(generateAccessor<T&>());
+            }
     };
 
     using CoreGraph = DirectedGraphWrapper<CoreVertexMeta>;

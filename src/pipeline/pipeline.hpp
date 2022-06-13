@@ -62,20 +62,24 @@ namespace GLCG::Pipelines {
             void removeVertex(const CoreGraph::VertexIterator& vertexIterator);
             void removeVertex(const std::string& name);
 
-            [[nodiscard]]
-            boost::iterator_range<CoreGraph::VertexIterator> getVertexIteratorRange() noexcept;
-            [[nodiscard]]
-            boost::iterator_range<CoreGraph::VertexIterator> getVertexIteratorRange() const noexcept;
+            using VertexIteratorRange = boost::iterator_range<CoreGraph::VertexIterator>;
+            using EdgeIteratorRange = boost::iterator_range<CoreGraph::EdgeIterator>;
 
             [[nodiscard]]
-            boost::iterator_range<CoreGraph::EdgeIterator> getEdgeIteratorRange() noexcept;
+            VertexIteratorRange getVertexIteratorRange() noexcept;
             [[nodiscard]]
-            boost::iterator_range<CoreGraph::EdgeIterator> getEdgeIteratorRange() const noexcept;
+            VertexIteratorRange getVertexIteratorRange() const noexcept;
+
+            [[nodiscard]]
+            EdgeIteratorRange getEdgeIteratorRange() noexcept;
+            [[nodiscard]]
+            EdgeIteratorRange getEdgeIteratorRange() const noexcept;
 
             [[nodiscard]]
             CoreGraph::VertexBundleIterator getVertexBundleIterator() noexcept;
-//            [[nodiscard]]
-//            CoreGraph::VertexBundleConstIterator getVertexBundleIterator() const noexcept;
+
+            [[nodiscard]]
+            CoreGraph::VertexBundleIterator getNeighbouringVertexBundleIterator(CoreGraph::Vertex vertex) noexcept;
 
             [[nodiscard]]
             std::string graphToString();
