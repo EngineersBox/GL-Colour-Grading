@@ -38,3 +38,5 @@ OpenGL based colour grading utility
 <https://gist.github.com/sugi-cho/6a01cae436acddd72bdf>
 
 <http://filmicworlds.com/blog/filmic-tonemapping-operators>
+
+<https://coloraggio.github.io/davinci-resolve-manuals/12.5_Manual/30.pdf>
