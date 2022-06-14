@@ -23,7 +23,9 @@ namespace GLCG:: Pipelines {
                     vertexTypeToString(vertexMeta.type).c_str()
                 ));
             }
+            preRenderIteration();
             this->handlers[vertexMeta.type](&this->pipeline->graph, &vertex, &vertexMeta);
+            postRenderIteration();
         }
     }
 
