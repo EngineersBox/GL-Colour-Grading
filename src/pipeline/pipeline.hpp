@@ -35,22 +35,34 @@ namespace GLCG::Pipelines {
         }
     }
 
-    struct NormalVertex: public CoreVertexMeta {
-        explicit NormalVertex(std::string const& name,
+    struct SerialVertex: public CoreVertexMeta {
+        explicit SerialVertex(std::string const& name,
                               PipelinePass const& pass):
-            CoreVertexMeta(name, VertexType::NORMAL),
+            CoreVertexMeta(name, VertexType::SERIAL),
             pass(pass) {}
         PipelinePass pass;
     };
 
-    struct BlendVertex: public CoreVertexMeta {
-        explicit BlendVertex(std::string const& name,
-                             PipelinePass const& pass,
-                             PipelinePassBlendMode blendMode):
-            CoreVertexMeta(name, VertexType::BLEND),
+    struct ParallelMixerVertex: public CoreVertexMeta {
+        explicit ParallelMixerVertex(std::string const& name,
+                                     PipelinePass const& pass,
+                                     PipelinePassBlendMode blendMode):
+            CoreVertexMeta(name, VertexType::PARALLEL_MIXER),
             pass(pass),
             blendMode(blendMode) {}
             PipelinePass pass;
+        PipelinePassBlendMode blendMode;
+        virtual std::string toString() override;
+    };
+
+    struct LayerMixerVertex: public CoreVertexMeta {
+        explicit LayerMixerVertex(std::string const& name,
+                                     PipelinePass const& pass,
+                                     PipelinePassBlendMode blendMode):
+            CoreVertexMeta(name, VertexType::LAYER_MIXER),
+            pass(pass),
+            blendMode(blendMode) {}
+        PipelinePass pass;
         PipelinePassBlendMode blendMode;
         virtual std::string toString() override;
     };
@@ -80,12 +92,15 @@ namespace GLCG::Pipelines {
             CoreGraph::VertexBundleIterator getVertexBundleIterator() noexcept;
 
             [[nodiscard]]
-            CoreGraph::VertexBundleIterator getNeighbouringVertexBundleIterator(CoreGraph::Vertex vertex) noexcept;
+            CoreGraph::VertexBundleIterator getNeighbouringInVertexBundleIterator(CoreGraph::Vertex vertex) noexcept;
+            [[nodiscard]]
+            CoreGraph::VertexBundleIterator getNeighbouringOutVertexBundleIterator(CoreGraph::Vertex vertex) noexcept;
 
             [[nodiscard]]
             std::string graphToString();
         private:
             CoreGraph graph;
+            friend class PipelineRenderer;
     };
 }
 

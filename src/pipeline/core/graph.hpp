@@ -16,14 +16,16 @@
 namespace GLCG::Pipelines {
     enum class VertexType {
         NONE,
-        NORMAL,
-        BLEND
+        SERIAL,
+        PARALLEL_MIXER,
+        LAYER_MIXER
     };
 
     static std::string vertexTypeToString(VertexType type) {
         switch (type) {
-            case VertexType::NORMAL: return "NORMAL";
-            case VertexType::BLEND: return "BLEND";
+            case VertexType::SERIAL: return "NORMAL";
+            case VertexType::PARALLEL_MIXER: return "PARALLEL_MIXER";
+            case VertexType::LAYER_MIXER: return "LAYER_MIXER";
             default: throw std::invalid_argument("Unknown vertex type");
         }
     }
@@ -32,7 +34,7 @@ namespace GLCG::Pipelines {
         CoreVertexMeta() = default;
         explicit CoreVertexMeta(std::string_view name, VertexType type):
             name(name),
-            type(type) {}
+            type(type){}
         std::string name;
         VertexType type = VertexType::NONE;
         virtual std::string toString();
@@ -43,32 +45,48 @@ namespace GLCG::Pipelines {
 
     template<typename T>
     class DirectedGraphWrapper: public InternalCoreGraph<T> {
-        private:
-            using InternalVertex = typename InternalCoreGraph<T>::vertex_descriptor;
-            using InternalVertexIterator = typename InternalCoreGraph<T>::vertex_iterator;
-
-            template<typename R>
-            using VertexAccessor = std::function<R(const InternalVertex)>;
-
-            template<typename R>
-            using InternalVertexBundleIterator = boost::range_detail::transformed_range<VertexAccessor<R>, const std::pair<InternalVertexIterator, InternalVertexIterator>>;
-
-            template<typename R>
-            [[nodiscard]]
-            VertexAccessor<R> generateAccessor() noexcept {
-                return [map = boost::get(boost::vertex_bundle, *this)](const InternalVertex v) -> R {
-                    return map[v];
-                };
-            }
-
         public:
-            DirectedGraphWrapper() = default;
-
-            using VertexBundleIterator = InternalVertexBundleIterator<T&>;
             using Vertex = typename InternalCoreGraph<T>::vertex_descriptor;
             using VertexIterator = typename InternalCoreGraph<T>::vertex_iterator;
             using Edge = typename InternalCoreGraph<T>::edge_descriptor;
             using EdgeIterator = typename InternalCoreGraph<T>::edge_iterator;
+        private:
+            template<typename R>
+            using VertexAccessor = std::function<R(const Vertex)>;
+
+            template<typename R>
+            using InternalVertexBundleIterator = boost::range_detail::transformed_range<VertexAccessor<R>, const std::pair<VertexIterator , VertexIterator>>;
+
+            template<typename R>
+            [[nodiscard]]
+            VertexAccessor<R> generateAccessor() noexcept {
+                return [map = boost::get(boost::vertex_bundle, *this)](const Vertex v) -> R {
+                    return map[v];
+                };
+            }
+
+            template<typename R>
+            using EdgeAccessor = std::function<R(const Edge)>;
+
+            template<typename R>
+            [[nodiscard]]
+            EdgeAccessor<R> generateOutEdgeAccessor() noexcept {
+                return [this](const Edge e) -> R {
+                    return boost::target(e, *this);
+                };
+            }
+
+            template<typename R>
+            [[nodiscard]]
+            EdgeAccessor<R> generateInEdgeAccessor() noexcept {
+                return [this](const Edge e) -> R {
+                    return boost::source(e, *this);
+                };
+            }
+        public:
+            DirectedGraphWrapper() = default;
+
+            using VertexBundleIterator = InternalVertexBundleIterator<T&>;
 
             [[nodiscard]]
             VertexBundleIterator vertexBundlesIterator() noexcept {
@@ -76,8 +94,17 @@ namespace GLCG::Pipelines {
             }
 
             [[nodiscard]]
-            VertexBundleIterator neighbouringVertexBundlesIterator(const InternalVertex vertex) noexcept {
-                return boost::adjacent_vertices(vertex, *this) | boost::adaptors::transformed(generateAccessor<T&>());
+            VertexBundleIterator neighbouringOutVertexBundlesIterator(const Vertex vertex) noexcept {
+                return boost::out_edges(vertex, *this)
+                       | boost::adaptors::transformed(generateOutEdgeAccessor<Vertex>())
+                       | boost::adaptors::transformed(generateAccessor<T&>());
+            }
+
+            [[nodiscard]]
+            VertexBundleIterator neighbouringInVertexBundlesIterator(const Vertex vertex) noexcept {
+                return boost::in_edges(vertex, *this)
+                       | boost::adaptors::transformed(generateInEdgeAccessor<Vertex>())
+                       | boost::adaptors::transformed(generateAccessor<T&>());
             }
 
             VertexIterator findVertex(const std::string_view& name);
@@ -86,6 +113,10 @@ namespace GLCG::Pipelines {
             void mergeGraphs(Vertex graph1Vertex,
                              const InternalCoreGraph<CoreVertexMeta>& graph2,
                              Vertex graph2Vertex);
+            [[nodiscard]]
+            bool hasInVertices(Vertex vertex);
+            [[nodiscard]]
+            bool hasOutVertices(Vertex vertex);
     };
 
     using CoreGraph = DirectedGraphWrapper<CoreVertexMeta>;

@@ -12,27 +12,23 @@ namespace GLCG:: Pipelines {
     void PipelineRenderer::render() {
         for (CoreGraph::Vertex& vertex : this->pipeline->getVertexIteratorRange()) {
             CoreVertexMeta& vertexMeta = this->pipeline->getVertex(vertex);
-            switch (vertexMeta.type) {
-                case VertexType::NORMAL:
-                    invokeWrappedRenderPass([this, &vertex, &vertexMeta]() -> void {
-                        renderNormalPass(&vertex, dynamic_cast<NormalVertex*>(&vertexMeta));
-                    });
-                    break;
-                case VertexType::BLEND:
-                    invokeWrappedRenderPass([this, &vertex, &vertexMeta]() -> void {
-                        renderBlendPass(&vertex, dynamic_cast<BlendVertex*>(&vertexMeta));
-                    });
-                    break;
-                default: std::runtime_error(Utils::String::format(
+            if (vertexMeta.type == VertexType::NONE) {
+                std::runtime_error(Utils::String::format(
                     "Cannot render pipeline pass \"%s\" with no specified type",
                     vertexMeta.name.c_str()
                 ));
+            } else if (!this->handlers.contains(vertexMeta.type)) {
+                throw std::runtime_error(Utils::String::format(
+                    "No handler registered for vertex type %s",
+                    vertexTypeToString(vertexMeta.type).c_str()
+                ));
             }
+            this->handlers[vertexMeta.type](&this->pipeline->graph, &vertex, &vertexMeta);
         }
     }
 
     void PipelineRenderer::renderParallel() {
-
+        // TODO: implement this
     }
 
     void PipelineRenderer::invokeWrappedRenderPass(const typename PipelineRenderer::RenderPassMethod& renderPassMethod) {
@@ -41,19 +37,22 @@ namespace GLCG:: Pipelines {
         this->postRenderIteration();
     }
 
-    void PipelineRenderer::renderBlendPass(CoreGraph::Vertex* vertex, BlendVertex* blendVertex) const {
-
-    }
-
-    void PipelineRenderer::renderNormalPass(CoreGraph::Vertex* vertex, NormalVertex* normalVertex) const {
-        normalVertex->pass.apply();
-    }
-
     void PipelineRenderer::preRenderIteration() {
         this->fbo.bindNextFBO();
     }
 
     void PipelineRenderer::postRenderIteration() {
         this->fbo.bindNextTexture();
+    }
+
+    template<VertexType V>
+    void PipelineRenderer::registerHandler(PassHandler handler) {
+        if (this->handlers.contains(V)) {
+            throw std::runtime_error(Utils::String::format(
+                "Handler already registered for vertex type %s",
+                vertexTypeToString(V).c_str()
+            ));
+        }
+        this->handlers[V] = handler;
     }
 }

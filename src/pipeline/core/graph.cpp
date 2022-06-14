@@ -45,4 +45,14 @@ namespace GLCG::Pipelines {
         CoreGraph::Vertex graph2SourceVertex = mapV[graph2Vertex];
         boost::add_edge(graph1Vertex, graph2SourceVertex, *this);
     }
+
+    template<typename T>
+    bool DirectedGraphWrapper<T>::hasInVertices(Vertex vertex) {
+        return boost::in_degree(vertex, *this) > 0;
+    }
+
+    template<typename T>
+    bool DirectedGraphWrapper<T>::hasOutVertices(Vertex vertex) {
+        return boost::out_degree(vertex, *this);
+    }
 }

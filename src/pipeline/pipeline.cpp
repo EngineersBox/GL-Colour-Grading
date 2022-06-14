@@ -19,11 +19,23 @@ namespace GLCG::Pipelines {
         return this->graph.vertexBundlesIterator();
     }
 
-    CoreGraph::VertexBundleIterator Pipeline::getNeighbouringVertexBundleIterator(const CoreGraph::Vertex vertex) noexcept {
-        return this->graph.neighbouringVertexBundlesIterator(vertex);
+    CoreGraph::VertexBundleIterator Pipeline::getNeighbouringInVertexBundleIterator(CoreGraph::Vertex vertex) noexcept {
+        return this->graph.neighbouringInVertexBundlesIterator(vertex);
+    }
+    CoreGraph::VertexBundleIterator Pipeline::getNeighbouringOutVertexBundleIterator(CoreGraph::Vertex vertex) noexcept {
+        return this->graph.neighbouringOutVertexBundlesIterator(vertex);
     }
 
-    std::string BlendVertex::toString() {
+    std::string ParallelMixerVertex::toString() {
+        return Utils::String::format(
+            "{ NAME: %s, TYPE: %s, MODE: %s }",
+            this->name.c_str(),
+            vertexTypeToString(this->type).c_str(),
+            blendModeToString(this->blendMode).c_str()
+        );
+    }
+
+    std::string LayerMixerVertex::toString() {
         return Utils::String::format(
             "{ NAME: %s, TYPE: %s, MODE: %s }",
             this->name.c_str(),
@@ -73,7 +85,7 @@ namespace GLCG::Pipelines {
         std::for_each(
             iter.begin(),
             iter.end(),
-            [&ss](CoreVertexMeta& bundle) -> void{
+            [&ss](CoreVertexMeta& bundle) -> void {
                 ss << bundle.toString();
             }
         );
