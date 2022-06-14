@@ -1,6 +1,7 @@
 #include "pipelineRenderer.hpp"
 
 #include <stdexcept>
+#include <utility>
 
 namespace GLCG:: Pipelines {
     PipelineRenderer::PipelineRenderer(std::unique_ptr<Pipeline> pipeline,
@@ -49,6 +50,6 @@ namespace GLCG:: Pipelines {
                 vertexTypeToString(V).c_str()
             ));
         }
-        this->handlers[V] = handler;
+        this->handlers[V] = std::move(handler);
     }
 }
