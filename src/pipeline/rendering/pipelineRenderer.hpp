@@ -21,9 +21,6 @@ namespace GLCG::Pipelines {
             virtual void render();
             virtual void renderParallel();
 
-            using RenderPassMethod = std::function<void(void)>;
-            void invokeWrappedRenderPass(const RenderPassMethod& renderPassMethod);
-
             using PassHandler = std::function<void(CoreGraph*, CoreGraph::Vertex*, CoreVertexMeta*)>;
 
             template<VertexType V>
