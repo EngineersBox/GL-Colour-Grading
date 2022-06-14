@@ -31,12 +31,6 @@ namespace GLCG:: Pipelines {
         // TODO: implement this
     }
 
-    void PipelineRenderer::invokeWrappedRenderPass(const typename PipelineRenderer::RenderPassMethod& renderPassMethod) {
-        this->preRenderIteration();
-        renderPassMethod();
-        this->postRenderIteration();
-    }
-
     void PipelineRenderer::preRenderIteration() {
         this->fbo.bindNextFBO();
     }
