@@ -19,8 +19,8 @@ namespace GLCG::Pipelines {
 
             virtual void render();
             virtual void renderParallel();
-            virtual void renderBlendPass(const BlendVertex& blendVertex);
-            virtual void renderNormalPass(const NormalVertex& normalVertex);
+            virtual void renderBlendPass(CoreGraph::Vertex* vertex, BlendVertex* blendVertex) const;
+            virtual void renderNormalPass(CoreGraph::Vertex* vertex, NormalVertex* normalVertex) const;
 
             using RenderPassMethod = std::function<void(void)>;
             void invokeWrappedRenderPass(const RenderPassMethod& renderPassMethod);

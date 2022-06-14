@@ -61,6 +61,7 @@ namespace GLCG::Pipelines {
             std::pair<CoreGraph::Edge, bool> addEdge(CoreGraph::Vertex vertex1, CoreGraph::Vertex vertex2);
             void removeVertex(const CoreGraph::VertexIterator& vertexIterator);
             void removeVertex(const std::string& name);
+            CoreVertexMeta& getVertex(CoreGraph::Vertex vertex);
 
             using VertexIteratorRange = boost::iterator_range<CoreGraph::VertexIterator>;
             using EdgeIteratorRange = boost::iterator_range<CoreGraph::EdgeIterator>;

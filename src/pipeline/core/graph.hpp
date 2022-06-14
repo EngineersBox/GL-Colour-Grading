@@ -30,8 +30,8 @@ namespace GLCG::Pipelines {
 
     struct CoreVertexMeta {
         CoreVertexMeta() = default;
-        explicit CoreVertexMeta(std::string name, VertexType type):
-            name(std::move(name)),
+        explicit CoreVertexMeta(std::string_view name, VertexType type):
+            name(name),
             type(type) {}
         std::string name;
         VertexType type = VertexType::NONE;
@@ -56,7 +56,7 @@ namespace GLCG::Pipelines {
             template<typename R>
             [[nodiscard]]
             VertexAccessor<R> generateAccessor() noexcept {
-                return [map = get(boost::vertex_bundle, *this)](const InternalVertex v) -> R {
+                return [map = boost::get(boost::vertex_bundle, *this)](const InternalVertex v) -> R {
                     return map[v];
                 };
             }
@@ -81,7 +81,8 @@ namespace GLCG::Pipelines {
             }
 
             VertexIterator findVertex(const std::string_view& name);
-            bool hasVertex(const std::string_view& name);
+            [[nodiscard]]
+            bool hasVertex(const std::string_view& name) const;
             void mergeGraphs(Vertex graph1Vertex,
                              const InternalCoreGraph<CoreVertexMeta>& graph2,
                              Vertex graph2Vertex);

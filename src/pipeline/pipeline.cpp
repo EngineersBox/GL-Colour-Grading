@@ -63,6 +63,10 @@ namespace GLCG::Pipelines {
         removeVertex(matchedIter);
     }
 
+    inline CoreVertexMeta& Pipeline::getVertex(CoreGraph::Vertex vertex) {
+        return this->graph[vertex];
+    }
+
     std::string Pipeline::graphToString() {
         std::stringstream ss;
         CoreGraph::VertexBundleIterator iter = getVertexBundleIterator();

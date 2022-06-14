@@ -24,7 +24,7 @@ namespace GLCG::Pipelines {
     }
 
     template<typename T>
-    bool DirectedGraphWrapper<T>::hasVertex(const std::string_view& name) {
+    bool DirectedGraphWrapper<T>::hasVertex(const std::string_view& name) const {
         boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(vertices(*this));
         return std::any_of(
             iter.begin(),
