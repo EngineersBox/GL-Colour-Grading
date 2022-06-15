@@ -96,10 +96,10 @@ namespace GLCG::Video::Context {
             .withFragment("../assets/shaders/ffmpeg/frame.fsh");
         this->shader.validateProgram();
 
-        this->uniforms[UniformIndices::MVP_MATRIX] = glGetUniformLocation(this->shader.id, "mvpMatrix");
-        this->uniforms[UniformIndices::FRAME_TEX] = glGetUniformLocation(this->shader.id, "frameTex");
-        this->attribs[AttributeIndices::VERTICES] = glGetAttribLocation(this->shader.id, "vertex");
-        this->attribs[AttributeIndices::TEX_COORDS] = glGetAttribLocation(this->shader.id, "texCoord0");
+        this->uniforms[FFmpegContext::UniformIndices::MVP_MATRIX] = glGetUniformLocation(this->shader.id, "mvpMatrix");
+        this->uniforms[FFmpegContext::UniformIndices::FRAME_TEX] = glGetUniformLocation(this->shader.id, "frameTex");
+        this->attribs[FFmpegContext::AttributeIndices::VERTICES] = glGetAttribLocation(this->shader.id, "vertex");
+        this->attribs[FFmpegContext::AttributeIndices::TEX_COORDS] = glGetAttribLocation(this->shader.id, "texCoord0");
     }
 
     void FFmpegContext::bind() {
