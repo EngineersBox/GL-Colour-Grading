@@ -24,7 +24,7 @@ namespace GLCG::Pipelines {
             using PassHandler = std::function<void(CoreGraph*, CoreGraph::Vertex*, CoreVertexMeta*)>;
 
             template<VertexType V>
-            void registerHandler(PassHandler handler);
+            void registerHandler(PassHandler&& handler);
         private:
             std::unordered_map<VertexType, PassHandler> handlers;
 

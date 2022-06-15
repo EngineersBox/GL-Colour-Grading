@@ -43,7 +43,7 @@ namespace GLCG:: Pipelines {
     }
 
     template<VertexType V>
-    void PipelineRenderer::registerHandler(PassHandler handler) {
+    void PipelineRenderer::registerHandler(PassHandler&& handler) {
         if (this->handlers.contains(V)) {
             throw std::runtime_error(Utils::String::format(
                 "Handler already registered for vertex type %s",
