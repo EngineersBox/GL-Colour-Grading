@@ -105,13 +105,11 @@ namespace GLCG::Video::Context {
     void FFmpegContext::bind() {
         this->shader.activate();
     }
-
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
+    
     void FFmpegContext::drawFrame() {
         glBindTexture(GL_TEXTURE_2D, this->frame_tex);
         glBindVertexArray(this->vao);
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, BUFFER_OFFSET(0));
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, nullptr);
         glBindVertexArray(0);
     }
 }
