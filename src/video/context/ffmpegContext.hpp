@@ -15,50 +15,56 @@ extern "C" {
 }
 
 #include "../../gpu/shaders/shader.hpp"
-#include "../../gpu/bindableResource.hpp"
 
 namespace GLCG::Video::Context {
-    class FFmpegContext: public GPU::BindableResource {
+    class FFmpegContext {
         public:
-            FFmpegContext();
-            void init();
-            void clear();
+            FFmpegContext(std::string& filename);
+            virtual ~FFmpegContext();
 
-            bool readNextFrame();
+            virtual void readFrame(uint8_t* buffer, int64_t* pts);
+            virtual void seekFrame(int64_t timestamp);
+
             void buildShader();
-
-            virtual void bind() override;
-            virtual void unbind() override = 0;
-            virtual void destroy() override = 0;
+            void bind();
             void drawFrame();
+        protected:
+            virtual void open(std::string& filename);
+            virtual void close();
         private:
-            AVFormatContext *fmt_ctx;
-            int stream_idx;
-            AVStream *video_stream;
-            AVCodecContext *codec_ctx;
-            AVCodec *decoder;
-            AVPacket *packet;
-            AVFrame *av_frame;
-            AVFrame *gl_frame;
-            struct SwsContext *conv_ctx;
+            static const char* getAVError(int errnum);
+            static AVPixelFormat correctPixelFormat(AVPixelFormat pix_fmt);
 
-            GPU::Shaders::Shader shader;
-            GLuint vao;
-            GLuint vert_buf;
-            GLuint elem_buf;
-            GLuint frame_tex;
-            GLuint attribs[2];
-            GLuint uniforms[2];
+            void readFrameToCurrentContext();
 
-            enum AttributeIndices {
-                VERTICES = 0,
-                TEX_COORDS
-            };
+            uint32_t width;
+            uint32_t height;
 
-            enum UniformIndices {
-                MVP_MATRIX = 0,
-                FRAME_TEX
-            };
+            AVRational timeBase;
+            AVFormatContext* avFormatCtx;
+            AVCodecContext* avCodecCtx;
+            int videoStreamIndex;
+            AVFrame* avFrame;
+            AVPacket* avPacket;
+            SwsContext* swsScalerCtx;
+
+//            GPU::Shaders::Shader shader;
+//            GLuint vao;
+//            GLuint vert_buf;
+//            GLuint elem_buf;
+//            GLuint frame_tex;
+//            GLuint attribs[2];
+//            GLuint uniforms[2];
+//
+//            enum AttributeIndices {
+//                VERTICES = 0,
+//                TEX_COORDS
+//            };
+//
+//            enum UniformIndices {
+//                MVP_MATRIX = 0,
+//                FRAME_TEX
+//            };
     };
 }
 
