@@ -6,7 +6,7 @@
 #include <glad/glad.h>
 #include "bindableResource.hpp"
 
-namespace GLCG::GPU::Buffers {
+namespace GLCG::Device::GPU::Buffers {
     class EBO: public BindableResource {
         public:
             GLuint id;

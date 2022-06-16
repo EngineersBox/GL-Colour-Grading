@@ -2,22 +2,23 @@
 
 #include <stdexcept>
 
-namespace GLCG::Video::Context {
-    FFmpegContext::FFmpegContext(std::string& filename) {
-        open(filename);
+namespace GLCG::Device::Video::Context {
+    FFmpegContext::FFmpegContext(std::string filename):
+        filename(filename) {
+        open();
     }
 
     FFmpegContext::~FFmpegContext() {
         close();
     }
 
-    void FFmpegContext::open(std::string& filename) {
+    void FFmpegContext::open() {
         if (!(this->avFormatCtx = avformat_alloc_context())) {
             throw std::runtime_error("Unable to create FFmpeg AVFormatContext");
-        } else if (avformat_open_input(&this->avFormatCtx, filename.c_str(), nullptr, nullptr) != 0) {
+        } else if (avformat_open_input(&this->avFormatCtx, this->filename.c_str(), nullptr, nullptr) != 0) {
             throw std::runtime_error(Utils::String::format(
                 "Unable to open stream from file: %s",
-                filename.c_str()
+                this->filename.c_str()
             ));
         }
         this->videoStreamIndex = -1;

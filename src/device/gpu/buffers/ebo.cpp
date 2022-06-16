@@ -1,6 +1,6 @@
 #include "ebo.hpp"
 
-namespace GLCG::GPU::Buffers {
+namespace GLCG::Device::GPU::Buffers {
     EBO::EBO(const GLuint* indices, GLsizeiptr size) {
         glGenBuffers(1, &this->id);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->id);

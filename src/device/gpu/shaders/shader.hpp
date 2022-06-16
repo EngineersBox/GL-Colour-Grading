@@ -11,7 +11,7 @@
 #include "programType.hpp"
 #include "exception/openGLFeatureSupportException.hpp"
 
-namespace GLCG::GPU::Shaders {
+namespace GLCG::Device::GPU::Shaders {
     class ShaderBuilder;
     class Shader {
         public:

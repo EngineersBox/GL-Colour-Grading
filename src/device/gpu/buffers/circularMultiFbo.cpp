@@ -1,6 +1,6 @@
 #include "circularMultiFbo.hpp"
 
-namespace GLCG::GPU::Buffers {
+namespace GLCG::Device::GPU::Buffers {
     CircularMultiFBO::CircularMultiFBO(const int width, const int height):
         BindableResource(),
         fbos{

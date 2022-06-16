@@ -7,7 +7,7 @@
 #include "vbo.hpp"
 #include "bindableResource.hpp"
 
-namespace GLCG::GPU::Buffers {
+namespace GLCG::Device::GPU::Buffers {
     class VAO: public BindableResource {
         public:
             GLuint id;

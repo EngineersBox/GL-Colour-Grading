@@ -2,15 +2,15 @@
 
 #include "core/grader.hpp"
 #include "logging/logger.hpp"
-#include "gpu/shaders/shader.hpp"
-#include "gpu/buffers/vao.hpp"
-#include "gpu/buffers/vbo.hpp"
-#include "gpu/buffers/ebo.hpp"
-#include "gpu/buffers/fbo.hpp"
+#include "device/gpu/shaders/shader.hpp"
+#include "device/gpu/buffers/vao.hpp"
+#include "device/gpu/buffers/vbo.hpp"
+#include "device/gpu/buffers/ebo.hpp"
+#include "device/gpu/buffers/fbo.hpp"
 #include "resources/texture.hpp"
-#include "gpu/workgroup.hpp"
+#include "device/gpu/workgroup.hpp"
 #include "pipeline/rendering/pipelineRenderer.hpp"
-#include "video/context/ffmpegContext.hpp"
+#include "device/video/context/ffmpegContext.hpp"
 
 // Vertices coordinates
 static constexpr GLfloat vertices[] = {
@@ -31,28 +31,28 @@ int main(int argc, const char* argv[]) {
     GLCG::Core::Grader grader = GLCG::Core::Grader("../assets/config/grader.cfg");
     grader.init();
 
-    GLCG::GPU::WorkGroup wg = GLCG::GPU::WorkGroup();
+    GLCG::Device::GPU::WorkGroup wg = GLCG::Device::GPU::WorkGroup();
     spdlog::trace("Work group summary: {}", wg.summary());
-    GLCG::GPU::Buffers::FBO fbo = GLCG::GPU::Buffers::FBO(
+    GLCG::Device::GPU::Buffers::FBO fbo = GLCG::Device::GPU::Buffers::FBO(
         grader.getWidth(),
         grader.getHeight()
     );
-    GLCG::GPU::Shaders::Shader coreShader = GLCG::GPU::Shaders::Shader::builder()
+    GLCG::Device::GPU::Shaders::Shader coreShader = GLCG::Device::GPU::Shaders::Shader::builder()
         .withVertex("../assets/shaders/core.vsh")
         .withFragment("../assets/shaders/core.fsh");
     spdlog::info("Compiled and linked core shader");
     coreShader.validateProgram();
     coreShader.activate();
 
-    GLCG::GPU::Buffers::VAO VAO1 = GLCG::GPU::Buffers::VAO();
+    GLCG::Device::GPU::Buffers::VAO VAO1 = GLCG::Device::GPU::Buffers::VAO();
     VAO1.bind();
 
-    GLCG::GPU::Buffers::VBO VBO1 = GLCG::GPU::Buffers::VBO(vertices, sizeof(vertices));
-    GLCG::GPU::Buffers::EBO EBO1 = GLCG::GPU::Buffers::EBO(indices, sizeof(indices));
+    GLCG::Device::GPU::Buffers::VBO VBO1 = GLCG::Device::GPU::Buffers::VBO(vertices, sizeof(vertices));
+    GLCG::Device::GPU::Buffers::EBO EBO1 = GLCG::Device::GPU::Buffers::EBO(indices, sizeof(indices));
 
-    GLCG::GPU::Buffers::VAO::linkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), nullptr);
-    GLCG::GPU::Buffers::VAO::linkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    GLCG::GPU::Buffers::VAO::linkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    GLCG::Device::GPU::Buffers::VAO::linkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), nullptr);
+    GLCG::Device::GPU::Buffers::VAO::linkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    GLCG::Device::GPU::Buffers::VAO::linkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
     VAO1.unbind();
     VBO1.unbind();

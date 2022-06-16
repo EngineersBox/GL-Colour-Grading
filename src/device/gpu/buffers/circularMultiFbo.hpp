@@ -8,7 +8,7 @@
 #include "../bindableResource.hpp"
 #include "fbo.hpp"
 
-namespace GLCG::GPU::Buffers {
+namespace GLCG::Device::GPU::Buffers {
     class CircularMultiFBO: public BindableResource {
         public:
             CircularMultiFBO(const int width, const int height);

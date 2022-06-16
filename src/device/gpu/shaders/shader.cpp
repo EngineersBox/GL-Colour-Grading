@@ -9,7 +9,7 @@
 #include "../../util/openglUtils.hpp"
 #include "../../util/exception/openGLFeatureSupportException.hpp"
 
-namespace GLCG::GPU::Shaders {
+namespace GLCG::Device::GPU::Shaders {
     void Shader::activate() const {
         glUseProgram(this->id);
     }

@@ -15,9 +15,10 @@ extern "C" {
 }
 
 #include "../../gpu/shaders/shader.hpp"
+#include "../../stream/closable.hpp"
 
-namespace GLCG::Video::Context {
-    class FFmpegContext {
+namespace GLCG::Device::Video::Context {
+    class FFmpegContext: protected Stream::Closable {
         public:
             FFmpegContext(std::string& filename);
             virtual ~FFmpegContext();
@@ -29,14 +30,15 @@ namespace GLCG::Video::Context {
             void bind();
             void drawFrame();
         protected:
-            void open(std::string& filename);
-            void close();
+            void open() override;
+            void close() override;
         private:
             static const char* getAVError(int errnum);
             static AVPixelFormat correctPixelFormat(AVPixelFormat pix_fmt);
 
             void readFrameToCurrentContext();
 
+            std::string filename;
             uint32_t width;
             uint32_t height;
 

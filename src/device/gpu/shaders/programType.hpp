@@ -6,7 +6,7 @@
 #include <glad/glad.h>
 #include <string>
 
-namespace GLCG::GPU::Shaders {
+namespace GLCG::Device::GPU::Shaders {
     using ProgramType = enum class ProgramType {
         FRAGMENT,
         VERTEX,

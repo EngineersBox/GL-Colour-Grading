@@ -6,7 +6,7 @@
 #include <glm/vec3.hpp>
 #include <string>
 
-namespace GLCG::GPU {
+namespace GLCG::Device::GPU {
     using WorkGroup = struct WorkGroup {
         WorkGroup();
 

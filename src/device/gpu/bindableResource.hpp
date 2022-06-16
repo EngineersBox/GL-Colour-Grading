@@ -3,7 +3,7 @@
 #ifndef GL_COLOUR_GRADING_BINDABLERESOURCE_HPP
 #define GL_COLOUR_GRADING_BINDABLERESOURCE_HPP
 
-namespace GLCG::GPU {
+namespace GLCG::Device::GPU {
     class BindableResource {
         public:
             BindableResource() = default;

@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace GLCG::GPU::Shaders {
+namespace GLCG::Device::GPU::Shaders {
     std::string programTypeToString(ProgramType type) {
         switch (type) {
             case ProgramType::FRAGMENT: return "FRAGMENT";

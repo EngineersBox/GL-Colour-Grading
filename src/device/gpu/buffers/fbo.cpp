@@ -3,7 +3,7 @@
 #include <spdlog/spdlog.h>
 #include <stdexcept>
 
-namespace GLCG::GPU::Buffers {
+namespace GLCG::Device::GPU::Buffers {
     FBO::FBO(const int width, const int height) {
         this->shader = Shaders::Shader::builder()
             .withVertex(FBO::FRAMEBUFFER_VERTEX_SHADER_PATH)

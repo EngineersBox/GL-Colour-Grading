@@ -9,7 +9,7 @@
 #include "../shaders/shader.hpp"
 #include "../bindableResource.hpp"
 
-namespace GLCG::GPU::Buffers {
+namespace GLCG::Device::GPU::Buffers {
     class FBO: public BindableResource {
         public:
             FBO(int width, int height);
@@ -28,7 +28,7 @@ namespace GLCG::GPU::Buffers {
                 return this->framebufferTexture;
             }
         private:
-            GLCG::GPU::Shaders::Shader shader;
+            GLCG::Device::GPU::Shaders::Shader shader;
             unsigned int rectVAO = 0;
             unsigned int rectVBO = 0;
             unsigned int fbo = 0;

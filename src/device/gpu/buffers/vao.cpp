@@ -1,6 +1,6 @@
 #include "vao.hpp"
 
-namespace GLCG::GPU::Buffers {
+namespace GLCG::Device::GPU::Buffers {
     VAO::VAO() {
         glGenVertexArrays(1, &this->id);
     }

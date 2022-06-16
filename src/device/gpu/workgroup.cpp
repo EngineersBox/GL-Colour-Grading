@@ -4,7 +4,7 @@
 #include "../util/stringUtils.hpp"
 #include "../util/openglUtils.hpp"
 
-namespace GLCG::GPU {
+namespace GLCG::Device::GPU {
     WorkGroup::WorkGroup() {
         if (!Utils::OpenGL::isVersionSupported(4, 3)) {
             // Compute shaders are not supported in versions older than 4.3
