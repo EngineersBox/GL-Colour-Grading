@@ -29,8 +29,8 @@ namespace GLCG::Video::Context {
             void bind();
             void drawFrame();
         protected:
-            virtual void open(std::string& filename);
-            virtual void close();
+            void open(std::string& filename);
+            void close();
         private:
             static const char* getAVError(int errnum);
             static AVPixelFormat correctPixelFormat(AVPixelFormat pix_fmt);
