@@ -60,6 +60,7 @@ namespace GLCG::Video::Context {
     }
 
     const char* FFmpegContext::getAVError(int errnum) {
+        // Fixes GCC compilation error with return of temporary pointer
         static char str[AV_ERROR_MAX_STRING_SIZE];
         memset(str, 0, sizeof(str));
         return av_make_error_string(str, AV_ERROR_MAX_STRING_SIZE, errnum);
