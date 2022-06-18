@@ -8,7 +8,7 @@ namespace GLCG:: Pipelines {
                                        const int width,
                                        const int height):
         pipeline(std::move(pipeline)),
-        fbo(GPU::Buffers::CircularMultiFBO(width, height)){}
+        fbo(Device::GPU::Buffers::CircularMultiFBO(width, height)){}
 
     void PipelineRenderer::render() {
         for (CoreGraph::Vertex& vertex : this->pipeline->getVertexIteratorRange()) {

@@ -14,16 +14,16 @@ namespace GLCG::Pipelines {
     class PipelinePass {
         public:
             PipelinePass() = delete;
-            PipelinePass(GPU::Shaders::Shader shader,
-                         GPU::Buffers::VAO vao):
+            PipelinePass(Device::GPU::Shaders::Shader shader,
+                         Device::GPU::Buffers::VAO vao):
                 shader(std::move(shader)),
                 vao(std::move(vao)) {};
             virtual ~PipelinePass() = default;
 
             virtual void apply();
         private:
-            GPU::Shaders::Shader shader;
-            GPU::Buffers::VAO vao;
+            Device::GPU::Shaders::Shader shader;
+            Device::GPU::Buffers::VAO vao;
     };
 }
 

@@ -90,21 +90,22 @@ namespace GLCG::Pipelines {
 
             [[nodiscard]]
             VertexBundleIterator vertexBundlesIterator() noexcept {
-                return boost::vertices(*this) | boost::adaptors::transformed(generateAccessor<T&>());
+                return boost::vertices(*this)
+                    | boost::adaptors::transformed(generateAccessor<T&>());
             }
 
             [[nodiscard]]
             VertexBundleIterator neighbouringOutVertexBundlesIterator(const Vertex vertex) noexcept {
                 return boost::out_edges(vertex, *this)
-                       | boost::adaptors::transformed(generateOutEdgeAccessor<Vertex>())
-                       | boost::adaptors::transformed(generateAccessor<T&>());
+                    | boost::adaptors::transformed(generateOutEdgeAccessor<Vertex>())
+                    | boost::adaptors::transformed(generateAccessor<T&>());
             }
 
             [[nodiscard]]
             VertexBundleIterator neighbouringInVertexBundlesIterator(const Vertex vertex) noexcept {
                 return boost::in_edges(vertex, *this)
-                       | boost::adaptors::transformed(generateInEdgeAccessor<Vertex>())
-                       | boost::adaptors::transformed(generateAccessor<T&>());
+                    | boost::adaptors::transformed(generateInEdgeAccessor<Vertex>())
+                    | boost::adaptors::transformed(generateAccessor<T&>());
             }
 
             VertexIterator findVertex(const std::string_view& name);

@@ -29,7 +29,7 @@ namespace GLCG::Pipelines {
             std::unordered_map<VertexType, PassHandler> handlers;
 
             std::unique_ptr<Pipeline> pipeline;
-            GPU::Buffers::CircularMultiFBO fbo;
+            Device::GPU::Buffers::CircularMultiFBO fbo;
 
             void preRenderIteration();
             void postRenderIteration();

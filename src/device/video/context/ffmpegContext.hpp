@@ -20,7 +20,7 @@ extern "C" {
 namespace GLCG::Device::Video::Context {
     class FFmpegContext: protected Stream::Closable {
         public:
-            FFmpegContext(std::string& filename);
+            FFmpegContext(std::string filename);
             virtual ~FFmpegContext();
 
             virtual void readFrame(uint8_t* buffer, int64_t* pts);

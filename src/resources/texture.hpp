@@ -9,12 +9,12 @@
 #include "../gpu/shaders/shader.hpp"
 
 namespace GLCG::Resources {
-    class Texture: public GPU::BindableResource {
+    class Texture: public Device::GPU::BindableResource {
         public:
             Texture(const char* image, const char* texType, GLuint slot);
             virtual ~Texture() = default;
 
-            static void assignTextureUnit(GPU::Shaders::Shader& shader, const char* uniform, GLuint unit);
+            static void assignTextureUnit(Device::GPU::Shaders::Shader& shader, const char* uniform, GLuint unit);
             void bind() override;
             void unbind() override;
             void destroy() override;

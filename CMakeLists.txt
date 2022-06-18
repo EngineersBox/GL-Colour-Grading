@@ -79,42 +79,8 @@ pkg_check_modules(FFMPEG_LIBS REQUIRED IMPORTED_TARGET
     libswresample
     libswscale
     libavutil
-    x264
-    x265
-    ffnvcodec
+#    x264
+#    x265
+#    ffnvcodec
 )
 target_link_libraries(GL_Colour_Grading PRIVATE PkgConfig::FFMPEG_LIBS)
-
-# FFMPEG Libs
-#set(
-#    FFMPEG_PATHS
-#    "libopengl/opengl.h"
-#    "libopencl/opencl.h"
-#    "libnvcodec/nvcodec.h"
-#    "libx264/x264.h"
-#    "libx265/x265.h"
-#)
-#set(
-#    FFMPEG_LIBS
-#    "opengl"
-#    "opencl"
-#    "nvcodec"
-#    "x264"
-#    "x265"
-#)
-#set(FFMPEG_INCLUDE_DIRECTORIES "")
-#set(FFMPEG_LINK_LIBRARIES "")
-#foreach(_ffmpeg_path ${FFMPEG_PATHS})
-#    set(FFMPEG_INCLUDE "")
-#    find_path(FFMPEG_INCLUDE _ffmpeg_path)
-#    list(APPEND FFMPEG_INCLUDE_DIRECTORIES ${FFMPEG_INCLUDE})
-#endforeach()
-#foreach(_ffmpeg_lib ${FFMPEG_LIBS})
-#    set(FFMPEG_LIBRARY "")
-#    find_path(FFMPEG_LIBRARY _ffmpeg_lib)
-#    list(APPEND FFMPEG_LINK_LIBRARIES ${FFMPEG_LIBRARY})
-#endforeach()
-#message("Include directories: ${FFMPEG_INCLUDE_DIRECTORIES}")
-#target_include_directories(GL_Colour_Grading PRIVATE ${FFMPEG_INCLUDE_DIRECTORIES})
-#message("Link libraries: ${FFMPEG_LINK_LIBRARIES}")
-#target_link_libraries(GL_Colour_Grading PRIVATE ${FFMPEG_LINK_LIBRARIES})
