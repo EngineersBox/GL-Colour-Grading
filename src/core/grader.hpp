@@ -30,11 +30,13 @@ namespace GLCG::Core {
             }
         private:
             GLFWwindow* window = nullptr;
+            const GLFWvidmode* mode = nullptr;
             Config config;
 
             void initGLContext();
             void destroyGLContext();
-            static void framebufferSizeCallback(GLFWwindow* window, int width, int height);
+            void initWindow();
+            static void sizeCallback(GLFWwindow* window, int width, int height);
     };
 }
 

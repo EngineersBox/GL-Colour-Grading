@@ -2,6 +2,11 @@
 
 #include <stdexcept>
 
+/* Bunch of code here is from Bartholemew <https://github.com/bartjoyce/video-app>
+ * who is just about the only person who provided an understandble explaination of
+ * how FFmpeg works. So many thanks to him.
+ */
+
 namespace GLCG::Device::Video::Context {
     FFmpegContext::FFmpegContext(std::string filename):
         filename(filename) {

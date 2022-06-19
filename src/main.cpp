@@ -73,6 +73,7 @@ int main(int argc, const char* argv[]) {
     spdlog::info("Starting event loop");
     // Main event loop
     while (!glfwWindowShouldClose(grader.getWindow())) {
+        // BUG: Fix fbo scaling not matching the window (E.g. using glBindFramebuffer(GL_FRAMEBUFFER, 0) works perfectly)
         fbo.bind();
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

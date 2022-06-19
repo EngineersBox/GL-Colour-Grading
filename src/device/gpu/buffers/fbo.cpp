@@ -17,7 +17,7 @@ namespace GLCG::Device::GPU::Buffers {
         prepareRectangleVBOVAO();
         createFBO();
         createFBOTexture(width, height);
-        createRBO(width, height);
+//        createRBO(width, height);
         this->shader.validateProgram();
 
         if (const GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER); fboStatus != GL_FRAMEBUFFER_COMPLETE) {
