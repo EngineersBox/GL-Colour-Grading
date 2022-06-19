@@ -11,6 +11,9 @@
 #include "texture.hpp"
 
 namespace GLCG::Pipelines {
+    // TODO/NOTE: Should this be refactored to just be an apply() method which can be overriden?
+    //  seems like a lot of restriction around providing resources like textures, FBOs, EBOs, etc
+    //  for other situations and definitions with the current model
     class PipelinePass {
         public:
             PipelinePass() = delete;
