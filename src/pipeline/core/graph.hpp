@@ -139,16 +139,43 @@ namespace GLCG::Pipelines {
                     | boost::adaptors::transformed(generateAccessor<T&>());
             }
 
-            VertexIterator findVertex(const std::string_view& name);
+            // For some incredibly stupid reason, these three methods are not known during the link stage
+            // if they are defined here and implemented in the source file. I don't have the patience to deal with
+            // a compiler's and linker's bullshit, so I'm just gonna declare them in the header.
+            VertexIterator findVertex(const std::string_view& name) {
+                boost::iterator_range<VertexIterator> iter = boost::make_iterator_range(boost::vertices(*this));
+                return std::find_if(
+                    iter.begin(),
+                    iter.end(),
+                    [map = boost::get(boost::vertex_bundle, *this), &name](const Vertex& current) -> bool {
+                        return map[current].name == name;
+                    }
+                );
+            };
             [[nodiscard]]
-            bool hasVertex(const std::string_view& name) const;
+            bool hasVertex(const std::string_view& name) const {
+                boost::iterator_range<VertexIterator> iter = boost::make_iterator_range(boost::vertices(*this));
+                return std::any_of(
+                    iter.begin(),
+                    iter.end(),
+                    [map = boost::get(boost::vertex_bundle, *this), &name](const Vertex& current) -> bool {
+                        return map[current].name == name;
+                    }
+                );
+            };
             void mergeGraphs(Vertex graph1Vertex,
                              const InternalCoreGraph<CoreVertexMeta>& graph2,
-                             Vertex graph2Vertex);
+                             Vertex graph2Vertex) {
+                std::vector<Vertex> orig2copy_data(boost::num_vertices(graph2));
+                auto mapV = boost::make_iterator_property_map(orig2copy_data.begin(), boost::get(boost::vertex_index, graph2));
+                boost::copy_graph(graph2, *this, boost::orig_to_copy(mapV));
+                Vertex graph2SourceVertex = mapV[graph2Vertex];
+                boost::add_edge(graph1Vertex, graph2SourceVertex, *this);
+            }
             [[nodiscard]]
-            bool hasInVertices(Vertex vertex);
+            bool hasInVertices(Vertex vertex) const;
             [[nodiscard]]
-            bool hasOutVertices(Vertex vertex);
+            bool hasOutVertices(Vertex vertex) const;
     };
 
     using CoreGraph = DirectedGraphWrapper<CoreVertexMeta>;

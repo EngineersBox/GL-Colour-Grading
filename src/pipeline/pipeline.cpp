@@ -75,7 +75,7 @@ namespace GLCG::Pipelines {
         removeVertex(matchedIter);
     }
 
-    inline CoreVertexMeta& Pipeline::getVertex(CoreGraph::Vertex vertex) {
+    CoreVertexMeta& Pipeline::getVertex(CoreGraph::Vertex vertex) {
         return this->graph[vertex];
     }
 
