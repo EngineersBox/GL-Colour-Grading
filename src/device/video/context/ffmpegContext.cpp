@@ -45,9 +45,9 @@ namespace GLCG::Device::Video::Context {
         } else if (avcodec_open2(this->avCodecCtx, avCodec, nullptr) < 0) {
             throw std::runtime_error("Unable to open codec");
         } else if (!(this->avFrame = av_frame_alloc())) {
-            std::runtime_error("Unable to allocate frame");
+            throw std::runtime_error("Unable to allocate frame");
         } else if (!(this->avPacket = av_packet_alloc())) {
-            std::runtime_error("Unable to allocate packet");
+            throw std::runtime_error("Unable to allocate packet");
         }
     }
 
@@ -91,7 +91,7 @@ namespace GLCG::Device::Video::Context {
                 av_packet_unref(this->avPacket);
                 continue;
             } else if (response < 0) {
-                std::runtime_error(Utils::String::format(
+                throw std::runtime_error(Utils::String::format(
                     "Failed to decode packet: %s",
                     getAVError(response)
                 ));
