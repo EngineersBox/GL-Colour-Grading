@@ -11,6 +11,9 @@ set(CXXFLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++20")
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
+# PkgConfig
+find_package(PkgConfig REQUIRED)
+
 # Include source content
 file(GLOB_RECURSE GL_Colour_Grading_SOURCES CONFIGURE_DEPENDS "src/**.cpp")
 file(GLOB_RECURSE GL_Colour_Grading_HEADERS CONFIGURE_DEPENDS "src/**.hpp")
@@ -61,7 +64,7 @@ find_package(Boost REQUIRED COMPONENTS filesystem iostreams graph)
 target_link_libraries(GL_Colour_Grading PRIVATE Boost::filesystem Boost::iostreams)
 
 # stb
-find_path(STB_INCLUDE_DIRS "stb.h")
+find_path(STB_INCLUDE_DIRS "stb_c_lexer.h")
 target_include_directories(GL_Colour_Grading PRIVATE ${STB_INCLUDE_DIRS})
 
 # libconfig
@@ -70,7 +73,6 @@ find_library(LIBCONFIG_LOCATION libconfig)
 target_link_libraries(GL_Colour_Grading PRIVATE ${LIBCONFIGPP_LOCATION} ${LIBCONFIG_LOCATION})
 
 # FFMPEG Libs
-find_package(PkgConfig REQUIRED)
 pkg_check_modules(FFMPEG_LIBS REQUIRED IMPORTED_TARGET
     libavdevice
     libavfilter

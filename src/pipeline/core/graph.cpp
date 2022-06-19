@@ -13,7 +13,7 @@ namespace GLCG::Pipelines {
 
     template<typename T>
     typename DirectedGraphWrapper<T>::VertexIterator DirectedGraphWrapper<T>::findVertex(const std::string_view& name) {
-        boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(vertices(*this));
+        boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(boost::vertices(*this));
         return std::find_if(
             iter.begin(),
             iter.end(),
@@ -25,7 +25,7 @@ namespace GLCG::Pipelines {
 
     template<typename T>
     bool DirectedGraphWrapper<T>::hasVertex(const std::string_view& name) const {
-        boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(vertices(*this));
+        boost::iterator_range<CoreGraph::VertexIterator> iter = boost::make_iterator_range(boost::vertices(*this));
         return std::any_of(
             iter.begin(),
             iter.end(),
@@ -39,8 +39,8 @@ namespace GLCG::Pipelines {
     void DirectedGraphWrapper<T>::mergeGraphs(Vertex graph1Vertex,
                                               const InternalCoreGraph<CoreVertexMeta>& graph2,
                                               Vertex graph2Vertex) {
-        std::vector<CoreGraph::Vertex> orig2copy_data(num_vertices(graph2));
-        auto mapV = make_iterator_property_map(orig2copy_data.begin(), get(boost::vertex_index, graph2));
+        std::vector<CoreGraph::Vertex> orig2copy_data(boost::num_vertices(graph2));
+        auto mapV = boost::make_iterator_property_map(orig2copy_data.begin(), boost::get(boost::vertex_index, graph2));
         boost::copy_graph(graph2, *this, boost::orig_to_copy(mapV));
         CoreGraph::Vertex graph2SourceVertex = mapV[graph2Vertex];
         boost::add_edge(graph1Vertex, graph2SourceVertex, *this);
@@ -53,6 +53,6 @@ namespace GLCG::Pipelines {
 
     template<typename T>
     bool DirectedGraphWrapper<T>::hasOutVertices(Vertex vertex) {
-        return boost::out_degree(vertex, *this);
+        return boost::out_degree(vertex, *this) > 0;
     }
 }
