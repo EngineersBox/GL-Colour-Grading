@@ -20,8 +20,8 @@ namespace GLCG::Pipelines {
                 vao(std::move(vao)) {};
             virtual ~PipelinePass() = default;
 
-            virtual void apply();
-        private:
+            virtual void apply(const int width, const int height);
+        protected:
             Device::GPU::Shaders::Shader shader;
             Device::GPU::Buffers::VAO vao;
     };

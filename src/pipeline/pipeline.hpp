@@ -57,8 +57,8 @@ namespace GLCG::Pipelines {
 
     struct LayerMixerVertex: public CoreVertexMeta {
         explicit LayerMixerVertex(std::string const& name,
-                                     PipelinePass const& pass,
-                                     PipelinePassBlendMode blendMode):
+                                  PipelinePass const& pass,
+                                  PipelinePassBlendMode blendMode):
             CoreVertexMeta(name, VertexType::LAYER_MIXER),
             pass(pass),
             blendMode(blendMode) {}

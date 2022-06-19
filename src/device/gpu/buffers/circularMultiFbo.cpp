@@ -3,6 +3,8 @@
 namespace GLCG::Device::GPU::Buffers {
     CircularMultiFBO::CircularMultiFBO(const int width, const int height):
         BindableResource(),
+        width(width),
+        height(height),
         fbos{
             FBO(width, height),
             FBO(width, height)

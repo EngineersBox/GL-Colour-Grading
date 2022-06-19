@@ -26,6 +26,80 @@ static constexpr GLuint indices[] = {
     0, 3, 2
 };
 
+static std::vector<GLCG::Pipelines::CoreVertexMeta> passes;
+
+static void bindAttributesAndUniforms(const unsigned int shaderId,
+                                      const int width,
+                                      const int height) {
+    GLuint positionLocation = glGetAttribLocation(shaderId, "a_position");
+    glEnableVertexAttribArray(positionLocation);
+    glVertexAttribPointer(
+        positionLocation,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        0,
+        nullptr
+    );
+    GLuint textureLocation = glGetAttribLocation(shaderId, "a_texCoord");
+    glVertexAttribPointer(
+        textureLocation,
+        2,
+        GL_FLOAT,
+        GL_FALSE,
+        0,
+        nullptr
+    );
+    GLuint textureSizeLocation = glGetUniformLocation(shaderId, "u_textureSize");
+    glUniform2i(textureSizeLocation, width, height);
+}
+
+struct Pass1: GLCG::Pipelines::PipelinePass {
+    Pass1(): GLCG::Pipelines::PipelinePass(
+        GLCG::Device::GPU::Shaders::Shader::builder()
+            .withVertex("../assets/shaders/post_proc_kernel.vsh")
+            .withFragment("../assets/shaders/post_proc_kernel.fsh"),
+        GLCG::Device::GPU::Buffers::VAO()
+    ) {}
+
+    void apply(const int width, const int height) override {
+        this->shader.activate();
+        bindAttributesAndUniforms(this->shader.id, width, height);
+        this->vao.bind();
+    }
+};
+
+struct Pass2: GLCG::Pipelines::PipelinePass {
+    Pass2(): GLCG::Pipelines::PipelinePass(
+        GLCG::Device::GPU::Shaders::Shader::builder()
+            .withVertex("../assets/shaders/post_proc_kernel.vsh")
+            .withFragment("../assets/shaders/post_proc_kernel.fsh"),
+        GLCG::Device::GPU::Buffers::VAO()
+    ) {}
+
+    void apply(const int width, const int height) override {
+        this->shader.activate();
+        bindAttributesAndUniforms(this->shader.id, width, height);
+        this->vao.bind();
+    }
+};
+
+GLCG::Pipelines::Pipeline createPipeline() {
+    GLCG::Pipelines::Pipeline pipeline = GLCG::Pipelines::Pipeline();
+    passes.push_back(GLCG::Pipelines::SerialVertex(
+        "Vertex 1",
+        Pass1()
+    ));
+    passes.push_back(GLCG::Pipelines::SerialVertex(
+        "Vertex 2",
+        Pass2()
+    ));
+    GLCG::Pipelines::CoreGraph::Vertex vertex1 = pipeline.addVertex(passes[0]);
+    GLCG::Pipelines::CoreGraph::Vertex vertex2 = pipeline.addVertex(passes[1]);
+    pipeline.addEdge(vertex1, vertex2);
+    return std::move(pipeline);
+}
+
 int main(int argc, const char* argv[]) {
     GLCG::Logger::init();
     GLCG::Core::Grader grader = GLCG::Core::Grader("../assets/config/grader.cfg");
@@ -74,7 +148,8 @@ int main(int argc, const char* argv[]) {
     // Main event loop
     while (!glfwWindowShouldClose(grader.getWindow())) {
         // BUG: Fix fbo scaling not matching the window (E.g. using glBindFramebuffer(GL_FRAMEBUFFER, 0) works perfectly)
-        fbo.bind();
+//        fbo.bind();
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
@@ -85,7 +160,7 @@ int main(int argc, const char* argv[]) {
         VAO1.bind();
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
-        fbo.finalise();
+//        fbo.finalise();
         glfwSwapBuffers(grader.getWindow());
         glfwPollEvents();
     }

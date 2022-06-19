@@ -22,10 +22,22 @@ namespace GLCG::Device::GPU::Buffers {
             void bindNextFBO();
             void bindNextTexture();
             void destroy() override;
+
+            [[nodiscard]]
+            constexpr int getWidth() const {
+                return this->width;
+            }
+            [[nodiscard]]
+            constexpr int getHeight() const {
+                return this->height;
+            }
         private:
             FBO fbos[2];
             unsigned int fboIndex = 0;
             unsigned int textureIndex = 0;
+
+            int width;
+            int height;
     };
 }
 

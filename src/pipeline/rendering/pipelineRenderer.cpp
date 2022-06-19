@@ -14,7 +14,7 @@ namespace GLCG:: Pipelines {
         for (CoreGraph::Vertex& vertex : this->pipeline->getVertexIteratorRange()) {
             CoreVertexMeta& vertexMeta = this->pipeline->getVertex(vertex);
             if (vertexMeta.type == VertexType::NONE) {
-                std::runtime_error(Utils::String::format(
+                throw std::runtime_error(Utils::String::format(
                     "Cannot render pipeline pass \"%s\" with no specified type",
                     vertexMeta.name.c_str()
                 ));
@@ -25,7 +25,13 @@ namespace GLCG:: Pipelines {
                 ));
             }
             preRenderIteration();
-            this->handlers[vertexMeta.type](&this->pipeline->graph, &vertex, &vertexMeta);
+            this->handlers[vertexMeta.type](
+                &this->pipeline->graph,
+                &vertex,
+                &vertexMeta,
+                this->fbo.getWidth(),
+                this->fbo.getHeight()
+            );
             postRenderIteration();
         }
     }
