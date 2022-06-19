@@ -92,9 +92,9 @@ namespace GLCG::Pipelines {
             CoreGraph::VertexBundleIterator getVertexBundleIterator() noexcept;
 
             [[nodiscard]]
-            CoreGraph::VertexBundleIterator getNeighbouringInVertexBundleIterator(CoreGraph::Vertex vertex) noexcept;
+            CoreGraph::InVertexBundleIterator getNeighbouringInVertexBundleIterator(CoreGraph::Vertex vertex) noexcept;
             [[nodiscard]]
-            CoreGraph::VertexBundleIterator getNeighbouringOutVertexBundleIterator(CoreGraph::Vertex vertex) noexcept;
+            CoreGraph::OutVertexBundleIterator getNeighbouringOutVertexBundleIterator(CoreGraph::Vertex vertex) noexcept;
 
             [[nodiscard]]
             std::string graphToString();

@@ -19,10 +19,10 @@ namespace GLCG::Pipelines {
         return this->graph.vertexBundlesIterator();
     }
 
-    CoreGraph::VertexBundleIterator Pipeline::getNeighbouringInVertexBundleIterator(CoreGraph::Vertex vertex) noexcept {
+    CoreGraph::InVertexBundleIterator Pipeline::getNeighbouringInVertexBundleIterator(CoreGraph::Vertex vertex) noexcept {
         return this->graph.neighbouringInVertexBundlesIterator(vertex);
     }
-    CoreGraph::VertexBundleIterator Pipeline::getNeighbouringOutVertexBundleIterator(CoreGraph::Vertex vertex) noexcept {
+    CoreGraph::OutVertexBundleIterator Pipeline::getNeighbouringOutVertexBundleIterator(CoreGraph::Vertex vertex) noexcept {
         return this->graph.neighbouringOutVertexBundlesIterator(vertex);
     }
 

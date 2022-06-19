@@ -50,12 +50,17 @@ namespace GLCG::Pipelines {
             using VertexIterator = typename InternalCoreGraph<T>::vertex_iterator;
             using Edge = typename InternalCoreGraph<T>::edge_descriptor;
             using EdgeIterator = typename InternalCoreGraph<T>::edge_iterator;
+            using InEdgeIterator = typename InternalCoreGraph<T>::in_edge_iterator;
+            using OutEdgeIterator = typename InternalCoreGraph<T>::out_edge_iterator;
         private:
             template<typename R>
             using VertexAccessor = std::function<R(const Vertex)>;
 
             template<typename R>
-            using InternalVertexBundleIterator = boost::range_detail::transformed_range<VertexAccessor<R>, const std::pair<VertexIterator , VertexIterator>>;
+            using InternalVertexBundleIterator = boost::range_detail::transformed_range<
+                VertexAccessor<R>,
+                const std::pair<VertexIterator, VertexIterator>
+            >;
 
             template<typename R>
             [[nodiscard]]
@@ -67,6 +72,30 @@ namespace GLCG::Pipelines {
 
             template<typename R>
             using EdgeAccessor = std::function<R(const Edge)>;
+
+            template<typename R, typename U>
+            using InternalInVertexBundleIterator = boost::range_detail::transformed_range<
+                VertexAccessor<R>,
+                const boost::range_detail::transformed_range<
+                    EdgeAccessor<U>,
+                    const std::pair<
+                        InEdgeIterator,
+                        InEdgeIterator
+                    >
+                >
+            >;
+
+            template<typename R, typename U>
+            using InternalOutVertexBundleIterator = boost::range_detail::transformed_range<
+                VertexAccessor<R>,
+                const boost::range_detail::transformed_range<
+                    EdgeAccessor<U>,
+                    const std::pair<
+                        OutEdgeIterator,
+                        OutEdgeIterator
+                    >
+                >
+            >;
 
             template<typename R>
             [[nodiscard]]
@@ -87,6 +116,8 @@ namespace GLCG::Pipelines {
             DirectedGraphWrapper() = default;
 
             using VertexBundleIterator = InternalVertexBundleIterator<T&>;
+            using InVertexBundleIterator = InternalInVertexBundleIterator<T&, Vertex>;
+            using OutVertexBundleIterator = InternalOutVertexBundleIterator<T&, Vertex>;
 
             [[nodiscard]]
             VertexBundleIterator vertexBundlesIterator() noexcept {
@@ -95,14 +126,14 @@ namespace GLCG::Pipelines {
             }
 
             [[nodiscard]]
-            VertexBundleIterator neighbouringOutVertexBundlesIterator(const Vertex vertex) noexcept {
+            OutVertexBundleIterator neighbouringOutVertexBundlesIterator(const Vertex vertex) noexcept {
                 return boost::out_edges(vertex, *this)
                     | boost::adaptors::transformed(generateOutEdgeAccessor<Vertex>())
                     | boost::adaptors::transformed(generateAccessor<T&>());
             }
 
             [[nodiscard]]
-            VertexBundleIterator neighbouringInVertexBundlesIterator(const Vertex vertex) noexcept {
+            InVertexBundleIterator neighbouringInVertexBundlesIterator(const Vertex vertex) noexcept {
                 return boost::in_edges(vertex, *this)
                     | boost::adaptors::transformed(generateInEdgeAccessor<Vertex>())
                     | boost::adaptors::transformed(generateAccessor<T&>());
