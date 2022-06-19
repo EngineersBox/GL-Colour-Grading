@@ -1,4 +1,4 @@
-#version 330 core
+#version 410 core
 
 attribute vec2 a_position;
 attribute vec2 a_texCoord;

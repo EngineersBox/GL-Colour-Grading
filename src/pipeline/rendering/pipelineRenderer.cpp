@@ -48,14 +48,14 @@ namespace GLCG:: Pipelines {
         this->fbo.bindNextTexture();
     }
 
-    template<VertexType V>
-    void PipelineRenderer::registerHandler(PassHandler&& handler) {
-        if (this->handlers.contains(V)) {
-            throw std::runtime_error(Utils::String::format(
-                "Handler already registered for vertex type %s",
-                vertexTypeToString(V).c_str()
-            ));
-        }
-        this->handlers[V] = std::move(handler);
-    }
+//    template<VertexType V>
+//    void PipelineRenderer::registerHandler(PassHandler&& handler) {
+//        if (this->handlers.contains(V)) {
+//            throw std::runtime_error(Utils::String::format(
+//                "Handler already registered for vertex type %s",
+//                vertexTypeToString(V).c_str()
+//            ));
+//        }
+//        this->handlers[V] = std::move(handler);
+//    }
 }

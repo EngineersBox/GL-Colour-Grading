@@ -37,18 +37,18 @@ namespace GLCG::Pipelines {
 
     struct SerialVertex: public CoreVertexMeta {
         explicit SerialVertex(std::string const& name,
-                              PipelinePass const& pass):
+                              PipelinePass pass):
             CoreVertexMeta(name, VertexType::SERIAL),
-            pass(pass) {}
+            pass(std::move(pass)) {}
         PipelinePass pass;
     };
 
     struct ParallelMixerVertex: public CoreVertexMeta {
         explicit ParallelMixerVertex(std::string const& name,
-                                     PipelinePass const& pass,
+                                     PipelinePass pass,
                                      PipelinePassBlendMode blendMode):
             CoreVertexMeta(name, VertexType::PARALLEL_MIXER),
-            pass(pass),
+            pass(std::move(pass)),
             blendMode(blendMode) {}
             PipelinePass pass;
         PipelinePassBlendMode blendMode;
@@ -57,10 +57,10 @@ namespace GLCG::Pipelines {
 
     struct LayerMixerVertex: public CoreVertexMeta {
         explicit LayerMixerVertex(std::string const& name,
-                                  PipelinePass const& pass,
+                                  PipelinePass pass,
                                   PipelinePassBlendMode blendMode):
             CoreVertexMeta(name, VertexType::LAYER_MIXER),
-            pass(pass),
+            pass(std::move(pass)),
             blendMode(blendMode) {}
         PipelinePass pass;
         PipelinePassBlendMode blendMode;
