@@ -65,6 +65,7 @@ struct Pass1: public GLCG::Pipelines::PipelinePass {
         vao(GLCG::Device::GPU::Buffers::VAO()),
         texture(texture){}
 
+    // BUG: Fix this bad function call exception
     void operator()(const int width, const int height) {
         this->shader.activate();
         bindAttributesAndUniforms(
