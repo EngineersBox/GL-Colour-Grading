@@ -1,12 +1,12 @@
 #version 410 core
 
-attribute vec2 a_position;
-attribute vec2 a_texCoord;
+in vec2 a_position;
+in vec2 a_texCoord;
 
 uniform vec2 u_resolution;
 uniform float u_flipY;
 
-varying vec2 v_texCoord;
+out vec2 v_texCoord;
 
 void main() {
     // convert the rectangle from pixels to 0.0 to 1.0
