@@ -53,8 +53,8 @@ static void bindAttributesAndUniforms(const unsigned int shaderId,
         nullptr
     );
     glUniform1f(glGetUniformLocation(shaderId, "u_flipY"), 1);
-    glUniform2i(glGetUniformLocation(shaderId, "u_resolution"), resWidth, resHeight);
-    glUniform2i(glGetUniformLocation(shaderId, "u_textureSize"), texWidth, texHeight);
+    glUniform2f(glGetUniformLocation(shaderId, "u_resolution"), static_cast<float>(resWidth), static_cast<float>(resHeight));
+    glUniform2f(glGetUniformLocation(shaderId, "u_textureSize"), static_cast<float>(texWidth), static_cast<float>(texHeight));
 }
 
 struct Pass1: public GLCG::Pipelines::PipelinePass {

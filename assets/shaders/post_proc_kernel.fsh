@@ -9,6 +9,8 @@ uniform float u_kernelWeight;
 
 varying vec2 v_texCoord;
 
+#define test(d) (d + 2)
+
 void main() {
     vec2 onePixel = vec2(1.0, 1.0) / u_textureSize;
     // Verbose addition is faster than for-driven iterative summation on a GPU
