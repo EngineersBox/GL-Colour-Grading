@@ -40,8 +40,10 @@ namespace GLCG:: Pipelines {
                     this->fbo.getHeight()
                 );
             } catch (const std::bad_function_call& e) {
-                spdlog::error("Unable to invoke pass render handler: {}", e.what());
-                exit(1);
+                throw std::runtime_error(Utils::String::format(
+                    "Unable to invoke pass render handler: {}",
+                    e.what()
+                ));
             }
             postRenderIteration();
         }
