@@ -17,6 +17,7 @@ namespace GLCG::Pipelines {
             PipelineRenderer(std::unique_ptr<Pipeline> pipeline,
                              int width,
                              int height);
+            void destroy();
 
             virtual void render();
             virtual void renderParallel();
@@ -30,7 +31,9 @@ namespace GLCG::Pipelines {
              *  const int: FBO width\n
              *  const int:  FBO height\n
              */
-            using PassHandler = std::function<void(CoreGraph*, CoreGraph::Vertex*, CoreVertexMeta*, const int, const int)>;
+             struct PassHandler {
+                 virtual void operator()(CoreGraph*, CoreGraph::Vertex*, CoreVertexMeta*, int, int) {};
+             };
 
             template<VertexType V>
             void registerHandler(PassHandler&& handler) {
@@ -53,7 +56,11 @@ namespace GLCG::Pipelines {
     };
 
     struct ParallelMixerPassHandler: public PipelineRenderer::PassHandler {
-        void operator()(CoreGraph* graph, CoreGraph::Vertex* vertex, CoreVertexMeta* parallelMixerVertex, const int fboWidth, const int fboHeight) {
+        void operator()(CoreGraph* graph,
+                        CoreGraph::Vertex* vertex,
+                        CoreVertexMeta* parallelMixerVertex,
+                        const int fboWidth,
+                        const int fboHeight) override {
             if (!graph->hasInVertices(*vertex)) {
                 throw std::runtime_error("Parallel mixer node does not have incoming edges, cannot blend connected nodes");
             }
@@ -62,7 +69,11 @@ namespace GLCG::Pipelines {
     };
 
     struct LayerMixerPassHandler: public PipelineRenderer::PassHandler {
-        void operator()(CoreGraph* graph, CoreGraph::Vertex* vertex, CoreVertexMeta* layerMixerVertex, const int fboWidth, const int fboHeight) {
+        void operator()(CoreGraph* graph,
+                        CoreGraph::Vertex* vertex,
+                        CoreVertexMeta* layerMixerVertex,
+                        const int fboWidth,
+                        const int fboHeight) override {
             if (!graph->hasInVertices(*vertex)) {
                 throw std::runtime_error("Layer mixer node does not have incoming edges, cannot blend connected nodes");
             }
@@ -71,7 +82,11 @@ namespace GLCG::Pipelines {
     };
 
     struct SerialPassHandler: public PipelineRenderer::PassHandler {
-        void operator()(CoreGraph* graph, CoreGraph::Vertex* vertex, CoreVertexMeta* serialVertex, const int fboWidth, const int fboHeight) {
+        void operator()(CoreGraph* graph,
+                        CoreGraph::Vertex* vertex,
+                        CoreVertexMeta* serialVertex,
+                        const int fboWidth,
+                        const int fboHeight) override {
             dynamic_cast<SerialVertex*>(serialVertex)->pass(fboWidth, fboHeight);
         }
     };

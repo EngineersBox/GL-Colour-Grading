@@ -2,6 +2,7 @@
 
 #include <stdexcept>
 #include <utility>
+#include <spdlog/spdlog.h>
 
 namespace GLCG:: Pipelines {
     PipelineRenderer::PipelineRenderer(std::unique_ptr<Pipeline> pipeline,
@@ -9,6 +10,11 @@ namespace GLCG:: Pipelines {
                                        const int height):
         pipeline(std::move(pipeline)),
         fbo(Device::GPU::Buffers::CircularMultiFBO(width, height)){}
+
+    void PipelineRenderer::destroy() {
+        this->fbo.destroy();
+        this->pipeline.release();
+    }
 
     void PipelineRenderer::render() {
         for (CoreGraph::Vertex& vertex : this->pipeline->getVertexIteratorRange()) {
@@ -25,13 +31,18 @@ namespace GLCG:: Pipelines {
                 ));
             }
             preRenderIteration();
-            this->handlers[vertexMeta.type](
-                &this->pipeline->graph,
-                &vertex,
-                &vertexMeta,
-                this->fbo.getWidth(),
-                this->fbo.getHeight()
-            );
+            try {
+                this->handlers[vertexMeta.type](
+                    &this->pipeline->graph,
+                    &vertex,
+                    &vertexMeta,
+                    this->fbo.getWidth(),
+                    this->fbo.getHeight()
+                );
+            } catch (const std::bad_function_call& e) {
+                spdlog::error("Unable to invoke pass render handler: {}", e.what());
+                exit(1);
+            }
             postRenderIteration();
         }
     }
