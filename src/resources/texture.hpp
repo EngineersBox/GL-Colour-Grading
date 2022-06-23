@@ -11,6 +11,7 @@
 namespace GLCG::Resources {
     class Texture: public Device::GPU::BindableResource {
         public:
+            Texture() = default;
             Texture(const char* image, const char* texType, GLuint slot);
             virtual ~Texture() = default;
 
@@ -43,10 +44,11 @@ namespace GLCG::Resources {
             constexpr GLuint getUnit() const noexcept {
                 return this->unit;
             }
+            void resize(const int newWidth, const int newHeight);
         private:
-            GLuint id;
-            const char* type;
-            GLuint unit;
+            GLuint id = 0;
+            const char* type = nullptr;
+            GLuint unit = 0;
             int width = 0;
             int height = 0;
             int channels = 0;

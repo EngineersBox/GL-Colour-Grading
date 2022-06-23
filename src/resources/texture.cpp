@@ -85,4 +85,11 @@ namespace GLCG::Resources {
     void Texture::destroy() {
         glDeleteTextures(1, &this->id);
     }
+
+    void Texture::resize(const int newWidth, const int newHeight) {
+        bind();
+        this->width = newWidth;
+        this->height = newHeight;
+        generateTexImage(nullptr);
+    }
 }

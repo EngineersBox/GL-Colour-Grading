@@ -12,6 +12,7 @@
 namespace GLCG::Device::GPU::Buffers {
     class FBO: public BindableResource {
         public:
+            FBO() = default;
             FBO(int width, int height);
             virtual ~FBO() = default;
 
@@ -27,6 +28,7 @@ namespace GLCG::Device::GPU::Buffers {
             constexpr unsigned int getTextureId() const noexcept {
                 return this->framebufferTexture;
             }
+            void attachTexture()
         private:
             GLCG::Device::GPU::Shaders::Shader shader;
             unsigned int rectVAO = 0;
