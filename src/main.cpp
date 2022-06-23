@@ -57,6 +57,17 @@ static void bindAttributesAndUniforms(const unsigned int shaderId,
     glUniform2f(glGetUniformLocation(shaderId, "u_textureSize"), static_cast<float>(texWidth), static_cast<float>(texHeight));
 }
 
+static constexpr float sharpnessKernel[] = {
+    0, -1, 0,
+    -1, 5, -1,
+    0, -1, 0
+};
+static constexpr float embossKernel[] = {
+    -2, -1, 0,
+    -1, 1, 1,
+    0, 1, 2
+};
+
 struct Pass1: public GLCG::Pipelines::PipelinePass {
     Pass1(GLCG::Resources::Texture const* texture):
         shader(GLCG::Device::GPU::Shaders::Shader::builder()
@@ -75,6 +86,8 @@ struct Pass1: public GLCG::Pipelines::PipelinePass {
             this->texture->getWidth(),
             this->texture->getHeight()
         );
+        glUniform1fv(glGetUniformLocation(this->shader.id, "u_kernel[0]"), 0, sharpnessKernel);
+        glUniform1f(glGetUniformLocation(this->shader.id, "u_kernelWeight"), 1);
         this->vao.bind();
     }
 
@@ -100,6 +113,8 @@ struct Pass2: public GLCG::Pipelines::PipelinePass {
             this->texture->getWidth(),
             this->texture->getHeight()
         );
+        glUniform1fv(glGetUniformLocation(this->shader.id, "u_kernel[0]"), 0, embossKernel);
+        glUniform1f(glGetUniformLocation(this->shader.id, "u_kernelWeight"), 1);
         this->vao.bind();
     }
 
@@ -197,6 +212,7 @@ int main(int argc, const char* argv[]) {
 
         goldenGate.bind();
         renderer.render();
+        glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glfwSwapBuffers(grader.getWindow());
         glfwPollEvents();
