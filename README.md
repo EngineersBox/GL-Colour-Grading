@@ -40,3 +40,7 @@ OpenGL based colour grading utility
 <http://filmicworlds.com/blog/filmic-tonemapping-operators>
 
 <https://coloraggio.github.io/davinci-resolve-manuals/12.5_Manual/30.pdf>
+
+Handy link to all error codes in OpenGL:
+
+<https://neslib.github.io/Ooogles.Net/html/0e1349ae-da69-6e5e-edd6-edd8523101f8.htm>
