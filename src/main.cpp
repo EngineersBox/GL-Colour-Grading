@@ -68,6 +68,12 @@ static constexpr float embossKernel[] = {
     0, 1, 2
 };
 
+static constexpr float normalKernel[] = {
+    0, 0, 0,
+    0, 1, 0,
+    0, 0, 0
+};
+
 struct Pass1: public GLCG::Pipelines::PipelinePass {
     Pass1(GLCG::Resources::Texture const* texture):
         shader(GLCG::Device::GPU::Shaders::Shader::builder()
@@ -114,6 +120,34 @@ struct Pass2: public GLCG::Pipelines::PipelinePass {
             this->texture->getHeight()
         );
         glUniform1fv(glGetUniformLocation(this->shader.id, "u_kernel[0]"), 0, embossKernel);
+        glUniform1f(glGetUniformLocation(this->shader.id, "u_kernelWeight"), 1);
+        this->vao.bind();
+    }
+
+    GLCG::Device::GPU::Shaders::Shader shader;
+    GLCG::Device::GPU::Buffers::VAO vao;
+    GLCG::Resources::Texture const* texture;
+};
+
+struct NormalPass: public GLCG::Pipelines::PipelinePass {
+    NormalPass(GLCG::Resources::Texture const* texture):
+        shader(GLCG::Device::GPU::Shaders::Shader::builder()
+                   .withVertex("../assets/shaders/post_proc_kernel.vsh")
+                   .withFragment("../assets/shaders/post_proc_kernel.fsh")),
+        vao(GLCG::Device::GPU::Buffers::VAO()),
+        texture(texture){}
+
+    // BUG: Fix this bad function call exception
+    void operator()(const int width, const int height) {
+        this->shader.activate();
+        bindAttributesAndUniforms(
+            this->shader.id,
+            width,
+            height,
+            this->texture->getWidth(),
+            this->texture->getHeight()
+        );
+        glUniform1fv(glGetUniformLocation(this->shader.id, "u_kernel[0]"), 0, normalKernel);
         glUniform1f(glGetUniformLocation(this->shader.id, "u_kernelWeight"), 1);
         this->vao.bind();
     }
@@ -189,27 +223,30 @@ int main(int argc, const char* argv[]) {
     );
     renderer.registerHandler<GLCG::Pipelines::VertexType::SERIAL>(GLCG::Pipelines::SerialPassHandler());
 
+    NormalPass normalPass = NormalPass(&goldenGate);
+
     spdlog::info("Starting event loop");
     // Main event loop
     while (!glfwWindowShouldClose(grader.getWindow())) {
-        // BUG: Fix fbo scaling not matching the window (E.g. using glBindFramebuffer(GL_FRAMEBUFFER, 0) works perfectly)
-//        fbo.bind();
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
-//
-//        coreShader.activate();
-//        glUniform1f(scaleUniformId, 0.5f);
-//        goldenGate.bind();
-//        VAO1.bind();
-//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-
-//        fbo.finalise();
 
 
         goldenGate.bind();
         renderer.render();
+
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(
+            0, 0,
+            goldenGate.getWidth(),
+            goldenGate.getHeight()
+        );
+        normalPass(
+            goldenGate.getWidth(),
+            goldenGate.getHeight()
+        );
         glDrawArrays(GL_TRIANGLES, 0, 6);
 
         glfwSwapBuffers(grader.getWindow());
