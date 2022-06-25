@@ -33,7 +33,19 @@ namespace GLCG::Resources {
         );
     }
 
-    Texture::Texture(const char* image, const char* texType, GLuint slot) {
+    inline void Texture::init() {
+        glGenTextures(1, &this->id);
+        this->unit = std::atomic_fetch_add(&Resources::textureUnits, 1U);
+        glActiveTexture(GL_TEXTURE0 + this->unit);
+        glBindTexture(GL_TEXTURE_2D, this->id);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    }
+
+    Texture::Texture(const char* image, const char* texType) {
         this->type = texType;
 
         stbi_set_flip_vertically_on_load(true);
@@ -48,23 +60,20 @@ namespace GLCG::Resources {
             throw std::runtime_error("Unable to load image");
         }
 
-        glGenTextures(1, &this->id);
-        glActiveTexture(GL_TEXTURE0 + slot);
-        unit = slot;
-        glBindTexture(GL_TEXTURE_2D, this->id);
-
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-        // float flatColor[] = {1.0f, 1.0f, 1.0f, 1.0f};
-        // glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, flatColor);
-
+        this->init();
         this->generateTexImage(bytes);
         glGenerateMipmap(GL_TEXTURE_2D);
         stbi_image_free(bytes);
         glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    Texture::Texture(const int width, const int height, const char* texType):
+        width(width),
+        height(height),
+        channels(4),
+        type(texType) {
+        this->init();
+        this->generateTexImage(nullptr);
     }
 
     void Texture::assignTextureUnit(Device::GPU::Shaders::Shader& shader, const char* uniform, GLuint unit){
@@ -73,8 +82,11 @@ namespace GLCG::Resources {
         glUniform1i(uniformLocation, unit);
     }
 
-    void Texture::bind() {
+    void Texture::activate() {
         glActiveTexture(GL_TEXTURE0 + this->unit);
+    }
+
+    void Texture::bind() {
         glBindTexture(GL_TEXTURE_2D, this->id);
     }
 
@@ -87,9 +99,9 @@ namespace GLCG::Resources {
     }
 
     void Texture::resize(const int newWidth, const int newHeight) {
-        bind();
+        this->bind();
         this->width = newWidth;
         this->height = newHeight;
-        generateTexImage(nullptr);
+        this->generateTexImage(nullptr);
     }
 }

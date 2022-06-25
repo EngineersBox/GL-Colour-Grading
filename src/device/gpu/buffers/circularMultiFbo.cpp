@@ -1,14 +1,20 @@
 #include "circularMultiFbo.hpp"
 
 namespace GLCG::Device::GPU::Buffers {
+    #define BUFFER_COUNTER_ITERATOR for (int i = 0; i < BUFFER_COUNT; i++)
     CircularMultiFBO::CircularMultiFBO(const int width, const int height):
         BindableResource(),
         width(width),
-        height(height),
-        fbos{
-            FBO(width, height),
-            FBO(width, height)
-        }{}
+        height(height) {
+        BUFFER_COUNTER_ITERATOR {
+            this->textures[i] = Resources::Texture(
+                this->width,
+                this->height,
+                Utils::String::format("FBO Texture %d", i).c_str()
+            );
+            this->fbos[i] = FBO(this->textures[i]);
+        }
+    }
 
     void CircularMultiFBO::bindNextFBO() {
         this->fbos[this->fboIndex].bind();
@@ -16,13 +22,14 @@ namespace GLCG::Device::GPU::Buffers {
     }
 
     void CircularMultiFBO::bindNextTexture() {
-        glBindTexture(GL_TEXTURE_2D, this->fbos[this->textureIndex].getTextureId());
+        this->textures[this->textureIndex].bind();
         this->textureIndex = (this->textureIndex + 1) % 2;
     }
 
     void CircularMultiFBO::destroy() {
-        for (FBO fbo : this->fbos) {
-            fbo.destroy();
+        BUFFER_COUNTER_ITERATOR {
+            this->textures[i].destroy();
+            this->fbos[i].destroy();
         }
     }
 }

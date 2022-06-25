@@ -4,18 +4,23 @@
 #define GL_COLOUR_GRADING_TEXTURE_HPP
 
 #include <glad/glad.h>
+#include <atomic>
 
 #include "../gpu/bindableResource.hpp"
 #include "../gpu/shaders/shader.hpp"
 
 namespace GLCG::Resources {
+    static std::atomic<GLuint> textureUnits = {0};
+
     class Texture: public Device::GPU::BindableResource {
         public:
             Texture() = default;
-            Texture(const char* image, const char* texType, GLuint slot);
+            Texture(const char* image, const char* texType);
+            Texture(const int width, const int height, const char* texType);
             virtual ~Texture() = default;
 
             static void assignTextureUnit(Device::GPU::Shaders::Shader& shader, const char* uniform, GLuint unit);
+            void activate();
             void bind() override;
             void unbind() override;
             void destroy() override;
@@ -53,6 +58,7 @@ namespace GLCG::Resources {
             int height = 0;
             int channels = 0;
 
+            inline void init();
             inline void generateTexImage(uint8_t const* bytes) const;
     };
 }

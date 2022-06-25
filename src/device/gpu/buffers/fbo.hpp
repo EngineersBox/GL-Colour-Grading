@@ -6,14 +6,14 @@
 #include <array>
 #include <stdexcept>
 
-#include "../shaders/shader.hpp"
+#include "../resources/texture.hpp"
 #include "../bindableResource.hpp"
 
 namespace GLCG::Device::GPU::Buffers {
     class FBO: public BindableResource {
         public:
             FBO() = default;
-            FBO(int width, int height);
+            FBO(Resources::Texture& texture);
             virtual ~FBO() = default;
 
             virtual void activate() const;
@@ -24,34 +24,9 @@ namespace GLCG::Device::GPU::Buffers {
             };
             void destroy() override;
 
-            [[nodiscard]]
-            constexpr unsigned int getTextureId() const noexcept {
-                return this->framebufferTexture;
-            }
-            void attachTexture()
+            void attachTexture(Resources::Texture& texture);
         private:
-            GLCG::Device::GPU::Shaders::Shader shader;
-            unsigned int rectVAO = 0;
-            unsigned int rectVBO = 0;
             unsigned int fbo = 0;
-            unsigned int framebufferTexture = 0;
-            unsigned int rbo = 0;
-
-            static constexpr std::array<float, 24> const RECTANGLE_VERTICES = {
-                1.0f, -1.0f,  1.0f, 0.0f,
-                -1.0f, -1.0f,  0.0f, 0.0f,
-                -1.0f,  1.0f,  0.0f, 1.0f,
-                1.0f,  1.0f,  1.0f, 1.0f,
-                1.0f, -1.0f,  1.0f, 0.0f,
-                -1.0f,  1.0f,  0.0f, 1.0f
-            };
-            static constexpr const char* FRAMEBUFFER_FRAGMENT_SHADER_PATH = "../assets/shaders/framebuffer.fsh";
-            static constexpr const char* FRAMEBUFFER_VERTEX_SHADER_PATH = "../assets/shaders/framebuffer.vsh";
-
-            void prepareRectangleVBOVAO();
-            void createFBO();
-            void createFBOTexture(int width, int height);
-            void createRBO(int width, int height);
     };
 }
 

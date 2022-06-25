@@ -177,8 +177,7 @@ int main(int argc, const char* argv[]) {
     const char* imagePath = "../assets/images/golden_gate.png";
     GLCG::Resources::Texture goldenGate = GLCG::Resources::Texture(
         imagePath,
-        "diffuse",
-        0
+        "diffuse"
     );
     spdlog::info("Loaded image from: {}", imagePath);
 //    GLCG::Resources::Texture::assignTextureUnit(coreShader, "tex0", 0);
@@ -186,8 +185,7 @@ int main(int argc, const char* argv[]) {
     GLCG::Pipelines::Pipeline pipeline = createPipeline(goldenGate);
     GLCG::Pipelines::PipelineRenderer renderer = GLCG::Pipelines::PipelineRenderer(
         std::unique_ptr<GLCG::Pipelines::Pipeline>(&pipeline),
-        grader.getWidth(),
-        grader.getHeight()
+        &goldenGate
     );
     renderer.registerHandler<GLCG::Pipelines::VertexType::SERIAL>(GLCG::Pipelines::SerialPassHandler());
 

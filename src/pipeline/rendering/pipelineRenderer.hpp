@@ -8,6 +8,7 @@
 #include <map>
 
 #include "../pipeline.hpp"
+#include "../../resources/texture.hpp"
 #include "../../gpu/buffers/circularMultiFbo.hpp"
 
 namespace GLCG::Pipelines {
@@ -17,6 +18,8 @@ namespace GLCG::Pipelines {
             PipelineRenderer(std::unique_ptr<Pipeline> pipeline,
                              int width,
                              int height);
+            PipelineRenderer(std::unique_ptr<Pipeline> pipeline,
+                             Resources::Texture* initialTexture);
             void destroy();
 
             virtual void render();
@@ -50,6 +53,7 @@ namespace GLCG::Pipelines {
 
             std::unique_ptr<Pipeline> pipeline;
             Device::GPU::Buffers::CircularMultiFBO fbo;
+            Resources::Texture* initialTexture = nullptr;
 
             void preRenderIteration();
             void postRenderIteration();

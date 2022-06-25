@@ -11,12 +11,24 @@ namespace GLCG:: Pipelines {
         pipeline(std::move(pipeline)),
         fbo(Device::GPU::Buffers::CircularMultiFBO(width, height)){}
 
+    PipelineRenderer::PipelineRenderer(std::unique_ptr<Pipeline> pipeline,
+                                       Resources::Texture* initialTexture):
+        pipeline(std::move(pipeline)),
+        initialTexture(initialTexture),
+        fbo(Device::GPU::Buffers::CircularMultiFBO(
+            initialTexture->getWidth(),
+            initialTexture->getHeight()
+        )){}
+
     void PipelineRenderer::destroy() {
         this->fbo.destroy();
         this->pipeline.release();
     }
 
     void PipelineRenderer::render() {
+        if (this->initialTexture != nullptr) {
+            this->initialTexture->bind();
+        }
         for (CoreGraph::Vertex& vertex : this->pipeline->getVertexIteratorRange()) {
             CoreVertexMeta& vertexMeta = this->pipeline->getVertex(vertex);
             if (vertexMeta.type == VertexType::NONE) {
@@ -60,15 +72,4 @@ namespace GLCG:: Pipelines {
     void PipelineRenderer::postRenderIteration() {
         this->fbo.bindNextTexture();
     }
-
-//    template<VertexType V>
-//    void PipelineRenderer::registerHandler(PassHandler&& handler) {
-//        if (this->handlers.contains(V)) {
-//            throw std::runtime_error(Utils::String::format(
-//                "Handler already registered for vertex type %s",
-//                vertexTypeToString(V).c_str()
-//            ));
-//        }
-//        this->handlers[V] = std::move(handler);
-//    }
 }
